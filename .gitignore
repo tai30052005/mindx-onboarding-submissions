@@ -1,0 +1,30 @@
+# Node
+node_modules/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Env — never commit real credentials or endpoints
+.env
+.env.local
+!.env.example
+
+# Python (week 5 automation)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+
+# NOTE: week-4 Odoo screenshots ARE deliverables and must be committed.
+# Redact sensitive information BEFORE committing — git history keeps originals.
