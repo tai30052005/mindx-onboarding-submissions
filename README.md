@@ -33,6 +33,7 @@ Not part of `docs/plans/`, but required by the training slides.
 
 - [notes/questions.md](notes/questions.md) — question log, routed by destination
 - [notes/mentor-feedback.md](notes/mentor-feedback.md) — feedback received, and what changed because of it
+- [notes/self-check.md](notes/self-check.md) — rehearsal questions for the weekly review session
 
 ## Submission convention
 
