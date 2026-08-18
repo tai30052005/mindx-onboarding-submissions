@@ -4,11 +4,12 @@
 
 ## Questions this file answers
 
-- What is TDD, and why is it a design practice rather than only a testing practice?
-- What happens in each of Red, Green, and Refactor?
-- How minimal is "minimal implementation" in the Green step?
-- May tests be modified during the Refactor step?
-- When is TDD *not* the right approach?
+- What is TDD? `[đề bài]`
+- Why is TDD a design practice rather than only a testing practice? `[thêm]`
+- What happens in each of Red, Green, and Refactor? `[đề bài]`
+- How minimal is "minimal implementation" in the Green step? `[thêm]`
+- May tests be modified during the Refactor step? `[thêm]`
+- When is TDD *not* the right approach? `[thêm]`
 
 ## What TDD is
 

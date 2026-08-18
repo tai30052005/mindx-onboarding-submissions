@@ -8,9 +8,9 @@
 
 ## Questions this file answers
 
-- What are the four mistakes, and what does each one look like in real test code?
-- Why is each one harmful — what does it cost later?
-- How do I detect and avoid each one?
+- What are the four mistakes, and what does each one look like in real test code? `[đề bài]`
+- Why is each one harmful — what does it cost later? `[thêm]`
+- How do I detect and avoid each one? `[đề bài]`
 
 ## 1. Over-testing
 

@@ -4,10 +4,10 @@
 
 ## Questions this file answers
 
-- What separates unit, integration, and end-to-end tests?
-- What does each level cost, and what does each level actually protect?
-- What is a reasonable balance between them, and why not just write end-to-end tests?
-- Given a specific test, which level is it, and why?
+- What separates unit, integration, and end-to-end tests? `[đề bài]`
+- What does each level cost, and what does each level actually protect? `[thêm]`
+- What is a reasonable balance between them, and why not just write end-to-end tests? `[thêm]`
+- Given a specific test, which level is it, and why? `[thêm]`
 
 ## Comparison
 
