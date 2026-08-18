@@ -4,11 +4,11 @@
 
 ## Questions this file answers
 
-- How do tests give control over code an AI wrote?
+- How do tests give control over code an AI wrote? `[đề bài]`
 - What changes when the test is written *before* the AI writes the implementation,
-  compared to the other way round?
-- What is the problem with letting the AI write both the tests and the code?
-- What do I check before accepting AI-generated code, and in what order?
+  compared to the other way round? `[thêm]`
+- What is the problem with letting the AI write both the tests and the code? `[thêm]`
+- What do I check before accepting AI-generated code, and in what order? `[thêm]`
 
 ## Tests as an executable specification
 

@@ -9,10 +9,11 @@ files, with fields `title`, `description`, `status`, `priority`, `tags`, and the
 
 ## Questions this file answers
 
-- What should be tested for each of the four commands?
-- What are the validation rules, and how is each one tested?
-- How are the three required error cases tested?
-- Which of these tests are unit tests and which are integration tests?
+- What should be tested for each of the four commands? `[đề bài]`
+- What are the validation rules, and how is each one tested? `[đề bài]`
+- How is the JSON file storage layer tested? `[đề bài]`
+- How are the three required error cases tested? `[đề bài]`
+- Which of these tests are unit tests and which are integration tests? `[thêm]`
 
 ## Test cases by command
 

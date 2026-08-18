@@ -39,3 +39,12 @@
   snippets; the actual project starts in week 2.
 - **Test framework: Jest**, used consistently across all snippets, matching the stack
   fixed for the program in `docs/plans/week-3/architecture.md`.
+
+## Question tags
+
+Each question under *Questions this file answers* is tagged by where it comes from:
+
+- `[đề bài]` — named in `docs/plans/week-1/overview.md` (Research focus / Deliverable). Required.
+- `[thêm]` — added on my own judgement of what the review session is likely to probe,
+  since acceptance criteria 3 and 4 are assessed orally but list no specific questions.
+  Useful, but not required by the brief.
