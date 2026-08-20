@@ -54,10 +54,18 @@ Chưa từng áp dụng TDD vào project nào
 - **Hỏi gì:** khai báo thẳng là chưa có kinh nghiệm nên không tự phát hiện được AI
   nói sai; yêu cầu 3 thứ: giải thích R-G-R kèm ví dụ chạy được, tách phần ĐỒNG THUẬN
   khỏi phần QUAN ĐIỂM, và 2-3 hiểu lầm phổ biến.
-- **Assumptions AI đang giả định:** _(điền sau khi có Lượt 2)_
-- **Risks / edge case bị bỏ:** _(điền sau khi có Lượt 2)_
-- **Mình verify bằng cách nào:**
-- **Mình sửa lại gì, vì sao:**
+- **Assumptions AI đang giả định:** không tự nêu ra ở lượt này — phải hỏi riêng ở Lượt 2
+  mới lộ. Xem danh sách đầy đủ ở Lượt 2 bên dưới.
+- **Risks / edge case bị bỏ:** cũng vậy, xem Lượt 2.
+- **Mình verify bằng cách nào:** không đọc chay. Dựng lại ví dụ AI đưa và **tự chạy** bằng
+  `node --test` trong `tdd-thu-nghiem/`: đi đủ 3 vòng RED → GREEN, thấy tận mắt hai kiểu
+  đỏ khác nhau (module chưa tồn tại, và hàm không ném lỗi). Rồi cố tình phá code — đổi
+  `return { title }` thành `return { title: title.trim() }` — và thấy 3/3 test vẫn xanh dù
+  hành vi đã đổi.
+- **Mình sửa lại gì, vì sao:** bỏ toàn bộ phần `npm init` / `jest.config.js` / lỗi
+  TypeScript 7 ra khỏi `01`, vì mentor đã chốt ngày 17/08 rằng tuần 1 snippet là đủ và
+  project để tuần 2 — AI đưa vào là lệch phạm vi. Giữ lại kết luận từ phép phá code, vì đó
+  là thứ tự kiểm chứng được và nó thành nền cho mục `## Refactor` trong `01`.
 
 **Lượt 2 — bắt AI tự nêu giả định**
 
@@ -74,8 +82,17 @@ Chưa từng áp dụng TDD vào project nào
   giết Jest worker; test song song tranh nhau file JSON; `toThrow()` không bắt được
   promise reject; quên `await` trong test async gây **xanh giả**; `toThrow('chuỗi')`
   khớp substring nên buộc test vào nội dung message; CRLF/LF trên Windows; `jest --watch`.
-- **Mình verify bằng cách nào:**
-- **Mình sửa lại gì, vì sao:**
+- **Mình verify bằng cách nào:** không nhận cả gói. Kiểm từng claim: claim `toThrow('chuỗi')`
+  khớp substring — đọc docs Jest chính thức mục `.toThrow(error?)`, **đúng**. Claim
+  `toThrow()` với hàm async "im lặng pass" — cài Jest 30 thật trong `jest-check/` và chạy
+  4 biến thể, **sai** (xem Part 3 dòng 4). Claim về nghiên cứu Fucci et al. — AI tự nhận
+  dẫn từ trí nhớ, mình không tra được nguồn nên **không dùng**.
+- **Mình sửa lại gì, vì sao:** ba thay đổi kéo theo, đều xuất phát từ danh sách rủi ro này.
+  (1) Chuyển toàn bộ `03` và `05` sang assert theo **loại lỗi** thay vì nội dung message,
+  vì assert theo message là weak assertion và vỡ khi sửa câu chữ. (2) Đưa ràng buộc tiêm
+  `now` / `generateId` thành quyết định thiết kế ghi rõ ở đầu `03`, vì không tiêm thì không
+  assert được giá trị chính xác. (3) Bỏ hẳn claim Fucci ra khỏi phần chính, chỉ ghi ở
+  `Still unsure about` của `01` — để lơ lửng trong bài nộp mà bị hỏi thì không đỡ được.
 
 **Lượt 3 — ba chỗ trống còn lại của `01`** (20/08)
 
@@ -109,11 +126,10 @@ Chưa từng áp dụng TDD vào project nào
 - **Mình verify bằng cách nào:**
 - **Mình sửa lại gì, vì sao:**
 
-**Tier 2 — Brief feature** (áp vào Ticket Manager CLI)
-
-**Tier 3 — Code example**
-
-**Tier 4 — Validation** (edge cases)
+> **Ghi chú về cấu trúc:** khung ban đầu mình dựng theo 4 tier (Research → Brief feature →
+> Code example → Validation). Thực tế không diễn ra theo 4 tier tách rời — Tier 2 và 3 gộp
+> vào Lượt 3, còn Tier 4 (validation, edge case) thì rải qua Lượt 2 và Lượt 6. Giữ nguyên
+> ghi chép theo lượt thật thay vì ép vào khung cũ.
 
 ### 20/08 — Testing levels, và một vòng review đối kháng
 
@@ -176,7 +192,6 @@ Chưa từng áp dụng TDD vào project nào
 
 **My constraints:** làm một mình · 5 tuần · tuần 3 phải cắm thêm HTTP client
 
-**Đề xuất từ phân tích trên** — *chờ mình xác nhận trước khi chốt:*
 
 **Chosen:** phương án 3 làm mặc định, cộng một nhóm nhỏ test theo phương án 1 cho ba error
 case bắt buộc. **Why:** ràng buộc "tuần 3 cắm HTTP client vào cùng codebase" là ràng buộc
