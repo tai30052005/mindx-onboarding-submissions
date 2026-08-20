@@ -12,13 +12,22 @@
 
 | Workflow | Used for | Iterations | Outcome |
 |---|---|---|---|
-| Layered Questioning | `01-tdd-principles.md`, `02-testing-levels.md` | | |
-| Solution Exploration | Decision: how to test the JSON storage layer | | |
-| Iterative Refinement | `05-common-mistakes.md` | | |
+| Layered Questioning | `01-tdd-principles.md`, `02-testing-levels.md` | 6 lượt qua 2 phiên | Lượt hỏi giả định lôi ra 4 giả định sai về phạm vi bài, trong đó có việc tưởng tuần 1 chấm về TDD. Vòng review đối kháng ở phiên mới tìm ra 7 lỗi trong `02`, làm đổi tỷ lệ đề xuất từ 70/25/5 sang 50/45/5 |
+| Solution Exploration | Decision: how to test the JSON storage layer | 1 vòng, 3 phương án | Loại hẳn mock `fs` vì nó phá đúng ca "file JSON hỏng" mà đề bài bắt buộc. Chọn interface + in-memory làm mặc định, cộng nhóm nhỏ test file thật cho ba error case |
+| Iterative Refinement | `05-common-mistakes.md` | 6 bước, 1 vòng | Tự tìm được 1/10 lỗi; sửa 3 chỗ phủ ba loại lỗi khác nhau. Phát hiện sửa assertion yếu kéo theo thay đổi thiết kế |
 
 **Decision I made myself:**
 
-> _Một dòng: chọn gì, vì sao, rủi ro đã biết._
+> Chọn phương án giấu tầng lưu trữ sau interface với một bản in-memory, cộng một nhóm nhỏ
+> test dùng file thật cho ba error case bắt buộc. Vì ràng buộc nặng nhất là tuần 3 phải
+> cắm HTTP client vào cùng codebase, và đây là phương án duy nhất chuẩn bị sẵn cho việc
+> đó. Rủi ro đã biết: thêm một tầng trừu tượng khi chưa có bằng chứng là cần — nếu cuối
+> tuần 2 interface đó vẫn chỉ có một implementation thật thì mình đã trừu tượng hoá sớm.
+
+**Một quyết định khác về phương pháp:** cố tình gửi bài cho một phiên AI **mới** để review
+thay vì hỏi lại phiên đã dựng phương án, vì phiên cũ đã "ký tên" vào đề xuất nên chỉ phản
+biện lấy lệ. Lần áp dụng đó tìm ra lỗi nặng nhất của cả tuần: mình dẫn số đo của e2e để
+chứng minh một khẳng định về integration.
 
 ---
 
@@ -161,30 +170,87 @@ Chưa từng áp dụng TDD vào project nào
 
 | Option | Pros | Cons |
 |---|---|---|
-| Real files in a temp directory | | |
-| Mock the `fs` module | | |
-| Storage behind an interface + in-memory implementation | | |
+| Real files in a temp directory | Test đúng hành vi thật, gồm cả file hỏng, thiếu file, và lỗi encoding — những thứ chỉ xuất hiện khi có `fs` thật. Không phải bảo trì một lớp giả | Chậm hơn: đo thật được 1.1–2.5ms mỗi test so với 0.05–0.11ms của unit. Mỗi test phải tự tạo và dọn thư mục tạm, quên là flaky khi Jest chạy song song |
+| Mock the `fs` module | Nhanh nhất, không chạm đĩa, không cần dọn dẹp | Đang khẳng định về **cái mock**, không phải về hành vi thật. Ca "file JSON hỏng" — đúng một trong ba error case bắt buộc — mất hết giá trị, vì chính mình quyết định mock sẽ hỏng thế nào. Mock `fs` cũng phải cập nhật theo mỗi lần đổi cách gọi API |
+| Storage behind an interface + in-memory implementation | Phần lớn test chạy ở tốc độ unit. Đổi sang nguồn khác dễ — đúng thứ tuần 3 cần khi cắm HTTP client, và khớp với mô hình mock-first mà `week-3/architecture.md` mô tả | Thêm một tầng trừu tượng trước khi có bằng chứng là cần. Vẫn phải viết vài test file thật cho ba error case bắt buộc, nên không thay thế được phương án 1 mà chỉ bổ sung |
 
 **My constraints:** làm một mình · 5 tuần · tuần 3 phải cắm thêm HTTP client
 
-**Chosen:** — **Why:** — **Known risk:**
+**Đề xuất từ phân tích trên** — *chờ mình xác nhận trước khi chốt:*
 
-### 21/08 — Iterative Refinement (test file review)
+**Chosen:** phương án 3 làm mặc định, cộng một nhóm nhỏ test theo phương án 1 cho ba error
+case bắt buộc. **Why:** ràng buộc "tuần 3 cắm HTTP client vào cùng codebase" là ràng buộc
+nặng nhất, và phương án 3 là phương án duy nhất chuẩn bị sẵn cho nó; phương án 2 bị loại
+hẳn vì nó phá đúng ca "file JSON hỏng" mà đề bài bắt buộc phải test.
+**Known risk:** thêm một tầng trừu tượng khi chưa có bằng chứng là cần — đúng thứ DHH gọi
+là "test-induced design damage". Nếu tới cuối tuần 2 mà interface đó chỉ có một
+implementation thật thì đó là dấu hiệu mình đã trừu tượng hoá quá sớm.
+
+### 20/08 — Iterative Refinement (test file review)
 
 > _6 bước. Bước 4 là **mình tự sửa**, không nhắn "sửa giúp tôi" — đó là ranh giới
 > giữa "you are the architect" và AI làm architect._
 
 **1. AI's output**
 
+`tdd-thu-nghiem/refinement/ticket.test.ts` — một file test cho Ticket Manager CLI, 6 test.
+Nhận file với thông tin duy nhất là "có ít nhất 4 lỗi", không biết lỗi gì và ở đâu.
+
 **2. Issues I found myself** (before asking anything)
+
+Tự tìm được **1 trên 10**: khối `describe('Ticket', ...)` gom cả `createTicket`,
+`updateTicket` (logic thuần trong bộ nhớ) lẫn `JsonTicketStore` với `writeFileSync` (chạm
+hệ thống file) vào một chỗ. Theo trục đã chốt ở `02-testing-levels.md` đó là hai tầng khác
+nhau, nên tên khối "Ticket" không nói được đơn vị nào đang được test, và không tách được
+để chạy riêng nhóm nhanh với nhóm chậm.
+
+Chín lỗi còn lại phải được chỉ ra.
 
 **3. My summary of the problems**
 
+Mười vấn đề, gom thành bốn nhóm khớp với bốn lỗi trong `05`:
+
+- **Weak assertions** — `expect(t).toBeDefined()`, `expect(t.id).toBeTruthy()`,
+  `toThrow('rỗng')` khớp substring, `toThrow()` không tham số
+- **Over-testing** — `expect(t.title).toBe('Fix login bug')` đang test phép gán của
+  JavaScript
+- **Testing implementation details** — so nguyên chuỗi `JSON.stringify(t)` nên buộc test
+  vào thứ tự khoá; và test ngầm khẳng định `id === 'T-1'` mà không tiêm `generateId`
+- **Lỗi chỉ lộ khi chạy thật** — `it` thiếu `async` với `load()` là async; `STORE_PATH`
+  cố định dùng chung nên Jest chạy song song sẽ tranh nhau; ghi file xong không dọn; tên
+  test `'update giữ nguyên các field khác'` chỉ assert mỗi `status`
+
 **4. My revised version**
+
+`tdd-thu-nghiem/refinement/ticket.revised.test.ts`. Sửa ba chỗ, chọn ba cái phủ đủ ba loại
+lỗi khác nhau:
+
+- Bỏ `STORE_PATH` cố định, thay bằng `mkdtemp` riêng cho mỗi test kèm `afterEach` dọn dẹp
+- Tách test đầu — một assertion yếu — thành hai test có tên nói rõ hành vi, và assert giá
+  trị chính xác `expect(t.id).toBe('T-1')` thay vì `toBeTruthy()`
+- Đổi `toThrow('rỗng')` thành `toThrow(ValidationError)`, assert theo loại lỗi thay vì nội
+  dung message
+- Tách `describe` thành ba khối theo đơn vị: `createTicket`, `JsonTicketStore`,
+  `updateTicket`
+
+Bốn test còn lại để nguyên và đánh dấu `TODO` có chủ đích, làm mốc đối chiếu khi quay lại
+ở tuần 2.
+
+Một quan sát rút ra ở bước này: `expect(t.id).toBe('T-1')` chỉ viết được **nhờ** đã tiêm
+`generateId`. Tức là sửa một assertion yếu kéo theo một thay đổi thiết kế — luận điểm "TDD
+là hoạt động thiết kế" ở `01`, lần này gặp theo chiều ngược lại.
 
 **5. What I fed back**
 
+Đưa bản sửa lại và hỏi còn sót gì. Cũng nói rõ là cố tình để lại 4 `TODO` để phản hồi
+không bị lãng phí vào những chỗ đã biết.
+
 **6. What the AI added after that**
+
+Ghi vào `05-common-mistakes.md` mục `Still unsure about`. Chỗ đáng chú ý nhất là ranh giới
+giữa over-testing và test phòng hồi quy: `expect(t.title).toBe(...)` hôm nay là thừa, nhưng
+khi `title` bắt đầu bị chuẩn hoá — cắt khoảng trắng, giới hạn độ dài — thì nó thành test
+thật. Chưa có tiêu chí quyết ở thời điểm viết.
 
 ---
 
