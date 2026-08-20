@@ -106,7 +106,51 @@ Chưa từng áp dụng TDD vào project nào
 
 **Tier 4 — Validation** (edge cases)
 
-### 19/08 — Testing levels
+### 20/08 — Testing levels, và một vòng review đối kháng
+
+**Lượt 5 — dựng bản đầu của `02`**
+
+- **Hỏi gì:** làm cùng Claude trong phiên Claude Code, không phải một phiên hỏi đáp riêng.
+  Ghi đúng như vậy để không nhận công cho một workflow không xảy ra.
+- **Assumptions AI đang giả định:** ngầm giả định integration test tốn hàng chục ms vì
+  chạm đĩa — giả định này về sau bị chính phép đo bác bỏ.
+- **Risks / edge case bị bỏ:** không đo tốc độ thật; lấy câu chữ trong acceptance criteria
+  tuần 2 làm định nghĩa cấp test trong khi nó là phát biểu về phạm vi cần phủ.
+- **Mình verify bằng cách nào:** đối chiếu định nghĩa với `week-2/overview.md` thay vì
+  lấy từ AI.
+- **Mình sửa lại gì, vì sao:** chốt một định nghĩa "unit" và bảo vệ nó, thay vì liệt kê
+  tranh cãi rồi né — vì deliverable đòi một bảng so sánh dứt khoát.
+
+**Lượt 6 — review đối kháng ở phiên MỚI**
+
+- **Hỏi gì:** đưa `02` cho một phiên AI hoàn toàn mới đọc và tìm lỗ hổng: chỗ nào trong
+  cách phân loại dễ bị phản bác nhất, và người theo Testing Trophy sẽ phản bác lựa chọn
+  kim tự tháp bằng lập luận gì. Có thêm câu "đừng khen phương án này".
+- **Assumptions AI đang giả định:** phiên mới không biết đây là bài nộp của mình, nên
+  không có động cơ giữ thể diện cho phương án — đó chính là lý do chọn nó.
+- **Risks / edge case bị bỏ:** review chỉ ra 7 lỗi, trong đó 3 lỗi mình không tự thấy
+  được: (a) dùng hai trục định nghĩa mâu thuẫn — trục chủ đề lấy từ acceptance criteria
+  và trục biên — mà không có trọng tài khi hai trục cho kết quả khác nhau; (b) định nghĩa
+  integration rộng tới mức gộp cả test 0.05ms lẫn test 2ms vào một nhóm, làm hỏng mọi lập
+  luận chi phí; (c) bảng verify dẫn số đo của **khởi động tiến trình** để chứng minh một
+  claim về **integration** — tức là chưa từng đo integration lần nào.
+- **Mình verify bằng cách nào:** không tin lời review, mà tự viết
+  `tdd-thu-nghiem/do-toc-do/bench.test.js` — 5 unit test thuần bộ nhớ và 5 integration
+  test ghi/đọc file thật trong thư mục tạm, chạy cùng một lần. Kết quả: unit 0.05–0.11ms,
+  integration 1.1–2.5ms, cả lần chạy có tiến trình ~88ms. Số đo đứng về phía người review.
+- **Mình sửa lại gì, vì sao:** đổi tỷ lệ đề xuất từ 70/25/5 sang **50/45/5**, vì lý do
+  chính để loại Trophy — integration chậm nên giết vòng lặp TDD — bị chính số đo của mình
+  bác bỏ. Chốt một trục định nghĩa duy nhất (biên ngoài tiến trình) và nói rõ acceptance
+  criteria là hệ quả chứ không phải trục thứ hai. Thu hẹp "integration": gọi hàm command
+  của chính mình không tính là integration. Viết lại đoạn Trophy thành phản biện đúng
+  luận điểm — hai bên dùng chữ "integration" khác nghĩa — thay vì viện dẫn tiêu chí chấm,
+  vì viện dẫn rubric là đổi chủ đề chứ không phải bảo vệ lựa chọn. Bổ sung `tickets
+  update`, ca sinh `id`, ca format output, tách "nội dung JSON hỏng" khỏi "file trên đĩa
+  hỏng", và ghi rõ 13 ca này không phải mẫu theo tỷ lệ.
+
+**Ghi chú về phương pháp:** cố tình gửi sang phiên mới thay vì phiên đã dựng phương án,
+để tránh việc AI phản biện chính đề xuất của nó và chỉ đưa ra phản bác lấy lệ. Phiên cũ
+đã "ký tên" vào phương án qua hai vòng trước đó.
 
 ### 20/08 — Solution Exploration: testing the JSON storage layer
 
@@ -153,7 +197,8 @@ Labels from `slides-ai-training.md`: `wrong facts/code` · `unnecessary icons/em
 |---|---|---|---|---|
 | 1 | `wrong facts/code` | Dạy `expect(() => createTicket('')).toThrow('title không được rỗng')` như cách viết đúng | Đọc docs Jest mục `.toThrow(error?)`: nó khớp theo **substring**, nên test vẫn pass với một Error khác miễn message chứa chuỗi đó; và đổi câu chữ message là vỡ test dù hành vi không đổi | Chỉ ra rằng chính nó ở lượt sau đã gọi đây là weak assertion + testing implementation details — hai trong bốn lỗi liệt kê ở `05`. Yêu cầu assert theo loại lỗi thay vì nội dung message |
 | 2 | `outdated information` | Khẳng định mục `## Refactor` trong `01-tdd-principles.md` vẫn còn trống | Mở file ra: mục đó đã viết xong và đã lưu trước khi hỏi | Nói rõ là nó đang dựa trên bản đọc cũ, và từ chối để nó viết lại mục đã có |
-| 3 | | | | |
+| 3 | `wrong facts/code` | Trong bản đầu của `02`, khẳng định "unit nhanh hơn integration một bậc độ lớn" và dẫn số đo làm bằng chứng | Phiên review mới chỉ ra số đo đó là thời gian **khởi động tiến trình** (e2e), không phải integration. Mình tự viết `do-toc-do/bench.test.js` đo lại: integration in-process chỉ 1.1–2.5ms, không phải hàng chục ms | Sửa thẳng con số trong bảng verify, và đổi luôn tỷ lệ đề xuất từ 70/25/5 sang 50/45/5 vì lập luận cũ dựa trên số sai. Ghi rõ trong `02` là tỷ lệ đã đổi và đổi vì lý do gì |
+| 4 | | | | |
 
 > Corrections only hold inside the current conversation — a new session starts clean.
 > Anything worth keeping goes into a rules file, per rule 10 of `.cursor/rules/overview.mdc`.
