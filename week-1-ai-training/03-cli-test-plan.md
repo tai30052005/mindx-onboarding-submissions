@@ -193,9 +193,18 @@ describe('JsonTicketStore', () => {
 });
 ```
 
-Chú ý ca thứ hai dùng `await expect(...).rejects.toThrow(...)`. Với hàm async thì
-`expect(() => f()).toThrow(...)` **im lặng pass** mà không kiểm tra gì — đây là lỗi vô
-hình, và nó sẽ còn nguy hiểm hơn ở tuần 3 khi có HTTP client.
+Chú ý ca thứ hai dùng `await expect(...).rejects.toThrow(...)`, và `it` phải là `async`.
+Đây là chỗ mình đã chạy thử thật với Jest 30 trên Node 24 thay vì tin lời AI:
+
+| Cách viết | Kết quả thật |
+|---|---|
+| `expect(() => load()).toThrow()` | Không pass, cũng không đỏ bình thường — promise bị reject không ai bắt, **worker chết** kèm stack trace không chỉ vào test nào |
+| `expect(load()).rejects.toThrow(...)` thiếu `await` | Assertion chạy sau khi test đã kết thúc; cũng làm chết worker |
+| `await expect(load()).rejects.toThrow('file hong')` | Pass đúng |
+| `await expect(load()).rejects.toThrow('thông báo khác')` | Đỏ đúng cách, có diff đọc được |
+
+Chi tiết ở `ai-workflow-log.md` Part 3. Điều này còn quan trọng hơn ở tuần 3, khi mọi lời
+gọi HTTP đều là async.
 
 ## How I verified this
 
