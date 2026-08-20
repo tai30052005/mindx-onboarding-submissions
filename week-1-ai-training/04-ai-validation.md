@@ -101,9 +101,14 @@ có cái sai nặng nhất là tưởng tuần 1 chấm về TDD trong khi tuầ
 Không hỏi thì không cái nào lộ ra.
 
 **4. Risks — có thể hỏng ở đâu, edge case nào bị bỏ?**
-*Ví dụ trong tuần:* `toThrow()` không bắt được promise bị reject, nên với hàm async ở tuần
-3 nó im lặng pass mà chẳng kiểm tra gì; và quên `await` trong test async cho ra **xanh
-giả**. Cả hai đều là loại lỗi vô hình — test báo pass trong khi không kiểm tra gì.
+*Ví dụ trong tuần:* AI cảnh báo rằng với hàm async, `expect(() => f()).toThrow(...)` sẽ
+"im lặng pass mà chẳng kiểm tra gì". Mình cài Jest thật và chạy thử thay vì tin: trên
+Jest 30 / Node 24 nó **không** pass, nhưng cũng **không** đỏ một cách bình thường — promise
+bị reject không có ai bắt, và worker chết kèm stack trace không chỉ vào test nào. Cùng
+hiện tượng với `expect(f()).rejects.toThrow(...)` khi quên `await`: assertion chạy sau khi
+test đã kết thúc. Chỉ `await expect(f()).rejects.toThrow(...)` là chạy đúng — pass khi
+đúng, và đỏ kèm diff đọc được khi sai. Bài học kép ở đây: rủi ro AI nêu là có thật, nhưng
+**mô tả của nó về triệu chứng thì sai**, và chỉ chạy thử mới biết.
 
 **5. Verification — kiểm chứng bằng cách nào?**
 Đây là câu duy nhất tạo ra bằng chứng. Ba cách mình dùng, xếp theo độ tin cậy giảm dần:
