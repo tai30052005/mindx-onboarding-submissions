@@ -121,10 +121,28 @@ Chưa từng áp dụng TDD vào project nào
 - **Hỏi gì:** trong 3 lý do vừa nêu, lý do nào yếu nhất và bị phản bác bằng lập luận
   gì; và phản biện ra sao trước câu "viết test sau cũng được, miễn cuối cùng có đủ
   test và đều xanh".
-- **Assumptions AI đang giả định:**
-- **Risks / edge case bị bỏ:**
-- **Mình verify bằng cách nào:**
-- **Mình sửa lại gì, vì sao:**
+- **Assumptions AI đang giả định:** đọc thẳng `01-tdd-principles.md` chứ không dựa vào
+  mô tả của mình, và nói rõ điều đó ngay đầu câu trả lời — nên nó phản biện đúng ba lý do
+  trong file chứ không phản biện một phiên bản tưởng tượng.
+- **Risks / edge case bị bỏ:** chỉ ra **lý do 3 là yếu nhất** với bốn chỗ hở, trong đó có
+  một chỗ là lỗi sự thật kiểm chứng được: câu "người viết test sau không còn lựa chọn nào
+  ngoài `toBeDefined()`" là sai. Hai lỗi nhỏ hơn: lý do 2 dùng chữ "cơ chế **duy nhất**"
+  trong khi mutation testing cho cùng bằng chứng; lý do 1 chỉ đúng với test-after-everything,
+  không đúng với iterative test-last.
+- **Mình verify bằng cách nào:** không tin lời phản bác. Viết `jest-check/faketimer.test.js`
+  với một hàm **không tiêm gì cả**, dùng `randomUUID()` và `new Date()` trực tiếp, rồi thử
+  ba assertion: `createdAt` khoá bằng `jest.useFakeTimers()` + `setSystemTime()` và assert
+  giá trị chính xác; `id` assert bằng regex định dạng UUID; `id` của hai lần gọi phải khác
+  nhau. **3/3 pass.** Người phản biện đúng.
+- **Mình sửa lại gì, vì sao:** viết lại lý do 3 trong `01` — bỏ câu sai, thay bằng phần
+  còn lại thật sự đứng được (test-first làm câu hỏi thiết kế thành *không thể né*,
+  test-last làm nó thành *có thể né*), và ghi rõ hai chỗ hở: đường vòng có tồn tại, và
+  đây là luận điểm về quyền sửa code chứ không về thứ tự viết. Đổi "cơ chế duy nhất" thành
+  "rẻ nhất và tự động nhất". Thêm hẳn một mục mới cho câu phản bác *"viết test sau cũng
+  được, miễn cuối cùng đủ test và đều xanh"*, theo hướng: nhượng bộ phần đúng trước, rồi
+  tấn công hai chữ chưa được kiểm chứng là "đủ" và "xanh", và đề xuất mutation score làm
+  trọng tài đo được. Cũng đưa phản bác vòng-tròn-định-nghĩa của DHH từ `Still unsure about`
+  lên phần chính, vì để một chỗ mình biết là hở làm trụ cột là tự tạo điểm bị vặn.
 
 > **Ghi chú về cấu trúc:** khung ban đầu mình dựng theo 4 tier (Research → Brief feature →
 > Code example → Validation). Thực tế không diễn ra theo 4 tier tách rời — Tier 2 và 3 gộp
@@ -280,7 +298,8 @@ Labels from `slides-ai-training.md`: `wrong facts/code` · `unnecessary icons/em
 | 2 | `outdated information` | Khẳng định mục `## Refactor` trong `01-tdd-principles.md` vẫn còn trống | Mở file ra: mục đó đã viết xong và đã lưu trước khi hỏi | Nói rõ là nó đang dựa trên bản đọc cũ, và từ chối để nó viết lại mục đã có |
 | 3 | `wrong facts/code` | Trong bản đầu của `02`, khẳng định "unit nhanh hơn integration một bậc độ lớn" và dẫn số đo làm bằng chứng | Phiên review mới chỉ ra số đo đó là thời gian **khởi động tiến trình** (e2e), không phải integration. Mình tự viết `do-toc-do/bench.test.js` đo lại: integration in-process chỉ 1.1–2.5ms, không phải hàng chục ms | Sửa thẳng con số trong bảng verify, và đổi luôn tỷ lệ đề xuất từ 70/25/5 sang 50/45/5 vì lập luận cũ dựa trên số sai. Ghi rõ trong `02` là tỷ lệ đã đổi và đổi vì lý do gì |
 | 4 | `wrong facts/code` | Với hàm async, `expect(() => f()).toThrow(...)` sẽ "im lặng pass mà chẳng kiểm tra gì" — AI nói ở Lượt 2, mình tin và chép lại vào `03` và `04` | Cài Jest 30 thật trong `jest-check/`, viết 4 biến thể và chạy. Nó **không** pass: promise bị reject không ai bắt nên worker chết kèm stack trace không chỉ vào test nào. Cả biến thể `.rejects` thiếu `await` cũng vậy. Chỉ `await expect(f()).rejects.toThrow(...)` mới chạy đúng — pass khi đúng, đỏ có diff khi sai | Sửa cả `03` lẫn `04`, thay câu "im lặng pass" bằng bảng kết quả đo thật kèm phiên bản (Jest 30 / Node 24). Ghi rõ là rủi ro AI nêu **có thật**, nhưng mô tả triệu chứng thì sai — nên vẫn phải chạy mới biết |
-| 5 | | | | |
+| 5 | `wrong facts/code` | Trong `01`, mình viết: nếu `id`/`createdAt` sinh ngầm trong hàm thì người viết test sau "không còn lựa chọn nào ngoài assert yếu kiểu `toBeDefined()`" | Lượt 4 phản bác bằng một phương án cụ thể. Mình viết `jest-check/faketimer.test.js` với hàm **không tiêm gì**, dùng `randomUUID()` và `new Date()` trực tiếp: `jest.useFakeTimers()` + `setSystemTime()` khoá được `createdAt` về giá trị chính xác; `id` assert được bằng regex định dạng và bằng tính duy nhất giữa hai lần gọi. **3/3 pass** | Viết lại toàn bộ lý do 3, bỏ câu sai, và ghi rõ phần còn lại đứng được là gì. Thêm ghi chú rằng đường vòng tuy dùng được nhưng yếu hơn: assert định dạng không ghim giá trị, fake timer là trạng thái toàn cục dễ rò |
+| 6 | | | | |
 
 > Corrections only hold inside the current conversation — a new session starts clean.
 > Anything worth keeping goes into a rules file, per rule 10 of `.cursor/rules/overview.mdc`.
