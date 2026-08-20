@@ -80,13 +80,33 @@ bug.
 **Lý do 2 — test viết sau không có bằng chứng rằng nó biết fail.** Test viết sau
 chạy lần đầu đã xanh, mà cái xanh đó có hai nguyên nhân khả dĩ: code đúng, hoặc test
 không kiểm tra gì cả. Cái mất ở đây là khả năng phân biệt hai nguyên nhân đó. Bắt
-buộc thấy đỏ trước là cơ chế duy nhất loại được loại test vô dụng này một cách hệ
-thống.
+buộc thấy đỏ trước là cơ chế **rẻ nhất và tự động nhất** để loại loại test vô dụng
+này — không phải cơ chế duy nhất. Mutation testing cho đúng bằng chứng đó một cách hệ
+thống hơn, và không cần TDD; nhưng nó là một bước riêng phải nhớ chạy, còn RED thì
+nằm sẵn trong vòng lặp.
 
-**Lý do 3 — test viết sau chấp nhận thiết kế đang có, kể cả khi thiết kế đó không
-test được.** Nếu `id` và `createdAt` được sinh ngầm bên trong hàm thì người viết test
-sau không còn lựa chọn nào ngoài assert yếu kiểu `toBeDefined()`. Vấn đề vẫn lộ ra,
-nhưng lộ lúc đã có bốn lệnh CLI gọi hàm đó — cái mất ở đây là cửa sổ sửa lúc còn rẻ.
+**Lý do 3 — test viết sau biến câu hỏi về thiết kế thành tuỳ chọn.** Nếu `id` và
+`createdAt` được sinh ngầm bên trong hàm, thì viết test trước bắt gặp bức tường
+"assert cái này bằng cách nào" khi chưa có dòng code nào và sửa gần như miễn phí. Viết
+test sau thì câu hỏi đó không bắt buộc phải trả lời — code đã chạy rồi, và luôn có
+đường vòng.
+
+Đây là lý do yếu nhất trong ba lý do, và cần nói rõ nó yếu ở đâu:
+
+- **Đường vòng thật sự tồn tại, và nó dùng được.** Mình đã chạy thử: `jest.useFakeTimers()`
+  cộng `setSystemTime()` khoá được `createdAt` về giá trị chính xác mà **không** đổi chữ
+  ký hàm; còn `id` ngẫu nhiên assert được bằng định dạng và bằng tính duy nhất giữa hai
+  lần gọi. Cả ba test đều pass. Nên `toBeDefined()` **không** phải hậu quả bắt buộc của
+  test-last — nó là hậu quả của việc người viết test bỏ cuộc.
+- **Đây là luận điểm về quyền sửa code, không phải về thứ tự.** Người viết test sau, nếu
+  là tác giả và được phép refactor, hoàn toàn có thể tách phụ thuộc ngay lúc đó. Thứ ép
+  họ dùng assert yếu là code bị đóng băng — ràng buộc tổ chức, không phải ràng buộc của
+  test-last.
+
+Cái thật sự còn lại của lý do 3, sau khi trừ đi hai chỗ trên: test-first làm câu hỏi
+thiết kế thành **không thể né**, còn test-last làm nó thành **có thể né** — và đường vòng
+tuy dùng được thì vẫn yếu hơn. Assert theo định dạng không ghim được giá trị; fake timer
+là trạng thái toàn cục, quên `useRealTimers()` là rò sang test khác.
 
 Ngoài ba lý do trên còn một lý do nữa: test viết trước là tiêu chí dừng khách quan.
 Xanh hết nghĩa là xong. Không có nó thì "xong" chỉ là một cảm giác, và cảm giác thì
@@ -104,6 +124,40 @@ design damage" — thêm tầng gián tiếp để phục vụ test chứ không
 bài toán của mình, một CLI nhỏ do một người làm trong năm tuần và tuần 3 phải cắm
 thêm HTTP client vào cùng codebase, mình nghiêng về phía làm rõ phụ thuộc: chi phí
 đổi chữ ký hàm ở tuần 3 lớn hơn chi phí thêm tham số ở tuần 2.
+
+Nhưng phải thừa nhận chỗ lập luận này hở: nếu lấy **khả năng test được** làm thước đo
+chất lượng thiết kế, rồi kết luận test-first cải thiện thiết kế, thì đó là vòng tròn định
+nghĩa. Người dùng thật của `createTicket` không bao giờ truyền `clock` và `idGen`. Mình
+chọn tiêm vì một lý do cụ thể của bài này — tuần 3 phải hoán đổi implementation — chứ
+không vì "test được thì đẹp hơn".
+
+### "Viết test sau cũng được, miễn cuối cùng có đủ test và đều xanh"
+
+Đây là phản bác mạnh nhất, và nó **đúng một phần**: test suite cuối cùng không mang dấu
+vết thứ tự nó được viết. Hai suite giống hệt nhau thì giá trị bằng nhau. TDD không phải
+điều kiện cần của test tốt.
+
+Chỗ mệnh đề đó chưa được kiểm chứng nằm ở hai chữ **"đủ"** và **"xanh"**.
+
+**"Xanh"** không phải thuộc tính của test, nó là kết quả của một lần chạy. Một test chưa
+từng đỏ thì màu xanh không mang thông tin. Hai suite trông giống nhau, nhưng một suite đã
+có bằng chứng từng bắt được lỗi, suite kia thì chưa.
+
+**"Đủ"** đo bằng gì? Test-last hầu như luôn đo bằng coverage. Mà coverage đếm **dòng code
+đã tồn tại** được chạy — nên về mặt cấu trúc nó không thể phát hiện hành vi bị thiếu hoàn
+toàn: không có code thì không có dòng nào để miss. Ví dụ ngay trong bài này: với
+`if (title === '')`, coverage đạt 100% mà ca `'   '` vẫn lọt, vì không có nhánh nào cho nó.
+
+Cách biến tranh cãi này thành thứ đo được: **chạy mutation testing lên cả hai suite rồi so
+mutation score.** Test-last điển hình tụt điểm ở ba chỗ — weak assertions, error path, và
+biên. Cách này sai được hai chiều: nếu suite test-last đạt điểm cao thì họ đúng.
+
+Và trong bối cảnh tuần 1 — code do AI sinh — lập luận đổi hẳn cường độ. Để AI viết
+implementation rồi bảo AI viết test cho chính implementation đó, thì AI đọc code và sinh
+test khớp với code, kể cả khi code sai. Điều kiện *"cuối cùng có đủ test và đều xanh"*
+được thoả mãn hoàn hảo trong khi kết quả vẫn sai hoàn toàn. Với code AI sinh, test viết
+trước là đặc tả độc lập để chấm output; test viết sau chỉ là bản chép lại hành vi hiện có
+dưới dạng assertion.
 
 ## When TDD does not fit
 
