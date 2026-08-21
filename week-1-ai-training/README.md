@@ -11,13 +11,14 @@
 4. [04-ai-validation.md](04-ai-validation.md) — how tests control AI-generated code
 5. [05-common-mistakes.md](05-common-mistakes.md) — testing mistakes and how to avoid them
 6. [ai-workflow-log.md](ai-workflow-log.md) — process: 3 workflows + hallucinations caught
+7. [experiments/](experiments/) — bốn thí nghiệm tự chạy, dùng để kiểm chứng thay vì tin lời AI
 
 ## Acceptance criteria → where it is
 
 | Acceptance criteria | Where | Done |
 |---|---|---|
-| Research content documented: TDD principles, testing levels, CLI test examples, AI validation | `01`, `02`, `03`, `04` | ☐ |
-| Research process with AI tracked: workflows applied and iterations documented | `ai-workflow-log.md` | ☐ |
+| Research content documented: TDD principles, testing levels, CLI test examples, AI validation | `01`, `02`, `03`, `04` | ☑ |
+| Research process with AI tracked: workflows applied and iterations documented | `ai-workflow-log.md` | ☑ |
 | Research findings can be explained clearly when submitting | *(interview)* | ☐ |
 | Questions about TDD, test types, AI-generated code validation can be answered | *(interview)* | ☐ |
 
@@ -25,12 +26,12 @@
 
 | # | Deliverable | Where | Done |
 |---|---|---|---|
-| 1 | Core principles of TDD and Red-Green-Refactor | `01` | ☐ |
-| 2 | Comparison of unit / integration / e2e tests | `02` | ☐ |
-| 3 | Examples of tests for a Ticket Manager CLI | `03` | ☐ |
-| 4 | How testing helps control AI-generated implementation | `04` | ☐ |
-| 5 | Common testing mistakes and how to avoid them | `05` | ☐ |
-| 6 | Evidence of applying all 3 workflows | `ai-workflow-log.md` | ☐ |
+| 1 | Core principles of TDD and Red-Green-Refactor | `01` | ☑ |
+| 2 | Comparison of unit / integration / e2e tests | `02` | ☑ |
+| 3 | Examples of tests for a Ticket Manager CLI | `03` | ☑ |
+| 4 | How testing helps control AI-generated implementation | `04` | ☑ |
+| 5 | Common testing mistakes and how to avoid them | `05` | ☑ |
+| 6 | Evidence of applying all 3 workflows | `ai-workflow-log.md` | ☑ |
 
 ## Decisions recorded
 

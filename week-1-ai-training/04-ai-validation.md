@@ -41,7 +41,7 @@ việc quyết định khẳng định cái gì mới là chỗ mình phải gi�
 | | Test written first | Code generated first |
 |---|---|---|
 | What anchors the behaviour | Đặc tả của mình, viết ra trước khi AI nhìn thấy bài toán. AI phải đi vừa cái khuôn đó | Bất cứ thứ gì AI sinh ra. Test viết sau chỉ mô tả lại code đã có |
-| What can silently go wrong | Đặc tả của mình có thể sai hoặc thiếu — nhưng sai một cách **nhìn thấy được**, vì nó viết ra thành chữ và đọc lại được | Test thừa hưởng đúng điểm mù của code. Assertion bị làm yếu đi cho vừa cái code đang có: gặp `id` sinh ngẫu nhiên bên trong thì không assert được giá trị, chỉ còn `toBeDefined()` |
+| What can silently go wrong | Đặc tả của mình có thể sai hoặc thiếu — nhưng sai một cách **nhìn thấy được**, vì nó viết ra thành chữ và đọc lại được | Test thừa hưởng đúng điểm mù của code. Assertion bị làm yếu đi cho vừa cái code đang có: gặp `id` sinh ngẫu nhiên bên trong thì assert giá trị chính xác không còn dễ, nên dễ hạ xuống `toBeDefined()` cho xong |
 | How a mistake surfaces | Đỏ ngay, tại đúng hành vi sai, trước khi có dòng implementation nào | Không nổi lên. Xanh ngay từ lần chạy đầu, và không phân biệt được "code đúng" với "test không kiểm tra gì" |
 
 Điểm mấu chốt: viết test trước không làm AI viết code giỏi hơn. Nó làm cho **việc AI viết
@@ -136,7 +136,7 @@ chữa. Và nhớ rằng đính chính chỉ có hiệu lực trong đúng cuộ
 | Test xanh không chứng minh code đúng | Tự sửa `return { title }` thành `return { title: title.trim() }`: hành vi đã đổi mà 3/3 test vẫn xanh |
 | Assertion yếu là hệ quả có cấu trúc của việc viết test sau, không phải sơ suất ngẫu nhiên | Quan sát trên demo do AI chạy: với `id`/`createdAt` sinh ngầm bên trong hàm, `toBeDefined()` không bắt được cả `createdAt` sai định dạng lẫn `id` rỗng — và không có assertion nào mạnh hơn viết được nếu không đổi chữ ký hàm |
 | Hỏi phiên AI mới cho phản biện thật hơn hỏi lại phiên cũ | Áp dụng trên `02-testing-levels.md`: phiên mới chỉ ra 7 lỗi, trong đó có lỗi dẫn số đo của e2e để chứng minh một claim về integration — lỗi mà hai vòng hỏi ở phiên cũ không nêu |
-| Lập luận nghe hợp lý vẫn có thể sai về số | Viết `tdd-thu-nghiem/do-toc-do/bench.test.js` đo unit và integration trong cùng một lần chạy, rồi sửa lại kết luận trong `02` theo số đo |
+| Lập luận nghe hợp lý vẫn có thể sai về số | Viết `experiments/speed/bench.test.js` đo unit và integration trong cùng một lần chạy, rồi sửa lại kết luận trong `02` theo số đo |
 
 ## Still unsure about
 

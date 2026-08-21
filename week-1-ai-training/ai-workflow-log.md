@@ -58,7 +58,7 @@ Chưa từng áp dụng TDD vào project nào
   mới lộ. Xem danh sách đầy đủ ở Lượt 2 bên dưới.
 - **Risks / edge case bị bỏ:** cũng vậy, xem Lượt 2.
 - **Mình verify bằng cách nào:** không đọc chay. Dựng lại ví dụ AI đưa và **tự chạy** bằng
-  `node --test` trong `tdd-thu-nghiem/`: đi đủ 3 vòng RED → GREEN, thấy tận mắt hai kiểu
+  `node --test` trong `experiments/tdd-loop/`: đi đủ 3 vòng RED → GREEN, thấy tận mắt hai kiểu
   đỏ khác nhau (module chưa tồn tại, và hàm không ném lỗi). Rồi cố tình phá code — đổi
   `return { title }` thành `return { title: title.trim() }` — và thấy 3/3 test vẫn xanh dù
   hành vi đã đổi.
@@ -84,7 +84,7 @@ Chưa từng áp dụng TDD vào project nào
   khớp substring nên buộc test vào nội dung message; CRLF/LF trên Windows; `jest --watch`.
 - **Mình verify bằng cách nào:** không nhận cả gói. Kiểm từng claim: claim `toThrow('chuỗi')`
   khớp substring — đọc docs Jest chính thức mục `.toThrow(error?)`, **đúng**. Claim
-  `toThrow()` với hàm async "im lặng pass" — cài Jest 30 thật trong `jest-check/` và chạy
+  `toThrow()` với hàm async "im lặng pass" — cài Jest 30 thật trong `experiments/async-check/` và chạy
   4 biến thể, **sai** (xem Part 3 dòng 4). Claim về nghiên cứu Fucci et al. — AI tự nhận
   dẫn từ trí nhớ, mình không tra được nguồn nên **không dùng**.
 - **Mình sửa lại gì, vì sao:** ba thay đổi kéo theo, đều xuất phát từ danh sách rủi ro này.
@@ -129,7 +129,7 @@ Chưa từng áp dụng TDD vào project nào
   ngoài `toBeDefined()`" là sai. Hai lỗi nhỏ hơn: lý do 2 dùng chữ "cơ chế **duy nhất**"
   trong khi mutation testing cho cùng bằng chứng; lý do 1 chỉ đúng với test-after-everything,
   không đúng với iterative test-last.
-- **Mình verify bằng cách nào:** không tin lời phản bác. Viết `jest-check/faketimer.test.js`
+- **Mình verify bằng cách nào:** không tin lời phản bác. Viết `experiments/async-check/faketimer.test.js`
   với một hàm **không tiêm gì cả**, dùng `randomUUID()` và `new Date()` trực tiếp, rồi thử
   ba assertion: `createdAt` khoá bằng `jest.useFakeTimers()` + `setSystemTime()` và assert
   giá trị chính xác; `id` assert bằng regex định dạng UUID; `id` của hai lần gọi phải khác
@@ -178,7 +178,7 @@ Chưa từng áp dụng TDD vào project nào
   luận chi phí; (c) bảng verify dẫn số đo của **khởi động tiến trình** để chứng minh một
   claim về **integration** — tức là chưa từng đo integration lần nào.
 - **Mình verify bằng cách nào:** không tin lời review, mà tự viết
-  `tdd-thu-nghiem/do-toc-do/bench.test.js` — 5 unit test thuần bộ nhớ và 5 integration
+  `experiments/speed/bench.test.js` — 5 unit test thuần bộ nhớ và 5 integration
   test ghi/đọc file thật trong thư mục tạm, chạy cùng một lần. Kết quả: unit 0.05–0.11ms,
   integration 1.1–2.5ms, cả lần chạy có tiến trình ~88ms. Số đo đứng về phía người review.
 - **Mình sửa lại gì, vì sao:** đổi tỷ lệ đề xuất từ 70/25/5 sang **50/45/5**, vì lý do
@@ -226,7 +226,7 @@ implementation thật thì đó là dấu hiệu mình đã trừu tượng hoá
 
 **1. AI's output**
 
-`tdd-thu-nghiem/refinement/ticket.test.ts` — một file test cho Ticket Manager CLI, 6 test.
+`experiments/refinement/ticket.test.ts` — một file test cho Ticket Manager CLI, 6 test.
 Nhận file với thông tin duy nhất là "có ít nhất 4 lỗi", không biết lỗi gì và ở đâu.
 
 **2. Issues I found myself** (before asking anything)
@@ -255,7 +255,7 @@ Mười vấn đề, gom thành bốn nhóm khớp với bốn lỗi trong `05`:
 
 **4. My revised version**
 
-`tdd-thu-nghiem/refinement/ticket.revised.test.ts`. Sửa ba chỗ, chọn ba cái phủ đủ ba loại
+`experiments/refinement/ticket.revised.test.ts`. Sửa ba chỗ, chọn ba cái phủ đủ ba loại
 lỗi khác nhau:
 
 - Bỏ `STORE_PATH` cố định, thay bằng `mkdtemp` riêng cho mỗi test kèm `afterEach` dọn dẹp
@@ -296,9 +296,9 @@ Labels from `slides-ai-training.md`: `wrong facts/code` · `unnecessary icons/em
 |---|---|---|---|---|
 | 1 | `wrong facts/code` | Dạy `expect(() => createTicket('')).toThrow('title không được rỗng')` như cách viết đúng | Đọc docs Jest mục `.toThrow(error?)`: nó khớp theo **substring**, nên test vẫn pass với một Error khác miễn message chứa chuỗi đó; và đổi câu chữ message là vỡ test dù hành vi không đổi | Chỉ ra rằng chính nó ở lượt sau đã gọi đây là weak assertion + testing implementation details — hai trong bốn lỗi liệt kê ở `05`. Yêu cầu assert theo loại lỗi thay vì nội dung message |
 | 2 | `outdated information` | Khẳng định mục `## Refactor` trong `01-tdd-principles.md` vẫn còn trống | Mở file ra: mục đó đã viết xong và đã lưu trước khi hỏi | Nói rõ là nó đang dựa trên bản đọc cũ, và từ chối để nó viết lại mục đã có |
-| 3 | `wrong facts/code` | Trong bản đầu của `02`, khẳng định "unit nhanh hơn integration một bậc độ lớn" và dẫn số đo làm bằng chứng | Phiên review mới chỉ ra số đo đó là thời gian **khởi động tiến trình** (e2e), không phải integration. Mình tự viết `do-toc-do/bench.test.js` đo lại: integration in-process chỉ 1.1–2.5ms, không phải hàng chục ms | Sửa thẳng con số trong bảng verify, và đổi luôn tỷ lệ đề xuất từ 70/25/5 sang 50/45/5 vì lập luận cũ dựa trên số sai. Ghi rõ trong `02` là tỷ lệ đã đổi và đổi vì lý do gì |
-| 4 | `wrong facts/code` | Với hàm async, `expect(() => f()).toThrow(...)` sẽ "im lặng pass mà chẳng kiểm tra gì" — AI nói ở Lượt 2, mình tin và chép lại vào `03` và `04` | Cài Jest 30 thật trong `jest-check/`, viết 4 biến thể và chạy. Nó **không** pass: promise bị reject không ai bắt nên worker chết kèm stack trace không chỉ vào test nào. Cả biến thể `.rejects` thiếu `await` cũng vậy. Chỉ `await expect(f()).rejects.toThrow(...)` mới chạy đúng — pass khi đúng, đỏ có diff khi sai | Sửa cả `03` lẫn `04`, thay câu "im lặng pass" bằng bảng kết quả đo thật kèm phiên bản (Jest 30 / Node 24). Ghi rõ là rủi ro AI nêu **có thật**, nhưng mô tả triệu chứng thì sai — nên vẫn phải chạy mới biết |
-| 5 | `wrong facts/code` | Trong `01`, mình viết: nếu `id`/`createdAt` sinh ngầm trong hàm thì người viết test sau "không còn lựa chọn nào ngoài assert yếu kiểu `toBeDefined()`" | Lượt 4 phản bác bằng một phương án cụ thể. Mình viết `jest-check/faketimer.test.js` với hàm **không tiêm gì**, dùng `randomUUID()` và `new Date()` trực tiếp: `jest.useFakeTimers()` + `setSystemTime()` khoá được `createdAt` về giá trị chính xác; `id` assert được bằng regex định dạng và bằng tính duy nhất giữa hai lần gọi. **3/3 pass** | Viết lại toàn bộ lý do 3, bỏ câu sai, và ghi rõ phần còn lại đứng được là gì. Thêm ghi chú rằng đường vòng tuy dùng được nhưng yếu hơn: assert định dạng không ghim giá trị, fake timer là trạng thái toàn cục dễ rò |
+| 3 | `wrong facts/code` | Trong bản đầu của `02`, khẳng định "unit nhanh hơn integration một bậc độ lớn" và dẫn số đo làm bằng chứng | Phiên review mới chỉ ra số đo đó là thời gian **khởi động tiến trình** (e2e), không phải integration. Mình tự viết `experiments/speed/bench.test.js` đo lại: integration in-process chỉ 1.1–2.5ms, không phải hàng chục ms | Sửa thẳng con số trong bảng verify, và đổi luôn tỷ lệ đề xuất từ 70/25/5 sang 50/45/5 vì lập luận cũ dựa trên số sai. Ghi rõ trong `02` là tỷ lệ đã đổi và đổi vì lý do gì |
+| 4 | `wrong facts/code` | Với hàm async, `expect(() => f()).toThrow(...)` sẽ "im lặng pass mà chẳng kiểm tra gì" — AI nói ở Lượt 2, mình tin và chép lại vào `03` và `04` | Cài Jest 30 thật trong `experiments/async-check/`, viết 4 biến thể và chạy. Nó **không** pass: promise bị reject không ai bắt nên worker chết kèm stack trace không chỉ vào test nào. Cả biến thể `.rejects` thiếu `await` cũng vậy. Chỉ `await expect(f()).rejects.toThrow(...)` mới chạy đúng — pass khi đúng, đỏ có diff khi sai | Sửa cả `03` lẫn `04`, thay câu "im lặng pass" bằng bảng kết quả đo thật kèm phiên bản (Jest 30 / Node 24). Ghi rõ là rủi ro AI nêu **có thật**, nhưng mô tả triệu chứng thì sai — nên vẫn phải chạy mới biết |
+| 5 | `wrong facts/code` | Trong `01`, mình viết: nếu `id`/`createdAt` sinh ngầm trong hàm thì người viết test sau "không còn lựa chọn nào ngoài assert yếu kiểu `toBeDefined()`" | Lượt 4 phản bác bằng một phương án cụ thể. Mình viết `experiments/async-check/faketimer.test.js` với hàm **không tiêm gì**, dùng `randomUUID()` và `new Date()` trực tiếp: `jest.useFakeTimers()` + `setSystemTime()` khoá được `createdAt` về giá trị chính xác; `id` assert được bằng regex định dạng và bằng tính duy nhất giữa hai lần gọi. **3/3 pass** | Viết lại toàn bộ lý do 3, bỏ câu sai, và ghi rõ phần còn lại đứng được là gì. Thêm ghi chú rằng đường vòng tuy dùng được nhưng yếu hơn: assert định dạng không ghim giá trị, fake timer là trạng thái toàn cục dễ rò |
 | 6 | | | | |
 
 > Corrections only hold inside the current conversation — a new session starts clean.

@@ -4,7 +4,7 @@
 >
 > The four mistakes below are the ones named in `docs/plans/week-1/overview.md`.
 > Ví dụ trong file này lấy từ buổi refinement thật của mình, ghi ở `ai-workflow-log.md`
-> mục 21/08. Phần provenance — cái gì mình tự tìm ra, cái gì phải được chỉ — ghi trung
+> mục 20/08. Phần provenance — cái gì mình tự tìm ra, cái gì phải được chỉ — ghi trung
 > thực ở cuối file.
 
 ## Questions this file answers
@@ -82,9 +82,15 @@ Test kiểu này trông y hệt test có ích trong báo cáo coverage, nhưng k
 code đúng với code sai. Nó là dạng tệ nhất: chiếm chỗ của một test thật mà không làm việc
 của test thật.
 
-Đây cũng **không phải sơ suất ngẫu nhiên**. Nó là hệ quả có cấu trúc của việc viết test
-sau: khi `id` và `createdAt` được sinh ngầm bên trong hàm, người viết test không còn lựa
-chọn nào mạnh hơn `toBeDefined()` — trừ khi đi sửa thiết kế.
+Đây thường **không phải sơ suất ngẫu nhiên** mà là chỗ người viết test bỏ cuộc: gặp `id`
+và `createdAt` sinh ngầm bên trong hàm, không assert được giá trị chính xác, nên hạ xuống
+`toBeDefined()` cho xong.
+
+Nhưng nói rằng test-last **bị ép** dùng assert yếu là sai — mình đã kiểm bằng cách chạy
+thật (`experiments/async-check/faketimer.test.js`, 3/3 pass, không tiêm gì cả):
+`jest.useFakeTimers()` + `setSystemTime()` khoá được `createdAt` về giá trị chính xác, và
+`id` ngẫu nhiên assert được bằng định dạng cộng tính duy nhất giữa hai lần gọi. Đường vòng
+có tồn tại; nó chỉ yếu hơn và phải chủ động nghĩ ra.
 
 **How to avoid it**
 
@@ -155,8 +161,8 @@ mô tả triệu chứng thì sai, và chỉ chạy mới biết. Chi tiết ở
 
 ## Before / after from my own refinement session
 
-File gốc: `tdd-thu-nghiem/refinement/ticket.test.ts` — 6 test, 10 vấn đề.
-Bản sửa: `tdd-thu-nghiem/refinement/ticket.revised.test.ts`.
+File gốc: `experiments/refinement/ticket.test.ts` — 6 test, 10 vấn đề.
+Bản sửa: `experiments/refinement/ticket.revised.test.ts`.
 
 **Trước** — hai lỗi nặng nhất:
 
@@ -227,7 +233,7 @@ logic khi đọc từng dòng — chỉ sai khi chạy thật trong đúng đi�
 | Claim | How I checked it |
 |---|---|
 | `toThrow('chuỗi')` khớp theo substring nên là assertion yếu | Đọc docs Jest chính thức, mục `.toThrow(error?)` |
-| `expect(() => f()).toThrow()` không dùng được cho hàm async | Cài Jest 30 thật trong `jest-check/`, viết 4 biến thể và chạy: hai biến thể sai làm chết worker, chỉ `await expect(f()).rejects.toThrow(...)` chạy đúng |
+| `expect(() => f()).toThrow()` không dùng được cho hàm async | Cài Jest 30 thật trong `experiments/async-check/`, viết 4 biến thể và chạy: hai biến thể sai làm chết worker, chỉ `await expect(f()).rejects.toThrow(...)` chạy đúng |
 | Test xanh không chứng minh code đúng | Tự đổi `return { title }` thành `return { title: title.trim() }` — hành vi đã khác mà 3/3 test vẫn xanh |
 | Đường dẫn file dùng chung gây flaky | Jest mặc định chạy nhiều worker song song; hai file test cùng ghi một đường dẫn sẽ tranh nhau |
 
