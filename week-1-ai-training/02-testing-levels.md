@@ -157,7 +157,7 @@ Mười ba test case lấy từ phạm vi thật của Ticket Manager CLI.
 |---|---|
 | Định nghĩa unit/integration mình dùng khớp với cách người chấm dùng | Đối chiếu trực tiếp acceptance criteria trong `docs/plans/week-2/overview.md`, không lấy định nghĩa từ AI |
 | Bảng phân loại không mâu thuẫn với phần còn lại của bài nộp | Đối chiếu 13 test case này với phạm vi và ba error case bắt buộc liệt kê trong `03-cli-test-plan.md` |
-| Unit nhanh hơn integration, nhưng integration vẫn rẻ về tuyệt đối | Tự viết `do-toc-do/bench.test.js`: 5 unit test thuần bộ nhớ và 5 integration test ghi/đọc file thật trong thư mục tạm, chạy cùng một lần. Unit **0.05–0.11 ms**, integration **1.1–2.5 ms**. Test đầu tiên mỗi nhóm chậm hơn do JIT warm-up nên không tính |
+| Unit nhanh hơn integration, nhưng integration vẫn rẻ về tuyệt đối | Tự viết `experiments/speed/bench.test.js`: 5 unit test thuần bộ nhớ và 5 integration test ghi/đọc file thật trong thư mục tạm, chạy cùng một lần. Unit **0.05–0.11 ms**, integration **1.1–2.5 ms**. Test đầu tiên mỗi nhóm chậm hơn do JIT warm-up nên không tính |
 | Lập luận "integration chậm nên giết vòng lặp TDD" là sai | Chính phép đo trên bác bỏ nó: ở 2ms mỗi test thì 500 integration test vẫn dưới 1 giây. Chi phí thật nằm ở e2e (~88ms cho một lần khởi động tiến trình), nên mình đổi tỷ lệ từ 70/25/5 sang 50/45/5 |
 
 ## Still unsure about
