@@ -84,13 +84,3 @@ and verify*. Bịa trong buổi phỏng vấn là hỏng đúng thứ đang đư
 - "Anh thấy phần nào trong bài của em còn yếu nhất để em cải thiện ở tuần 2 ạ?"
 - "Sang tuần 2 anh muốn em ưu tiên kỷ luật TDD hay tốc độ ra sản phẩm hơn ạ?"
 
----
-
-## Bài test giọng văn
-
-Đọc từng đoạn trong `01`–`05`, tự hỏi: **"mình nói lại được câu này bằng lời của mình không?"**
-
-Không được → viết lại cho giống cách mình nói, hoặc xóa.
-
-Người hỏi đã đọc văn bản của mình trước khi vào phỏng vấn. Khoảng cách giữa giọng viết và
-giọng nói là thứ lộ ra rõ nhất trong 30 phút.
