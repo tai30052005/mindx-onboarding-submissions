@@ -51,8 +51,9 @@ mất nghĩa.
 | Breaks when refactoring? | Dễ vỡ nhất nếu test bám vào chi tiết nội bộ thay vì hành vi | Vỡ khi đổi định dạng lưu trữ trên đĩa | Ít vỡ nhất khi refactor bên trong; chỉ vỡ khi đổi giao diện CLI |
 | Use it when | Luật nghiệp vụ, validate, lọc, sắp xếp — chỗ nhiều nhánh cần phủ rẻ | Cần bằng chứng round-trip ghi/đọc đúng, và hành vi khi file thật hỏng hoặc thiếu | Cần bằng chứng người dùng gõ lệnh thì ra đúng kết quả |
 
-Một cách nhớ gọn: **unit nói logic của mình đúng, integration nói code ghép được với thế
-giới bên ngoài, end-to-end nói người dùng thật sự dùng được.**
+Cách mình tự nhắc khi phân vân: unit trả lời "logic của mình có đúng không", integration
+trả lời "ghi xuống rồi đọc lại có ra đúng thứ đó không", e2e trả lời "gõ lệnh vào thì có
+ra kết quả không".
 
 ## Choosing a balance
 
