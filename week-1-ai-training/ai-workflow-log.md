@@ -182,11 +182,11 @@ Chưa từng áp dụng TDD vào project nào
   test ghi/đọc file thật trong thư mục tạm, chạy cùng một lần. Kết quả: unit 0.05–0.11ms,
   integration 1.1–2.5ms, cả lần chạy có tiến trình ~88ms. Số đo đứng về phía người review.
 - **Mình sửa lại gì, vì sao:** đổi tỷ lệ đề xuất từ 70/25/5 sang **50/45/5**, vì lý do
-  chính để loại Trophy — integration chậm nên giết vòng lặp TDD — bị chính số đo của mình
+  chính để loại Trophy, rằng integration chậm nên giết vòng lặp TDD, bị chính số đo của mình
   bác bỏ. Chốt một trục định nghĩa duy nhất (biên ngoài tiến trình) và nói rõ acceptance
   criteria là hệ quả chứ không phải trục thứ hai. Thu hẹp "integration": gọi hàm command
   của chính mình không tính là integration. Viết lại đoạn Trophy thành phản biện đúng
-  luận điểm — hai bên dùng chữ "integration" khác nghĩa — thay vì viện dẫn tiêu chí chấm,
+  luận điểm, rằng hai bên đang dùng chữ "integration" khác nghĩa, thay vì viện dẫn tiêu chí chấm,
   vì viện dẫn rubric là đổi chủ đề chứ không phải bảo vệ lựa chọn. Bổ sung `tickets
   update`, ca sinh `id`, ca format output, tách "nội dung JSON hỏng" khỏi "file trên đĩa
   hỏng", và ghi rõ 13 ca này không phải mẫu theo tỷ lệ.
@@ -259,7 +259,7 @@ Mười vấn đề, gom thành bốn nhóm khớp với bốn lỗi trong `05`:
 lỗi khác nhau:
 
 - Bỏ `STORE_PATH` cố định, thay bằng `mkdtemp` riêng cho mỗi test kèm `afterEach` dọn dẹp
-- Tách test đầu — một assertion yếu — thành hai test có tên nói rõ hành vi, và assert giá
+- Tách test đầu, vốn là một assertion yếu, thành hai test có tên nói rõ hành vi, và assert giá
   trị chính xác `expect(t.id).toBe('T-1')` thay vì `toBeTruthy()`
 - Đổi `toThrow('rỗng')` thành `toThrow(ValidationError)`, assert theo loại lỗi thay vì nội
   dung message
@@ -282,7 +282,7 @@ không bị lãng phí vào những chỗ đã biết.
 
 Ghi vào `05-common-mistakes.md` mục `Still unsure about`. Chỗ đáng chú ý nhất là ranh giới
 giữa over-testing và test phòng hồi quy: `expect(t.title).toBe(...)` hôm nay là thừa, nhưng
-khi `title` bắt đầu bị chuẩn hoá — cắt khoảng trắng, giới hạn độ dài — thì nó thành test
+khi `title` bắt đầu bị chuẩn hoá, kiểu cắt khoảng trắng hay giới hạn độ dài, thì nó thành test
 thật. Chưa có tiêu chí quyết ở thời điểm viết.
 
 ---

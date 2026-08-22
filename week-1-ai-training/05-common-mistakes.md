@@ -4,7 +4,7 @@
 >
 > The four mistakes below are the ones named in `docs/plans/week-1/overview.md`.
 > Ví dụ trong file này lấy từ buổi refinement thật của mình, ghi ở `ai-workflow-log.md`
-> mục 20/08. Phần provenance — cái gì mình tự tìm ra, cái gì phải được chỉ — ghi trung
+> mục 20/08. Phần provenance, tức cái gì mình tự tìm ra và cái gì phải được chỉ, ghi trung
 > thực ở cuối file.
 
 ## Questions this file answers
@@ -79,8 +79,8 @@ expect(() => createTicket({ title: '' }, deps)).toThrow(ValidationError);   // s
 **Why it hurts**
 
 Test kiểu này trông y hệt test có ích trong báo cáo coverage, nhưng không phân biệt được
-code đúng với code sai. Nó là dạng tệ nhất: chiếm chỗ của một test thật mà không làm việc
-của test thật.
+code đúng với code sai. Và vì hành vi đó đã "có test" rồi, khả năng có ai quay lại viết
+một test thật cho nó là rất thấp.
 
 Đây thường **không phải sơ suất ngẫu nhiên** mà là chỗ người viết test bỏ cuộc: gặp `id`
 và `createdAt` sinh ngầm bên trong hàm, không assert được giá trị chính xác, nên hạ xuống
@@ -109,7 +109,7 @@ it('serialize ra đúng định dạng', () => {
 ```
 
 So nguyên chuỗi thì test bị buộc vào **thứ tự khoá** trong object. Đổi thứ tự field trong
-câu `return` là một refactor thuần — hành vi quan sát được không đổi — mà test vẫn vỡ.
+câu `return` là một refactor thuần, hành vi quan sát được không đổi, mà test vẫn vỡ.
 
 Cùng loại: `toThrow('title không được rỗng')` buộc test vào câu chữ thông báo lỗi.
 
@@ -143,16 +143,18 @@ và ghi file xong không dọn.
 
 **Why it hurts**
 
-Code AI sinh ra **đọc rất trôi** — tên hợp lý, cấu trúc gọn, không có mùi code ẩu. Với code
-người viết, sự lủng củng là tín hiệu cảnh báo; với code AI, tín hiệu đó biến mất vì mọi
-thứ đều trôi chảy như nhau, kể cả phần sai. Nên phản xạ "đọc thấy ổn là ổn" mất giá trị
-đúng lúc cần nó nhất.
+Cả ba lỗi đều không nhìn thấy được khi đọc. Không lỗi nào sai cú pháp, không lỗi nào sai
+logic nếu soi từng dòng. `it` thiếu `async` chỉ lộ khi hàm thật sự được gọi; đường dẫn
+dùng chung chỉ lộ khi có worker thứ hai chạy cùng lúc. Đọc kỹ hơn không giúp được gì, vì
+vấn đề không nằm ở chỗ đọc chưa kỹ.
+
+Lý do code AI né được phản xạ đọc-thấy-ổn thì mình viết ở `04-ai-validation.md`, mục
+"Tests as an executable specification". Không chép lại ở đây.
 
 **How to avoid it**
 
-Ba việc, xếp theo độ tin cậy giảm dần: **chạy thử và cố tình phá**; **đo thật thay vì tin
-lập luận**; **hỏi một phiên AI mới, không phải phiên đã đưa ra phương án** — phiên cũ đã
-"ký tên" vào đề xuất nên nó phản biện lấy lệ.
+Quy trình đầy đủ cũng nằm ở `04`, mục "My review procedure". Riêng với nhóm lỗi này thì
+chỉ đúng một việc có tác dụng: **chạy nó**. Cả ba lỗi trên đều lộ ngay lần chạy đầu tiên.
 
 Ví dụ thật trong tuần này: AI nói với hàm async thì `expect(() => f()).toThrow()` sẽ "im
 lặng pass". Mình cài Jest thật và chạy: nó **không** pass, nhưng cũng **không** đỏ bình
@@ -234,7 +236,7 @@ logic khi đọc từng dòng — chỉ sai khi chạy thật trong đúng đi�
 |---|---|
 | `toThrow('chuỗi')` khớp theo substring nên là assertion yếu | Đọc docs Jest chính thức, mục `.toThrow(error?)` |
 | `expect(() => f()).toThrow()` không dùng được cho hàm async | Cài Jest 30 thật trong `experiments/async-check/`, viết 4 biến thể và chạy: hai biến thể sai làm chết worker, chỉ `await expect(f()).rejects.toThrow(...)` chạy đúng |
-| Test xanh không chứng minh code đúng | Tự đổi `return { title }` thành `return { title: title.trim() }` — hành vi đã khác mà 3/3 test vẫn xanh |
+| `toBeTruthy()` pass với cả giá trị sai định dạng | Chạy `node -e "console.log(['x','-',1].map(Boolean))"` — cả ba đều `true`, nên một `id` rỗng ký tự hay sai tiền tố vẫn lọt |
 | Đường dẫn file dùng chung gây flaky | Jest mặc định chạy nhiều worker song song; hai file test cùng ghi một đường dẫn sẽ tranh nhau |
 
 ## Still unsure about
@@ -244,5 +246,6 @@ logic khi đọc từng dòng — chỉ sai khi chạy thật trong đúng đi�
   dài — thì nó thành test thật. Chưa biết dựa vào đâu để quyết ở thời điểm viết
 - Chưa sửa hết file bài tập: còn 4 test đánh dấu `TODO`. Để nguyên có chủ đích, làm mốc
   đối chiếu khi quay lại ở tuần 2
-- Chưa thử mutation testing bằng công cụ (Stryker). Phép "cố tình phá" mình đang làm thủ
-  công hai ba lần, chưa biết có đáng tự động hoá cho phạm vi này không
+- Trong 9 lỗi mình không tự thấy, chưa rõ một công cụ mutation testing sẽ bắt hộ được bao
+  nhiêu. Đoán là bắt được nhóm weak assertion và bỏ qua nhóm `async` thiếu / thư mục dùng
+  chung, vì hai nhóm sau không phải lỗi về assertion. Chưa kiểm nên vẫn là đoán

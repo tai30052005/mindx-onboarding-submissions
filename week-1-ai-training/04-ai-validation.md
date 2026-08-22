@@ -16,9 +16,8 @@
 Đọc code rồi tin vào mắt mình và có một phép kiểm chạy được là hai loại bằng chứng khác
 nhau về bản chất, không phải khác nhau về mức độ cẩn thận.
 
-Đọc code cho ra một phán đoán không thể bị bác bỏ bằng máy: mình thấy nó đúng. Một test
-cho ra một khẳng định **có thể sai**, và máy sẽ nói cho biết. Đó là khác biệt giữa ý kiến
-và bằng chứng.
+Đọc code cho ra một phán đoán mà không máy nào bác lại được: mình thấy nó đúng. Test cho
+ra một khẳng định có thể sai, và máy sẽ nói cho biết là nó sai.
 
 Khác biệt này lớn hơn hẳn khi code do AI viết, vì một lý do cụ thể: **code AI sinh ra đọc
 rất trôi.** Tên biến hợp lý, cấu trúc gọn, comment đầy đủ, không có mùi code ẩu. Nhưng độ
@@ -44,11 +43,11 @@ việc quyết định khẳng định cái gì mới là chỗ mình phải gi�
 | What can silently go wrong | Đặc tả của mình có thể sai hoặc thiếu — nhưng sai một cách **nhìn thấy được**, vì nó viết ra thành chữ và đọc lại được | Test thừa hưởng đúng điểm mù của code. Assertion bị làm yếu đi cho vừa cái code đang có: gặp `id` sinh ngẫu nhiên bên trong thì assert giá trị chính xác không còn dễ, nên dễ hạ xuống `toBeDefined()` cho xong |
 | How a mistake surfaces | Đỏ ngay, tại đúng hành vi sai, trước khi có dòng implementation nào | Không nổi lên. Xanh ngay từ lần chạy đầu, và không phân biệt được "code đúng" với "test không kiểm tra gì" |
 
-Điểm mấu chốt: viết test trước không làm AI viết code giỏi hơn. Nó làm cho **việc AI viết
-sai trở nên nhìn thấy được**, và giữ quyền định nghĩa "đúng là gì" ở phía mình.
+Viết test trước không làm AI viết code giỏi hơn. Nó chỉ làm cho việc AI viết sai trở nên
+nhìn thấy được, và giữ quyền định nghĩa "đúng là gì" ở phía mình.
 
 Đây cũng là chỗ ranh giới "you are the architect" nằm. AI viết implementation thì được.
-Nhưng đặc tả — cái gì được coi là đúng — phải do mình cầm bút.
+Nhưng đặc tả, tức cái gì được coi là đúng, phải do mình cầm bút.
 
 ## Why not let the AI write both the tests and the code
 
@@ -70,8 +69,6 @@ Không phải vì thế mà AI không bao giờ được viết test. Phân vai 
 - **Test edge case bổ sung, sau khi hành vi đã được neo**: AI viết được, và viết tốt — nó
   nghĩ ra được những ca mình không nghĩ tới. Nhưng đó là mở rộng một đặc tả đã có, không
   phải tạo ra đặc tả.
-
-Nói cách khác: AI được thêm test, không được là nguồn duy nhất quyết định thế nào là đúng.
 
 ## My review procedure before accepting AI output
 
