@@ -213,7 +213,8 @@ Chưa từng áp dụng TDD vào project nào
   bác bỏ. Chốt một trục định nghĩa duy nhất (biên ngoài tiến trình) và nói rõ acceptance
   criteria là hệ quả chứ không phải trục thứ hai. Thu hẹp "integration": gọi hàm command
   của chính mình không tính là integration. Viết lại đoạn Trophy thành phản biện đúng
-  luận điểm, rằng hai bên đang dùng chữ "integration" khác nghĩa, thay vì viện dẫn tiêu chí chấm,
+  luận điểm, rằng hai bên đang dùng chữ "integration" khác nghĩa, thay vì viện dẫn
+  tiêu chí chấm,
   vì viện dẫn rubric là đổi chủ đề chứ không phải bảo vệ lựa chọn. Bổ sung `tickets
   update`, ca sinh `id`, ca format output, tách "nội dung JSON hỏng" khỏi "file trên đĩa
   hỏng", và ghi rõ 13 ca này không phải mẫu theo tỷ lệ.
