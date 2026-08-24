@@ -19,7 +19,3 @@ npm-debug.log*
 Thumbs.db
 .idea/
 *.swp
-
-# Ghi chú làm việc và bài phụ — giữ trên máy, không thuộc bài nộp
-notes/
-extras/
