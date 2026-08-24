@@ -46,7 +46,7 @@ việc quyết định khẳng định cái gì mới là chỗ mình phải gi�
 Viết test trước không làm AI viết code giỏi hơn. Nó chỉ làm cho việc AI viết sai trở nên
 nhìn thấy được, và giữ quyền định nghĩa "đúng là gì" ở phía mình.
 
-Đây cũng là chỗ ranh giới "you are the architect" nằm. AI viết implementation thì được.
+Ranh giới "you are the architect" nằm đúng ở chỗ này. AI viết implementation thì được.
 Nhưng đặc tả, tức cái gì được coi là đúng, phải do mình cầm bút.
 
 ## Why not let the AI write both the tests and the code
@@ -108,7 +108,7 @@ test đã kết thúc. Chỉ `await expect(f()).rejects.toThrow(...)` là chạy
 **mô tả của nó về triệu chứng thì sai**, và chỉ chạy thử mới biết.
 
 **5. Verification — kiểm chứng bằng cách nào?**
-Đây là câu duy nhất tạo ra bằng chứng. Ba cách mình dùng, xếp theo độ tin cậy giảm dần:
+Chỉ câu này tạo ra bằng chứng. Ba cách mình dùng, xếp theo độ tin cậy giảm dần:
 
 - **Tự chạy và cố tình phá.** Sửa code cho sai lệch rồi xem test có đỏ không. Phá mà vẫn
   xanh thì test đó vô dụng. Cách này không đòi kinh nghiệm, chỉ đòi chịu thử.

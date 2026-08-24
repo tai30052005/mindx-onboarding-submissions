@@ -30,7 +30,7 @@ createTicket(input: CreateTicketInput, deps: Deps): Ticket
 Nếu hàm tự gọi `randomUUID()` và `new Date()` thì từ bên ngoài không có cách nào assert
 giá trị chính xác, chỉ còn `expect(t.id).toBeDefined()` — đúng loại weak assertion liệt kê
 ở `05-common-mistakes.md`. Tiêm vào thì test khẳng định được `expect(t.id).toBe('T-1')`.
-Đây cũng là ví dụ cụ thể cho luận điểm "TDD là hoạt động thiết kế" ở `01`.
+Luận điểm "TDD là hoạt động thiết kế" ở `01` gặp lại ở đây dưới dạng cụ thể.
 
 **2. Hàm xử lý lệnh *trả về* exit code, không tự gọi `process.exit()`.**
 

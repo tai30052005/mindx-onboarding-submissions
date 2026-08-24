@@ -112,8 +112,8 @@ Ngoài ba lý do trên còn một lý do nữa: test viết trước là tiêu c
 Xanh hết nghĩa là xong. Không có nó thì "xong" chỉ là một cảm giác, và cảm giác thì
 trượt về cả hai phía: hoặc làm thừa, hoặc dừng sớm.
 
-Đây cũng là lý do TDD được gọi là hoạt động thiết kế chứ không chỉ là hoạt động
-testing. Test là khách hàng đầu tiên của code, nên viết test trước buộc mình chốt
+TDD được gọi là hoạt động thiết kế chứ không chỉ là hoạt động testing cũng vì
+chỗ này. Test là khách hàng đầu tiên của code, nên viết test trước buộc mình chốt
 public API, chốt nguồn của những giá trị không xác định như thời gian và id, và chốt
 hình dạng của lỗi, tất cả trước khi có dòng implementation nào. Nói cho đúng thì TDD
 không đảm bảo thiết kế tốt. Nó chỉ làm thiết kế xấu lộ ra sớm, lúc sửa còn rẻ.
@@ -139,8 +139,8 @@ vết thứ tự nó được viết. Hai suite giống hệt nhau thì giá tr�
 Chỗ mệnh đề đó chưa được kiểm chứng nằm ở hai chữ **"đủ"** và **"xanh"**.
 
 **"Xanh"** chỉ là kết quả của một lần chạy cụ thể, nó không nói gì về bản thân cái test.
-Một test chưa từng đỏ thì màu xanh không mang thông tin. Hai suite trông giống nhau, nhưng một suite đã
-có bằng chứng từng bắt được lỗi, suite kia thì chưa.
+Một test chưa từng đỏ thì màu xanh không mang thông tin. Hai suite trông giống nhau,
+nhưng một suite đã có bằng chứng từng bắt được lỗi, suite kia thì chưa.
 
 **"Đủ"** đo bằng gì? Test-last hầu như luôn đo bằng coverage. Mà coverage đếm **dòng code
 đã tồn tại** được chạy — nên về mặt cấu trúc nó không thể phát hiện hành vi bị thiếu hoàn
@@ -171,8 +171,8 @@ hành vi hiện tại, kể cả hành vi sai, rồi mới tách dần và TDD �
 
 **Vấn đề về hiệu năng, đồng thời, phân tán.** Unit test xanh không nói gì về race
 condition hay p99 latency, và tệ hơn là nó tạo cảm giác an toàn giả. Thay thế:
-benchmark và load test cho hiệu năng, stress test và fuzz cho đồng thời. Đây là khác
-loại công cụ khác hẳn. Viết thêm unit test không giải quyết được nhóm này.
+benchmark và load test cho hiệu năng, stress test và fuzz cho đồng thời. Nhóm này cần
+loại công cụ khác hẳn; viết thêm unit test không giải quyết được gì.
 
 Ngược lại, ca TDD ít gây tranh cãi nhất là sửa bug: viết test tái hiện bug trước khi
 sửa. Phần lớn người phản đối TDD vẫn làm việc này, vì nó vừa chứng minh đã tái hiện
