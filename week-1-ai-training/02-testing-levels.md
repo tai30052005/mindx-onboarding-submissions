@@ -47,7 +47,7 @@ mất nghĩa.
 |---|---|---|---|
 | What is under test | Một hành vi của logic ticket, luật validate, hoặc lớp command chạy với tầng lưu trong bộ nhớ | Sự phối hợp giữa code của mình và một biên ngoài tiến trình: file JSON trên đĩa | Cả chương trình, khởi động từ dòng lệnh |
 | What is replaced / faked | Mọi biên: `fs`, mạng, đồng hồ, bộ sinh `id` | Không giả hệ thống file — dùng thư mục tạm thật. Chỉ giả dịch vụ ngoài không kiểm soát được (KB API tuần 3) | Không giả gì, trừ dịch vụ ngoài |
-| Speed (đo thật, xem bảng verify) | 0.05 – 0.11 ms | 1.1 – 2.5 ms | ~88 ms cho một lần khởi động tiến trình |
+| Speed (đo thật, xem bảng verify) | 0.05 – 0.13 ms | 1.0 – 2.5 ms | ~88 ms cho một lần khởi động tiến trình |
 | Breaks when refactoring? | Dễ vỡ nhất nếu test bám vào chi tiết nội bộ thay vì hành vi | Vỡ khi đổi định dạng lưu trữ trên đĩa | Ít vỡ nhất khi refactor bên trong; chỉ vỡ khi đổi giao diện CLI |
 | Use it when | Luật nghiệp vụ, validate, lọc, sắp xếp — chỗ nhiều nhánh cần phủ rẻ | Cần bằng chứng round-trip ghi/đọc đúng, và hành vi khi file thật hỏng hoặc thiếu | Cần bằng chứng người dùng gõ lệnh thì ra đúng kết quả |
 
@@ -158,7 +158,7 @@ Mười ba test case lấy từ phạm vi thật của Ticket Manager CLI.
 |---|---|
 | Định nghĩa unit/integration mình dùng khớp với cách người chấm dùng | Đối chiếu trực tiếp acceptance criteria trong `docs/plans/week-2/overview.md`, không lấy định nghĩa từ AI |
 | Bảng phân loại không mâu thuẫn với phần còn lại của bài nộp | Đối chiếu 13 test case này với phạm vi và ba error case bắt buộc liệt kê trong `03-cli-test-plan.md` |
-| Unit nhanh hơn integration, nhưng integration vẫn rẻ về tuyệt đối | Tự viết `experiments/speed/bench.test.js`: 5 unit test thuần bộ nhớ và 5 integration test ghi/đọc file thật trong thư mục tạm, chạy cùng một lần. Unit **0.05–0.11 ms**, integration **1.1–2.5 ms**. Test đầu tiên mỗi nhóm chậm hơn do JIT warm-up nên không tính |
+| Unit nhanh hơn integration, nhưng integration vẫn rẻ về tuyệt đối | Tự viết `experiments/speed/bench.test.js`: 5 unit test thuần bộ nhớ và 5 integration test ghi/đọc file thật trong thư mục tạm, chạy cùng một lần. Chạy lại 4 lượt: unit **0.05–0.13 ms**, integration **1.0–2.5 ms**. Test đầu tiên mỗi nhóm bị JIT warm-up nên không tính. Con số dao động theo tải máy, nhưng khoảng cách giữa hai nhóm thì không đổi |
 | Lập luận "integration chậm nên giết vòng lặp TDD" là sai | Chính phép đo trên bác bỏ nó: ở 2ms mỗi test thì 500 integration test vẫn dưới 1 giây. Chi phí thật nằm ở e2e (~88ms cho một lần khởi động tiến trình), nên mình đổi tỷ lệ từ 70/25/5 sang 50/45/5 |
 
 ## Still unsure about

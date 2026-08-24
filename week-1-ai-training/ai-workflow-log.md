@@ -179,8 +179,8 @@ Chưa từng áp dụng TDD vào project nào
   claim về **integration** — tức là chưa từng đo integration lần nào.
 - **Mình verify bằng cách nào:** không tin lời review, mà tự viết
   `experiments/speed/bench.test.js` — 5 unit test thuần bộ nhớ và 5 integration
-  test ghi/đọc file thật trong thư mục tạm, chạy cùng một lần. Kết quả: unit 0.05–0.11ms,
-  integration 1.1–2.5ms, cả lần chạy có tiến trình ~88ms. Số đo đứng về phía người review.
+  test ghi/đọc file thật trong thư mục tạm, chạy cùng một lần. Kết quả: unit 0.05–0.13ms,
+  integration 1.0–2.5ms, cả lần chạy có tiến trình ~88ms. Số đo đứng về phía người review.
 - **Mình sửa lại gì, vì sao:** đổi tỷ lệ đề xuất từ 70/25/5 sang **50/45/5**, vì lý do
   chính để loại Trophy, rằng integration chậm nên giết vòng lặp TDD, bị chính số đo của mình
   bác bỏ. Chốt một trục định nghĩa duy nhất (biên ngoài tiến trình) và nói rõ acceptance
@@ -204,7 +204,7 @@ Chưa từng áp dụng TDD vào project nào
 
 | Option | Pros | Cons |
 |---|---|---|
-| Real files in a temp directory | Test đúng hành vi thật, gồm cả file hỏng, thiếu file, và lỗi encoding — những thứ chỉ xuất hiện khi có `fs` thật. Không phải bảo trì một lớp giả | Chậm hơn: đo thật được 1.1–2.5ms mỗi test so với 0.05–0.11ms của unit. Mỗi test phải tự tạo và dọn thư mục tạm, quên là flaky khi Jest chạy song song |
+| Real files in a temp directory | Test đúng hành vi thật, gồm cả file hỏng, thiếu file, và lỗi encoding — những thứ chỉ xuất hiện khi có `fs` thật. Không phải bảo trì một lớp giả | Chậm hơn: đo thật được 1.0–2.5ms mỗi test so với 0.05–0.13ms của unit. Mỗi test phải tự tạo và dọn thư mục tạm, quên là flaky khi Jest chạy song song |
 | Mock the `fs` module | Nhanh nhất, không chạm đĩa, không cần dọn dẹp | Đang khẳng định về **cái mock**, không phải về hành vi thật. Ca "file JSON hỏng" — đúng một trong ba error case bắt buộc — mất hết giá trị, vì chính mình quyết định mock sẽ hỏng thế nào. Mock `fs` cũng phải cập nhật theo mỗi lần đổi cách gọi API |
 | Storage behind an interface + in-memory implementation | Phần lớn test chạy ở tốc độ unit. Đổi sang nguồn khác dễ — đúng thứ tuần 3 cần khi cắm HTTP client, và khớp với mô hình mock-first mà `week-3/architecture.md` mô tả | Thêm một tầng trừu tượng trước khi có bằng chứng là cần. Vẫn phải viết vài test file thật cho ba error case bắt buộc, nên không thay thế được phương án 1 mà chỉ bổ sung |
 
@@ -296,7 +296,7 @@ Labels from `slides-ai-training.md`: `wrong facts/code` · `unnecessary icons/em
 |---|---|---|---|---|
 | 1 | `wrong facts/code` | Dạy `expect(() => createTicket('')).toThrow('title không được rỗng')` như cách viết đúng | Đọc docs Jest mục `.toThrow(error?)`: nó khớp theo **substring**, nên test vẫn pass với một Error khác miễn message chứa chuỗi đó; và đổi câu chữ message là vỡ test dù hành vi không đổi | Chỉ ra rằng chính nó ở lượt sau đã gọi đây là weak assertion + testing implementation details — hai trong bốn lỗi liệt kê ở `05`. Yêu cầu assert theo loại lỗi thay vì nội dung message |
 | 2 | `outdated information` | Khẳng định mục `## Refactor` trong `01-tdd-principles.md` vẫn còn trống | Mở file ra: mục đó đã viết xong và đã lưu trước khi hỏi | Nói rõ là nó đang dựa trên bản đọc cũ, và từ chối để nó viết lại mục đã có |
-| 3 | `wrong facts/code` | Trong bản đầu của `02`, khẳng định "unit nhanh hơn integration một bậc độ lớn" và dẫn số đo làm bằng chứng | Phiên review mới chỉ ra số đo đó là thời gian **khởi động tiến trình** (e2e), không phải integration. Mình tự viết `experiments/speed/bench.test.js` đo lại: integration in-process chỉ 1.1–2.5ms, không phải hàng chục ms | Sửa thẳng con số trong bảng verify, và đổi luôn tỷ lệ đề xuất từ 70/25/5 sang 50/45/5 vì lập luận cũ dựa trên số sai. Ghi rõ trong `02` là tỷ lệ đã đổi và đổi vì lý do gì |
+| 3 | `wrong facts/code` | Trong bản đầu của `02`, khẳng định "unit nhanh hơn integration một bậc độ lớn" và dẫn số đo làm bằng chứng | Phiên review mới chỉ ra số đo đó là thời gian **khởi động tiến trình** (e2e), không phải integration. Mình tự viết `experiments/speed/bench.test.js` đo lại: integration in-process chỉ 1.0–2.5ms, không phải hàng chục ms | Sửa thẳng con số trong bảng verify, và đổi luôn tỷ lệ đề xuất từ 70/25/5 sang 50/45/5 vì lập luận cũ dựa trên số sai. Ghi rõ trong `02` là tỷ lệ đã đổi và đổi vì lý do gì |
 | 4 | `wrong facts/code` | Với hàm async, `expect(() => f()).toThrow(...)` sẽ "im lặng pass mà chẳng kiểm tra gì" — AI nói ở Lượt 2, mình tin và chép lại vào `03` và `04` | Cài Jest 30 thật trong `experiments/async-check/`, viết 4 biến thể và chạy. Nó **không** pass: promise bị reject không ai bắt nên worker chết kèm stack trace không chỉ vào test nào. Cả biến thể `.rejects` thiếu `await` cũng vậy. Chỉ `await expect(f()).rejects.toThrow(...)` mới chạy đúng — pass khi đúng, đỏ có diff khi sai | Sửa cả `03` lẫn `04`, thay câu "im lặng pass" bằng bảng kết quả đo thật kèm phiên bản (Jest 30 / Node 24). Ghi rõ là rủi ro AI nêu **có thật**, nhưng mô tả triệu chứng thì sai — nên vẫn phải chạy mới biết |
 | 5 | `wrong facts/code` | Trong `01`, mình viết: nếu `id`/`createdAt` sinh ngầm trong hàm thì người viết test sau "không còn lựa chọn nào ngoài assert yếu kiểu `toBeDefined()`" | Lượt 4 phản bác bằng một phương án cụ thể. Mình viết `experiments/async-check/faketimer.test.js` với hàm **không tiêm gì**, dùng `randomUUID()` và `new Date()` trực tiếp: `jest.useFakeTimers()` + `setSystemTime()` khoá được `createdAt` về giá trị chính xác; `id` assert được bằng regex định dạng và bằng tính duy nhất giữa hai lần gọi. **3/3 pass** | Viết lại toàn bộ lý do 3, bỏ câu sai, và ghi rõ phần còn lại đứng được là gì. Thêm ghi chú rằng đường vòng tuy dùng được nhưng yếu hơn: assert định dạng không ghim giá trị, fake timer là trạng thái toàn cục dễ rò |
 
