@@ -31,6 +31,33 @@ chứng minh một khẳng định về integration.
 
 ---
 
+## Bằng chứng cho phần log này
+
+Log là bản thuật lại, viết sau khi việc đã xảy ra. Ba nguồn dưới đây kiểm chéo được nó.
+
+**1. Transcript gốc** — `transcripts/`, chép nguyên văn 5 lượt. Đối chiếu được với cột
+*"Hỏi gì"* và *"Mình sửa lại gì, vì sao"* ở từng lượt bên dưới. Lượt nào không có
+transcript thì `transcripts/README.md` ghi rõ là không có, kèm lý do.
+
+**2. Thí nghiệm chạy lại được** — `experiments/`, bốn thư mục. `tdd-loop/` và `speed/`
+chạy bằng `node --test`, không cần cài gì.
+
+**3. Lịch sử git** — mỗi lần đổi kết luận là một commit riêng, nên trạng thái **trước**
+khi sửa vẫn còn nguyên và không viết lùi được:
+
+| Đổi cái gì | Trước | Sau | Mở diff bằng |
+|---|---|---|---|
+| Tỷ lệ 70/25/5 → 50/45/5 sau khi tự đo | `0cee1f0` | `b704709` | `git diff 0cee1f0 b704709 -- week-1-ai-training/02-testing-levels.md` |
+| Sửa claim async `toThrow` sau khi chạy Jest thật | | `aabacbe` | `git show aabacbe` |
+| Viết lại lý do 3 sau khi chạy fake timer | | `657b2f5` | `git show 657b2f5` |
+| Đưa `experiments/` vào làm bằng chứng | | `02e2e48` | `git show 02e2e48` |
+
+Diff đầu bảng là cái đáng xem nhất: bản cũ ghi *"Tỷ lệ 70/25/5 là ước lượng theo lập luận,
+chưa có số đo thật"*, và ô Speed ghi *"hàng chục đến hàng trăm ms"* — đúng cái giả định mà
+phép đo về sau bác bỏ.
+
+---
+
 ## Part 2 — Session log
 
 Template mỗi lượt — copy năm dòng này rồi điền:

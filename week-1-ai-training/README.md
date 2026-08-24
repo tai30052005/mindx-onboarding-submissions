@@ -12,6 +12,7 @@
 5. [05-common-mistakes.md](05-common-mistakes.md) — testing mistakes and how to avoid them
 6. [ai-workflow-log.md](ai-workflow-log.md) — process: 3 workflows + hallucinations caught
 7. [experiments/](experiments/) — bốn thí nghiệm tự chạy, dùng để kiểm chứng thay vì tin lời AI
+8. [transcripts/](transcripts/) — phiên làm việc với AI, chép nguyên văn, để đối chiếu với log
 
 ## Acceptance criteria → where it is
 
