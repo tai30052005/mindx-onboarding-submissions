@@ -40,5 +40,5 @@ khớp nhau không.
 | Lượt 4: nói lý do 3 sai ở đâu | Chấp nhận, viết lại toàn bộ lý do 3 | Nhưng chỉ sau khi tự chạy `faketimer.test.js` để kiểm — 3/3 pass |
 | Lượt 6: nói bảng verify dẫn số đo sai | Chấp nhận, đổi tỷ lệ 70/25/5 → 50/45/5 | Nhưng chỉ sau khi tự viết `bench.test.js` đo lại |
 
-Hai dòng cuối là điểm chính: cả hai lần AI phản bác đúng, nhưng mình **không nhận lời**
-mà tự đo lại rồi mới sửa. Đó là khác biệt giữa nghe lời AI và kiểm chứng AI.
+Hai dòng cuối là điểm chính: cả hai lần AI phản bác đúng, nhưng mình không nhận lời ngay
+mà tự chạy lại phép đo rồi mới sửa.

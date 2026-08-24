@@ -1,8 +1,8 @@
 # Experiments
 
-Bốn thí nghiệm tự chạy trong tuần 1. Mục đích không phải làm project — mentor đã chốt
-ngày 17/08 rằng tuần 1 snippet là đủ — mà là **kiểm chứng bằng cách chạy thật** thay vì
-tin lời AI. Kết quả của chúng được dẫn trong `02`, `03`, `04`, `05` và
+Bốn thí nghiệm tự chạy trong tuần 1. Mục đích không phải làm project, vì mentor đã chốt
+ngày 17/08 rằng tuần 1 snippet là đủ. Mục đích là **kiểm chứng bằng cách chạy thật** thay
+vì tin lời AI. Kết quả của chúng được dẫn trong `02`, `03`, `04`, `05` và
 `ai-workflow-log.md`.
 
 | Thư mục | Kiểm chứng điều gì | Kết luận |
