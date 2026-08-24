@@ -114,7 +114,7 @@ test đã kết thúc. Chỉ `await expect(f()).rejects.toThrow(...)` là chạy
   xanh thì test đó vô dụng. Cách này không đòi kinh nghiệm, chỉ đòi chịu thử.
 - **Đo thật thay vì tin lập luận.** Trong tuần này mình khẳng định "unit nhanh hơn
   integration một bậc" dựa trên số đo của một thứ khác. Viết một bench nhỏ đo lại: unit
-  0.05–0.11ms, integration in-process 1.1–2.5ms. Số đo bác bỏ lập luận, và mình đổi kết
+  0.05–0.13ms, integration in-process 1.0–2.5ms. Số đo bác bỏ lập luận, và mình đổi kết
   luận.
 - **Hỏi một phiên AI hoàn toàn mới, không phải phiên đã đưa ra phương án.** Phiên cũ đã
   "ký tên" vào đề xuất nên nó phản biện lấy lệ. Phiên mới không biết đây là bài của mình
