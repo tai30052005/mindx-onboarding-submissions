@@ -1,15 +1,15 @@
-# Testing Levels: Unit vs Integration vs End-to-End
+# Ba tầng test: unit, integration, end-to-end
 
-> **Deliverable 2.** Workflow used: Layered Questioning, rồi một vòng review đối kháng
+> **Deliverable 2.** Workflow đã dùng: Layered Questioning, rồi một vòng review đối kháng
 > ở phiên AI mới. Vòng review đó làm đổi tỷ lệ mình đề xuất — chi tiết ở
 > `ai-workflow-log.md`.
 
-## Questions this file answers
+## Những câu hỏi file này trả lời
 
-- What separates unit, integration, and end-to-end tests? `[đề bài]`
-- What does each level cost, and what does each level actually protect? `[thêm]`
-- What is a reasonable balance between them, and why not just write end-to-end tests? `[thêm]`
-- Given a specific test, which level is it, and why? `[thêm]`
+- Unit, integration và end-to-end khác nhau ở đâu? `[đề bài]`
+- Mỗi tầng tốn gì, và thật sự bảo vệ được cái gì? `[thêm]`
+- Tỷ lệ hợp lý giữa ba tầng là bao nhiêu, và vì sao không viết toàn end-to-end cho chắc? `[thêm]`
+- Cho một test cụ thể, nó thuộc tầng nào và vì sao? `[thêm]`
 
 ## Định nghĩa mình chọn, và vì sao
 
@@ -41,21 +41,21 @@ Lý do phải nói rõ chỗ này: nếu để "đi qua lớp command" cũng tí
 nhóm integration sẽ chứa cả test 0.05ms lẫn test 2ms, và mọi lập luận về chi phí ở dưới
 mất nghĩa.
 
-## Comparison
+## So sánh ba tầng
 
 | | Unit | Integration | End-to-end |
 |---|---|---|---|
-| What is under test | Một hành vi của logic ticket, luật validate, hoặc lớp command chạy với tầng lưu trong bộ nhớ | Sự phối hợp giữa code của mình và một biên ngoài tiến trình: file JSON trên đĩa | Cả chương trình, khởi động từ dòng lệnh |
-| What is replaced / faked | Mọi biên: `fs`, mạng, đồng hồ, bộ sinh `id` | Không giả hệ thống file — dùng thư mục tạm thật. Chỉ giả dịch vụ ngoài không kiểm soát được (KB API tuần 3) | Không giả gì, trừ dịch vụ ngoài |
-| Speed (đo thật, xem bảng verify) | 0.05 – 0.13 ms | 1.0 – 2.5 ms | ~88 ms cho một lần khởi động tiến trình |
-| Breaks when refactoring? | Dễ vỡ nhất nếu test bám vào chi tiết nội bộ thay vì hành vi | Vỡ khi đổi định dạng lưu trữ trên đĩa | Ít vỡ nhất khi refactor bên trong; chỉ vỡ khi đổi giao diện CLI |
-| Use it when | Luật nghiệp vụ, validate, lọc, sắp xếp — chỗ nhiều nhánh cần phủ rẻ | Cần bằng chứng round-trip ghi/đọc đúng, và hành vi khi file thật hỏng hoặc thiếu | Cần bằng chứng người dùng gõ lệnh thì ra đúng kết quả |
+| Cái gì đang được test | Một hành vi của logic ticket, luật validate, hoặc lớp command chạy với tầng lưu trong bộ nhớ | Sự phối hợp giữa code của mình và một biên ngoài tiến trình: file JSON trên đĩa | Cả chương trình, khởi động từ dòng lệnh |
+| Cái gì bị thay hoặc giả lập | Mọi biên: `fs`, mạng, đồng hồ, bộ sinh `id` | Không giả hệ thống file — dùng thư mục tạm thật. Chỉ giả dịch vụ ngoài không kiểm soát được (KB API tuần 3) | Không giả gì, trừ dịch vụ ngoài |
+| Tốc độ (đo thật, xem bảng cuối file) | 0.05 – 0.13 ms | 1.0 – 2.5 ms | ~88 ms cho một lần khởi động tiến trình |
+| Có vỡ khi refactor không | Dễ vỡ nhất nếu test bám vào chi tiết nội bộ thay vì hành vi | Vỡ khi đổi định dạng lưu trữ trên đĩa | Ít vỡ nhất khi refactor bên trong; chỉ vỡ khi đổi giao diện CLI |
+| Dùng khi nào | Luật nghiệp vụ, validate, lọc, sắp xếp — chỗ nhiều nhánh cần phủ rẻ | Cần bằng chứng round-trip ghi/đọc đúng, và hành vi khi file thật hỏng hoặc thiếu | Cần bằng chứng người dùng gõ lệnh thì ra đúng kết quả |
 
 Cách mình tự nhắc khi phân vân: unit trả lời "logic của mình có đúng không", integration
 trả lời "ghi xuống rồi đọc lại có ra đúng thứ đó không", e2e trả lời "gõ lệnh vào thì có
 ra kết quả không".
 
-## Choosing a balance
+## Chọn tỷ lệ giữa ba tầng
 
 Tỷ lệ mình đề xuất cho CLI này: **khoảng 50% unit, 45% integration, 5% end-to-end.**
 
@@ -108,7 +108,7 @@ So hai tỷ lệ mà không quy về cùng một nghĩa là so sai đơn vị. S
 giữa 50/45/5 của mình và khuyến nghị của Trophy hẹp hơn nhiều so với vẻ ngoài của hai con
 số.
 
-## Classifying real examples
+## Phân loại ví dụ thật
 
 Mười ba test case lấy từ phạm vi thật của Ticket Manager CLI.
 
@@ -122,7 +122,7 @@ Mười ba test case lấy từ phạm vi thật của Ticket Manager CLI.
   chạm đồng hồ và bộ sinh ngẫu nhiên. Đây là ràng buộc thiết kế chưa cam kết, không phải
   sự thật đã có.
 
-| # | Test case | Level | Why |
+| # | Test case | Tầng | Vì sao |
 |---|---|---|---|
 | 1 | `createTicket` với `title` rỗng thì ném lỗi | Unit | Thuần luật validate, không biên nào |
 | 2 | Ticket mới tạo có `status` mặc định là `open` | Unit | Quy tắc nghiệp vụ trong bộ nhớ — với điều kiện clock/id được tiêm |
@@ -152,16 +152,16 @@ Mười ba test case lấy từ phạm vi thật của Ticket Manager CLI.
   ở biên CLI. Không mảnh nào của ca này ở lại thành unit test thuần theo cách mình nghĩ
   ban đầu.
 
-## How I verified this
+## Mình kiểm chứng bằng cách nào
 
-| Claim | How I checked it |
+| Khẳng định | Kiểm bằng cách nào |
 |---|---|
 | Định nghĩa unit/integration mình dùng khớp với cách người chấm dùng | Đối chiếu trực tiếp acceptance criteria trong `docs/plans/week-2/overview.md`, không lấy định nghĩa từ AI |
 | Bảng phân loại không mâu thuẫn với phần còn lại của bài nộp | Đối chiếu 13 test case này với phạm vi và ba error case bắt buộc liệt kê trong `03-cli-test-plan.md` |
 | Unit nhanh hơn integration, nhưng integration vẫn rẻ về tuyệt đối | Tự viết `experiments/speed/bench.test.js`: 5 unit test thuần bộ nhớ và 5 integration test ghi/đọc file thật trong thư mục tạm, chạy cùng một lần. Chạy lại 4 lượt: unit **0.05–0.13 ms**, integration **1.0–2.5 ms**. Test đầu tiên mỗi nhóm bị JIT warm-up nên không tính. Con số dao động theo tải máy, nhưng khoảng cách giữa hai nhóm thì không đổi |
 | Lập luận "integration chậm nên giết vòng lặp TDD" là sai | Chính phép đo trên bác bỏ nó: ở 2ms mỗi test thì 500 integration test vẫn dưới 1 giây. Chi phí thật nằm ở e2e (~88ms cho một lần khởi động tiến trình), nên mình đổi tỷ lệ từ 70/25/5 sang 50/45/5 |
 
-## Still unsure about
+## Còn chưa chắc
 
 - Ba dòng unit đầu bảng phụ thuộc vào việc `id`/`createdAt`/tầng lưu có được tiêm hay
   không. Đó là quyết định thiết kế của tuần 2, chưa cam kết — nếu làm khác thì bảng phải

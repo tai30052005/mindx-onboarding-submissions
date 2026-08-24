@@ -1,17 +1,16 @@
-# How Testing Controls AI-Generated Implementation
+# Test kiểm soát code do AI sinh ra bằng cách nào
 
-> **Deliverable 4.** This is the file most directly tied to the point of week 1.
+> **Deliverable 4.** Đây là file bám sát trọng tâm tuần 1 nhất.
 > Mọi ví dụ trong file này lấy từ chính tuần làm việc này, ghi lại ở `ai-workflow-log.md`.
 
-## Questions this file answers
+## Những câu hỏi file này trả lời
 
-- How do tests give control over code an AI wrote? `[đề bài]`
-- What changes when the test is written *before* the AI writes the implementation,
-  compared to the other way round? `[thêm]`
-- What is the problem with letting the AI write both the tests and the code? `[thêm]`
-- What do I check before accepting AI-generated code, and in what order? `[thêm]`
+- Test giúp kiểm soát code do AI viết bằng cách nào? `[đề bài]`
+- Viết test **trước** khi AI viết implementation thì khác gì so với làm ngược lại? `[thêm]`
+- Để AI viết cả test lẫn code thì vấn đề nằm ở đâu? `[thêm]`
+- Mình soát những gì trước khi nhận code AI sinh, và theo thứ tự nào? `[thêm]`
 
-## Tests as an executable specification
+## Test là đặc tả chạy được
 
 Đọc code rồi tin vào mắt mình và có một phép kiểm chạy được là hai loại bằng chứng khác
 nhau về bản chất, không phải khác nhau về mức độ cẩn thận.
@@ -35,13 +34,13 @@ khác trước. Cả 3 test vẫn xanh, vì không test nào khẳng định v�
 ra không phải "test là đủ" mà là: **test chỉ bảo vệ đúng những gì nó khẳng định** — nên
 việc quyết định khẳng định cái gì mới là chỗ mình phải giữ quyền.
 
-## Test-first vs code-first when working with AI
+## Viết test trước hay sinh code trước khi làm với AI
 
-| | Test written first | Code generated first |
+| | Viết test trước | Sinh code trước |
 |---|---|---|
-| What anchors the behaviour | Đặc tả của mình, viết ra trước khi AI nhìn thấy bài toán. AI phải đi vừa cái khuôn đó | Bất cứ thứ gì AI sinh ra. Test viết sau chỉ mô tả lại code đã có |
-| What can silently go wrong | Đặc tả của mình có thể sai hoặc thiếu — nhưng sai một cách **nhìn thấy được**, vì nó viết ra thành chữ và đọc lại được | Test thừa hưởng đúng điểm mù của code. Assertion bị làm yếu đi cho vừa cái code đang có: gặp `id` sinh ngẫu nhiên bên trong thì assert giá trị chính xác không còn dễ, nên dễ hạ xuống `toBeDefined()` cho xong |
-| How a mistake surfaces | Đỏ ngay, tại đúng hành vi sai, trước khi có dòng implementation nào | Không nổi lên. Xanh ngay từ lần chạy đầu, và không phân biệt được "code đúng" với "test không kiểm tra gì" |
+| Cái gì neo hành vi | Đặc tả của mình, viết ra trước khi AI nhìn thấy bài toán. AI phải đi vừa cái khuôn đó | Bất cứ thứ gì AI sinh ra. Test viết sau chỉ mô tả lại code đã có |
+| Cái gì hỏng âm thầm | Đặc tả của mình có thể sai hoặc thiếu — nhưng sai một cách **nhìn thấy được**, vì nó viết ra thành chữ và đọc lại được | Test thừa hưởng đúng điểm mù của code. Assertion bị làm yếu đi cho vừa cái code đang có: gặp `id` sinh ngẫu nhiên bên trong thì assert giá trị chính xác không còn dễ, nên dễ hạ xuống `toBeDefined()` cho xong |
+| Lỗi lộ ra thế nào | Đỏ ngay, tại đúng hành vi sai, trước khi có dòng implementation nào | Không nổi lên. Xanh ngay từ lần chạy đầu, và không phân biệt được "code đúng" với "test không kiểm tra gì" |
 
 Viết test trước không làm AI viết code giỏi hơn. Nó chỉ làm cho việc AI viết sai trở nên
 nhìn thấy được, và giữ quyền định nghĩa "đúng là gì" ở phía mình.
@@ -49,7 +48,7 @@ nhìn thấy được, và giữ quyền định nghĩa "đúng là gì" ở ph�
 Ranh giới "you are the architect" nằm đúng ở chỗ này. AI viết implementation thì được.
 Nhưng đặc tả, tức cái gì được coi là đúng, phải do mình cầm bút.
 
-## Why not let the AI write both the tests and the code
+## Vì sao không để AI viết cả test lẫn code
 
 Vì cả hai sản phẩm cùng sinh ra từ **một cách hiểu duy nhất**. Nếu cách hiểu đó sai, AI sẽ
 viết một implementation sai và một test khẳng định đúng cái sai đó. Chạy lên xanh hết.
@@ -70,7 +69,7 @@ Không phải vì thế mà AI không bao giờ được viết test. Phân vai 
   nghĩ ra được những ca mình không nghĩ tới. Nhưng đó là mở rộng một đặc tả đã có, không
   phải tạo ra đặc tả.
 
-## My review procedure before accepting AI output
+## Quy trình mình soát trước khi nhận output của AI
 
 Năm câu hỏi lấy từ `slides-ai-training.md`. Mình dùng chúng theo thứ tự, vì bốn câu đầu
 tạo ra **nghi ngờ**, còn câu thứ năm mới tạo ra **bằng chứng** — bỏ câu cuối thì bốn câu
@@ -126,16 +125,16 @@ chữa. Và nhớ rằng đính chính chỉ có hiệu lực trong đúng cuộ
 đầu lại từ đầu. Thứ nào đáng giữ thì phải đưa vào file quy tắc, theo rule 10 của
 `.cursor/rules/overview.mdc`.
 
-## How I verified this
+## Mình kiểm chứng bằng cách nào
 
-| Claim | How I checked it |
+| Khẳng định | Kiểm bằng cách nào |
 |---|---|
 | Test xanh không chứng minh code đúng | Tự sửa `return { title }` thành `return { title: title.trim() }`: hành vi đã đổi mà 3/3 test vẫn xanh |
 | Assertion yếu là hệ quả có cấu trúc của việc viết test sau, không phải sơ suất ngẫu nhiên | Quan sát trên demo do AI chạy: với `id`/`createdAt` sinh ngầm bên trong hàm, `toBeDefined()` không bắt được cả `createdAt` sai định dạng lẫn `id` rỗng — và không có assertion nào mạnh hơn viết được nếu không đổi chữ ký hàm |
 | Hỏi phiên AI mới cho phản biện thật hơn hỏi lại phiên cũ | Áp dụng trên `02-testing-levels.md`: phiên mới chỉ ra 7 lỗi, trong đó có lỗi dẫn số đo của e2e để chứng minh một claim về integration — lỗi mà hai vòng hỏi ở phiên cũ không nêu |
 | Lập luận nghe hợp lý vẫn có thể sai về số | Viết `experiments/speed/bench.test.js` đo unit và integration trong cùng một lần chạy, rồi sửa lại kết luận trong `02` theo số đo |
 
-## Still unsure about
+## Còn chưa chắc
 
 - Ranh giới "AI được thêm test edge case, không được là nguồn đặc tả" nghe rõ trên giấy,
   nhưng chưa rõ trong lúc làm thật thì phân biệt bằng dấu hiệu nào — vì một edge case AI

@@ -1,4 +1,4 @@
-# Experiments
+# Thí nghiệm
 
 Bốn thí nghiệm tự chạy trong tuần 1. Mục đích không phải làm project, vì mentor đã chốt
 ngày 17/08 rằng tuần 1 snippet là đủ. Mục đích là **kiểm chứng bằng cách chạy thật** thay

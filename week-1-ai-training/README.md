@@ -1,31 +1,31 @@
-# Week 1 — AI Training: Effective Usage & Critical Thinking
+# Tuần 1 — AI Training: Effective Usage & Critical Thinking
 
-**Period:** 18/08/2026 → 25/08/2026
-**Research topic:** Test-Driven Development for building reliable CLI tools with AI assistance
+**Thời gian:** 18/08/2026 → 25/08/2026
+**Chủ đề nghiên cứu:** Test-Driven Development, để làm CLI đáng tin khi có AI hỗ trợ
 
-## Suggested reading order
+## Thứ tự nên đọc
 
-1. [01-tdd-principles.md](01-tdd-principles.md) — what TDD is
-2. [02-testing-levels.md](02-testing-levels.md) — unit / integration / e2e
-3. [03-cli-test-plan.md](03-cli-test-plan.md) — test plan for the Ticket Manager CLI
-4. [04-ai-validation.md](04-ai-validation.md) — how tests control AI-generated code
-5. [05-common-mistakes.md](05-common-mistakes.md) — testing mistakes and how to avoid them
-6. [ai-workflow-log.md](ai-workflow-log.md) — process: 3 workflows + hallucinations caught
+1. [01-tdd-principles.md](01-tdd-principles.md) — TDD là gì
+2. [02-testing-levels.md](02-testing-levels.md) — ba tầng unit / integration / e2e
+3. [03-cli-test-plan.md](03-cli-test-plan.md) — kế hoạch test cho Ticket Manager CLI
+4. [04-ai-validation.md](04-ai-validation.md) — test kiểm soát code AI sinh ra bằng cách nào
+5. [05-common-mistakes.md](05-common-mistakes.md) — lỗi test thường gặp và cách tránh
+6. [ai-workflow-log.md](ai-workflow-log.md) — quá trình: 3 workflow và những chỗ AI nói sai
 7. [experiments/](experiments/) — bốn thí nghiệm tự chạy, dùng để kiểm chứng thay vì tin lời AI
 8. [transcripts/](transcripts/) — phiên làm việc với AI, chép nguyên văn, để đối chiếu với log
 
-## Acceptance criteria → where it is
+## Tiêu chí chấm → nằm ở đâu
 
-| Acceptance criteria | Where | Done |
+| Tiêu chí chấm | Nằm ở đâu | Xong |
 |---|---|---|
 | Research content documented: TDD principles, testing levels, CLI test examples, AI validation | `01`, `02`, `03`, `04` | ☑ |
 | Research process with AI tracked: workflows applied and iterations documented | `ai-workflow-log.md` | ☑ |
 | Research findings can be explained clearly when submitting | *(interview)* | ☐ |
 | Questions about TDD, test types, AI-generated code validation can be answered | *(interview)* | ☐ |
 
-## Deliverables → where it is
+## Deliverable → nằm ở đâu
 
-| # | Deliverable | Where | Done |
+| # | Deliverable | Nằm ở đâu | Xong |
 |---|---|---|---|
 | 1 | Core principles of TDD and Red-Green-Refactor | `01` | ☑ |
 | 2 | Comparison of unit / integration / e2e tests | `02` | ☑ |
@@ -34,19 +34,19 @@
 | 5 | Common testing mistakes and how to avoid them | `05` | ☑ |
 | 6 | Evidence of applying all 3 workflows | `ai-workflow-log.md` | ☑ |
 
-## Decisions recorded
+## Các quyết định đã chốt
 
-- **Snippets only, no runnable project.** Confirmed by mentor on 17/08: *"Snippet là đủ.
-  Tuần 2 e mới làm project nhé."* All test examples in this folder are illustrative
-  snippets; the actual project starts in week 2.
-- **Test framework: Jest**, used consistently across all snippets, matching the stack
-  fixed for the program in `docs/plans/week-3/architecture.md`.
+- **Chỉ đoạn code minh hoạ, không có project chạy được.** Mentor đã chốt ngày 17/08: *"Snippet là đủ.
+  Tuần 2 e mới làm project nhé."* Mọi ví dụ test trong thư mục này đều là đoạn minh hoạ;
+  project thật bắt đầu từ tuần 2.
+- **Framework test: Jest**, dùng nhất quán trong mọi đoạn code, khớp với stack mà
+  chương trình đã chốt ở `docs/plans/week-3/architecture.md`.
 
-## Question tags
+## Nhãn câu hỏi
 
-Each question under *Questions this file answers* is tagged by where it comes from:
+Mỗi câu hỏi ở mục *Những câu hỏi file này trả lời* đều gắn nhãn nguồn gốc:
 
-- `[đề bài]` — named in `docs/plans/week-1/overview.md` (Research focus / Deliverable). Required.
-- `[thêm]` — added on my own judgement of what the review session is likely to probe,
-  since acceptance criteria 3 and 4 are assessed orally but list no specific questions.
-  Useful, but not required by the brief.
+- `[đề bài]` — đề bài nêu trong `docs/plans/week-1/overview.md` (Research focus / Deliverable). Bắt buộc.
+- `[thêm]` — mình tự thêm, theo phán đoán buổi review sẽ đào vào đâu, vì tiêu chí 3 và 4
+  chấm bằng miệng nhưng không liệt kê câu hỏi cụ thể nào. Hữu ích, nhưng đề bài không
+  bắt buộc.

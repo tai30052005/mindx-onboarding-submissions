@@ -1,13 +1,13 @@
-# MindX Engineer Onboarding — Submissions
+# MindX Engineer Onboarding — Bài nộp
 
-Personal submissions for the 5-week MindX engineer onboarding program.
+Bài nộp cá nhân cho chương trình onboarding engineer 5 tuần của MindX.
 
-> Reference materials (slides, weekly plans) are **not** copied into this repo.
-> They stay in the original company folder and are referenced by filename only.
+> Tài liệu tham chiếu (slide, kế hoạch từng tuần) **không** chép vào repo này.
+> Chúng nằm nguyên ở thư mục gốc của công ty, ở đây chỉ nhắc tên file.
 
-## Weeks
+## Các tuần
 
-| Week | Topic | Folder | Submitted |
+| Tuần | Chủ đề | Thư mục | Đã nộp |
 |------|-------|--------|-----------|
 | 1 | AI Training — Effective Usage & Critical Thinking | [week-1-ai-training](week-1-ai-training/) | ☐ |
 | 2 | TDD Practice — Ticket Manager CLI | `week-2-3-ticket-cli/` | ☐ |
@@ -15,18 +15,18 @@ Personal submissions for the 5-week MindX engineer onboarding program.
 | 4 | Ticket Handling & Professional Communication | `week-4-ticket-handling/` | ☐ |
 | 5 | Reporting, Analysis & Automation | `week-5-reporting-automation/` | ☐ |
 
-Folders for weeks 2–5 are created when each week starts.
+Thư mục cho tuần 2–5 sẽ tạo khi tới tuần đó.
 
-Weeks 2 and 3 share one codebase (week 3 extends the week-2 CLI), so the two
-submissions are distinguished by git tag rather than by folder.
+Tuần 2 và tuần 3 dùng chung một codebase (tuần 3 mở rộng CLI của tuần 2), nên hai bài
+nộp phân biệt bằng git tag chứ không bằng thư mục.
 
-## Submission convention
+## Quy ước nộp bài
 
-For each week:
+Với mỗi tuần:
 
-1. Tag the repo: `week-1`, `week-2`, …
-2. (Week 1 only) Send to mentor via Zalo for a pre-check first
-3. Email `thuantv@mindx.com.vn`, cc `huynq@mindx.com.vn`, with the tag link
+1. Gắn tag cho repo: `week-1`, `week-2`, …
+2. (Chỉ tuần 1) Gửi mentor qua Zalo xin xem trước
+3. Gửi mail `thuantv@mindx.com.vn`, cc `huynq@mindx.com.vn`, kèm link tag
 
-Tags freeze the state at submission time, so later work does not change what was
-already handed in.
+Tag đóng băng trạng thái tại thời điểm nộp, nên việc làm sau đó không đổi được thứ đã
+nộp.

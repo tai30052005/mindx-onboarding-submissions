@@ -1,19 +1,19 @@
-# Test Plan for the Ticket Manager CLI
+# Kế hoạch test cho Ticket Manager CLI
 
-> **Deliverable 3.** Snippets only — the project itself is built in week 2.
-> This file doubles as the working spec for week 2.
+> **Deliverable 3.** Chỉ có đoạn code minh hoạ; project thật làm ở tuần 2.
+> File này đồng thời là bản đặc tả dùng cho tuần 2.
 
-Scope taken from `docs/plans/week-2/overview.md`: a CLI storing tickets in local JSON
-files, with fields `title`, `description`, `status`, `priority`, `tags`, and the commands
+Phạm vi lấy từ `docs/plans/week-2/overview.md`: một CLI lưu ticket vào file JSON trên máy,
+ticket có các field `title`, `description`, `status`, `priority`, `tags`, và bốn lệnh
 `tickets create`, `tickets list`, `tickets show <id>`, `tickets update <id>`.
 
-## Questions this file answers
+## Những câu hỏi file này trả lời
 
-- What should be tested for each of the four commands? `[đề bài]`
-- What are the validation rules, and how is each one tested? `[đề bài]`
-- How is the JSON file storage layer tested? `[đề bài]`
-- How are the three required error cases tested? `[đề bài]`
-- Which of these tests are unit tests and which are integration tests? `[thêm]`
+- Mỗi lệnh trong bốn lệnh cần test những gì? `[đề bài]`
+- Có những luật validate nào, và test từng luật ra sao? `[đề bài]`
+- Tầng lưu file JSON được test thế nào? `[đề bài]`
+- Ba error case bắt buộc được test thế nào? `[đề bài]`
+- Trong số đó, cái nào là unit test và cái nào là integration test? `[thêm]`
 
 ## Ba quyết định thiết kế mà kế hoạch này dựa vào
 
@@ -48,9 +48,9 @@ test flaky — lúc xanh lúc đỏ mà không do code. Dùng `fs.mkdtemp` cho t
 > (`ai-workflow-log.md`, mục 20/08). Kế hoạch dưới đây viết theo phương án thư mục tạm
 > thật, khớp với cách phân loại đã chốt ở `02-testing-levels.md`.
 
-## Validation rules
+## Luật validate
 
-| Rule | Áp cho | Test thế nào |
+| Luật | Áp cho | Test thế nào |
 |---|---|---|
 | `title` bắt buộc, không rỗng và không toàn khoảng trắng | create, update | Unit, truyền `''` và `'   '`, kỳ vọng ném lỗi validate |
 | `status` thuộc tập cho phép | create, update | Unit, truyền giá trị ngoài tập, kỳ vọng bị từ chối |
@@ -58,11 +58,11 @@ test flaky — lúc xanh lúc đỏ mà không do code. Dùng `fs.mkdtemp` cho t
 | `tags` là mảng chuỗi, khử trùng lặp | create, update | Unit, truyền `['bug','bug']`, kỳ vọng còn một phần tử |
 | `id` phải tồn tại trong kho | show, update | Unit với kho trong bộ nhớ, và Integration với file thật |
 
-## Test cases by command
+## Test case theo từng lệnh
 
 ### `tickets create`
 
-| # | Behaviour under test | Level | Expected result |
+| # | Hành vi được test | Tầng | Kết quả mong đợi |
 |---|---|---|---|
 | 1 | Tạo với `title` hợp lệ | Unit | Ticket có `status = 'open'` |
 | 2 | `title` rỗng | Unit | Ném lỗi validate, không tạo gì |
@@ -75,9 +75,9 @@ test flaky — lúc xanh lúc đỏ mà không do code. Dùng `fs.mkdtemp` cho t
 | 9 | Tạo xong thì ticket có trong file JSON | Integration | Đọc lại file trong thư mục tạm thấy đúng ticket |
 | 10 | Tạo khi `tickets.json` chưa tồn tại | Integration | Tạo file mới, không văng lỗi |
 
-### `tickets list` (including filters by status / priority / tags)
+### `tickets list` (kèm lọc theo status / priority / tags)
 
-| # | Behaviour under test | Level | Expected result |
+| # | Hành vi được test | Tầng | Kết quả mong đợi |
 |---|---|---|---|
 | 1 | Không truyền filter | Unit | Trả về toàn bộ danh sách |
 | 2 | Filter theo `status` | Unit | Đúng tập con |
@@ -92,7 +92,7 @@ test flaky — lúc xanh lúc đỏ mà không do code. Dùng `fs.mkdtemp` cho t
 
 ### `tickets show <id>`
 
-| # | Behaviour under test | Level | Expected result |
+| # | Hành vi được test | Tầng | Kết quả mong đợi |
 |---|---|---|---|
 | 1 | `id` tồn tại, kho trong bộ nhớ | Unit | Trả đúng ticket, đủ 5 field |
 | 2 | `id` không tồn tại, kho trong bộ nhớ | Unit | Lỗi "not found", không ném lỗi lạ |
@@ -102,7 +102,7 @@ test flaky — lúc xanh lúc đỏ mà không do code. Dùng `fs.mkdtemp` cho t
 
 ### `tickets update <id>`
 
-| # | Behaviour under test | Level | Expected result |
+| # | Hành vi được test | Tầng | Kết quả mong đợi |
 |---|---|---|---|
 | 1 | Đổi `status` sang giá trị hợp lệ | Unit | Ticket có status mới |
 | 2 | Đổi `status` sang giá trị ngoài tập | Unit | Bị từ chối, ticket không đổi |
@@ -112,11 +112,11 @@ test flaky — lúc xanh lúc đỏ mà không do code. Dùng `fs.mkdtemp` cho t
 | 6 | Update rồi đọc lại file | Integration | Thay đổi đã được lưu xuống đĩa |
 | 7 | Update một ticket không làm hỏng ticket khác | Integration | Các bản ghi còn lại nguyên vẹn |
 
-## Required error cases
+## Ba error case bắt buộc
 
-`docs/plans/week-2/overview.md` requires these three explicitly:
+`docs/plans/week-2/overview.md` bắt buộc đúng ba ca này:
 
-| Error case | How to trigger it in a test | Expected behaviour |
+| Error case | Tạo tình huống trong test bằng cách nào | Hành vi mong đợi |
 |---|---|---|
 | Invalid input | Gọi `create` với `title = ''`, hoặc `update` với `status` ngoài tập cho phép | Ném lỗi validate có mã riêng; không ghi gì xuống file; exit code khác 0; thông báo nói rõ field nào sai |
 | Ticket not found | Gọi `show` hoặc `update` với `id` không có trong kho | Lỗi "not found" — **khác loại** với lỗi validate, để lớp CLI map ra thông báo và exit code khác nhau |
@@ -127,7 +127,7 @@ theo loại lỗi thì test không vỡ khi sửa câu chữ thông báo. Assert
 kiểu `toThrow('title không được rỗng')` — là weak assertion, vì `toThrow` khớp theo
 substring nên vẫn pass với một lỗi khác miễn message chứa chuỗi đó.
 
-## Illustrative snippets
+## Đoạn code minh hoạ
 
 Cú pháp Jest, giữ nhất quán toàn tài liệu — không trộn với Vitest.
 
@@ -206,16 +206,16 @@ Chú ý ca thứ hai dùng `await expect(...).rejects.toThrow(...)`, và `it` ph
 Chi tiết ở `ai-workflow-log.md` Part 3. Điều này còn quan trọng hơn ở tuần 3, khi mọi lời
 gọi HTTP đều là async.
 
-## How I verified this
+## Mình kiểm chứng bằng cách nào
 
-| Claim | How I checked it |
+| Khẳng định | Kiểm bằng cách nào |
 |---|---|
 | Phạm vi 4 lệnh, 5 field và 3 error case là đúng đề bài | Đối chiếu từng dòng với `docs/plans/week-2/overview.md`, không lấy phạm vi từ AI |
 | Phân loại unit/integration ở đây nhất quán với `02` | Áp cùng một trục: biên ngoài tiến trình. Các ca dùng kho trong bộ nhớ là unit kể cả khi về chủ đề là "CLI command behavior" |
 | `toThrow('chuỗi')` khớp theo substring nên là weak assertion | Đọc docs Jest chính thức, mục `.toThrow(error?)` |
 | Thư mục tạm riêng cho mỗi test là cần thiết, không phải cẩn thận thừa | Jest mặc định chạy nhiều worker song song; hai file test dùng chung một đường dẫn sẽ tranh nhau |
 
-## Still unsure about
+## Còn chưa chắc
 
 - Ca `update` không truyền field nào: nên từ chối như invalid input, hay coi là no-op và
   trả 0? Đề bài không nói. Cần chốt trước khi viết test, vì đây là quyết định về đặc tả

@@ -1,17 +1,17 @@
-# TDD Principles and Red-Green-Refactor
+# Nguyên tắc TDD và vòng Red-Green-Refactor
 
-> **Deliverable 1.** Workflow used: Layered Questioning.
+> **Deliverable 1.** Workflow đã dùng: Layered Questioning.
 
-## Questions this file answers
+## Những câu hỏi file này trả lời
 
-- What is TDD? `[đề bài]`
-- Why is TDD a design practice rather than only a testing practice? `[thêm]`
-- What happens in each of Red, Green, and Refactor? `[đề bài]`
-- How minimal is "minimal implementation" in the Green step? `[thêm]`
-- May tests be modified during the Refactor step? `[thêm]`
-- When is TDD *not* the right approach? `[thêm]`
+- TDD là gì? `[đề bài]`
+- Vì sao TDD là hoạt động thiết kế chứ không chỉ là hoạt động testing? `[thêm]`
+- Mỗi bước Red, Green, Refactor làm gì? `[đề bài]`
+- "Code tối thiểu" ở bước Green là tối thiểu tới mức nào? `[thêm]`
+- Bước Refactor có được sửa test không? `[thêm]`
+- Khi nào TDD **không** phải cách phù hợp? `[thêm]`
 
-## What TDD is
+## TDD là gì
 
 TDD là Test-Driven Development, là viết một test cho một hành vi chưa tồn tại, xem nó
 fail, viết code tối thiểu để pass, rồi dọn dẹp code trong khi test vẫn xanh, và lặp
@@ -70,7 +70,7 @@ Một giới hạn cần nhớ: test xanh không đảm bảo refactor đúng. T
 những gì nó khẳng định, nên nếu thay đổi rơi vào vùng chưa có test nào phủ thì sẽ
 không có ai báo.
 
-## Why write the test first
+## Vì sao viết test trước
 
 **Lý do 1 — test viết sau bị neo vào code đã tồn tại.** Khi đã đọc implementation
 rồi mới viết test, mình đọc các nhánh `if` đang có và viết test phủ đúng chúng. Thứ
@@ -158,7 +158,7 @@ test khớp với code, kể cả khi code sai. Điều kiện *"cuối cùng c�
 trước là đặc tả độc lập để chấm output; test viết sau chỉ là bản chép lại hành vi hiện có
 dưới dạng assertion.
 
-## When TDD does not fit
+## Khi nào TDD không phù hợp
 
 **Code khám phá, khi chưa biết mình muốn gì.** TDD đòi viết kỳ vọng trước; chưa biết
 kỳ vọng thì viết test là bịa. Thay thế: spike có giới hạn thời gian: viết code nháp
@@ -178,15 +178,15 @@ Ngược lại, ca TDD ít gây tranh cãi nhất là sửa bug: viết test tá
 sửa. Phần lớn người phản đối TDD vẫn làm việc này, vì nó vừa chứng minh đã tái hiện
 đúng bug, vừa là bảo hiểm chống bug quay lại.
 
-## How I verified this
+## Mình kiểm chứng bằng cách nào
 
-| Claim | How I checked it |
+| Khẳng định | Kiểm bằng cách nào |
 |---|---|
 | Test xanh không có nghĩa là code đúng | Đổi `return { title }` thành `return { title: title.trim() }` — hành vi đã khác mà 3/3 test vẫn xanh |
 | Test thứ hai là thứ buộc code tổng quát hoá | Với `if (title === '')`, thêm test truyền `'   '` thì đỏ; sửa thành `title.trim() === ''` mới xanh |
 | `toThrow('chuỗi')` khớp theo substring | Đọc docs Jest chính thức, mục `.toThrow(error?)` |
 
-## Still unsure about
+## Còn chưa chắc
 
 - Ranh giới giữa "làm rõ phụ thuộc" và "ceremony thừa" khi tiêm `clock` / `idGen` vào —
   hai phe Beck và DHH nhìn cùng một đoạn code ra hai kết luận ngược nhau

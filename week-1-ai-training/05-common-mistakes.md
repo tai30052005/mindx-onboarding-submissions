@@ -1,21 +1,21 @@
-# Common Testing Mistakes and How to Avoid Them
+# Những lỗi test thường gặp và cách tránh
 
-> **Deliverable 5.** Workflow used: Iterative Refinement.
+> **Deliverable 5.** Workflow đã dùng: Iterative Refinement.
 >
-> The four mistakes below are the ones named in `docs/plans/week-1/overview.md`.
+> Bốn lỗi dưới đây là bốn lỗi đề bài nêu trong `docs/plans/week-1/overview.md`.
 > Ví dụ trong file này lấy từ buổi refinement thật của mình, ghi ở `ai-workflow-log.md`
 > mục 20/08. Phần provenance, tức cái gì mình tự tìm ra và cái gì phải được chỉ, ghi trung
 > thực ở cuối file.
 
-## Questions this file answers
+## Những câu hỏi file này trả lời
 
-- What are the four mistakes, and what does each one look like in real test code? `[đề bài]`
-- Why is each one harmful — what does it cost later? `[thêm]`
-- How do I detect and avoid each one? `[đề bài]`
+- Bốn lỗi đó là gì, và trong code test thật chúng trông ra sao? `[đề bài]`
+- Mỗi lỗi có hại thế nào, về sau phải trả giá gì? `[thêm]`
+- Phát hiện và tránh từng lỗi bằng cách nào? `[đề bài]`
 
-## 1. Over-testing
+## 1. Test thừa (over-testing)
 
-**What it looks like**
+**Trông như thế nào**
 
 ```ts
 it('title được lưu đúng', () => {
@@ -27,21 +27,21 @@ it('title được lưu đúng', () => {
 Với implementation là `return { title, ... }`, test này đang kiểm tra **phép gán của
 JavaScript**, không kiểm tra logic nào của mình.
 
-**Why it hurts**
+**Tác hại**
 
 Nó không bao giờ đỏ vì một lý do có ý nghĩa — nếu phép gán hỏng thì đã không có gì chạy
 được. Nhưng nó vẫn tính vào con số test và vào coverage, nên tạo cảm giác được bảo vệ
 nhiều hơn thực tế. Và nó vẫn phải bảo trì: đổi tên field là phải sửa nó.
 
-**How to avoid it**
+**Cách tránh**
 
 Phép thử: **cố tình phá code, xem test có đỏ không.** Không nghĩ ra được cách phá nào làm
 test này đỏ mà không phá luôn cả chương trình, thì test đó không bảo vệ gì. Hỏi cụ thể hơn:
 "quy tắc nào của mình sẽ bị vi phạm nếu test này đỏ?" — không trả lời được thì xoá.
 
-## 2. Weak assertions
+## 2. Assertion yếu (weak assertions)
 
-**What it looks like**
+**Trông như thế nào**
 
 ```ts
 // trước
@@ -76,7 +76,7 @@ expect(() => createTicket({ title: '' }, deps)).toThrow(ValidationError);   // s
 `toThrow('chuỗi')` khớp theo **substring**, nên bất kỳ Error nào chứa chữ "rỗng" cũng pass
 — kể cả một lỗi hoàn toàn khác.
 
-**Why it hurts**
+**Tác hại**
 
 Test kiểu này trông y hệt test có ích trong báo cáo coverage, nhưng không phân biệt được
 code đúng với code sai. Và vì hành vi đó đã "có test" rồi, khả năng có ai quay lại viết
@@ -92,14 +92,14 @@ thật (`experiments/async-check/faketimer.test.js`, 3/3 pass, không tiêm gì 
 `id` ngẫu nhiên assert được bằng định dạng cộng tính duy nhất giữa hai lần gọi. Đường vòng
 có tồn tại; nó chỉ yếu hơn và phải chủ động nghĩ ra.
 
-**How to avoid it**
+**Cách tránh**
 
 Với mỗi assertion, hỏi: **giá trị sai nào vẫn lọt qua được?** Trả lời ra một giá trị cụ
 thể là assertion đó còn yếu. Và assert theo **loại lỗi**, không theo nội dung message.
 
-## 3. Testing implementation details
+## 3. Test vào chi tiết cài đặt
 
-**What it looks like**
+**Trông như thế nào**
 
 ```ts
 it('serialize ra đúng định dạng', () => {
@@ -113,21 +113,21 @@ câu `return` là một refactor thuần, hành vi quan sát được không đ�
 
 Cùng loại: `toThrow('title không được rỗng')` buộc test vào câu chữ thông báo lỗi.
 
-**Why it hurts**
+**Tác hại**
 
 Test đáng lẽ là lưới an toàn cho bước Refactor thì biến thành xiềng xích. Sửa cấu trúc
 xong thấy một loạt test đỏ dù không đổi hành vi, và phản xạ tiếp theo là **ngại refactor**
 — mất đúng thứ TDD sinh ra để cho.
 
-**How to avoid it**
+**Cách tránh**
 
 Test qua **bề mặt công khai**, khẳng định về hành vi chứ không về cách hành vi được tạo ra.
 Phép thử: *"nếu mình refactor bên trong mà không đổi hành vi, test này có đỏ không?"* — đỏ
 thì nó đang test implementation.
 
-## 4. Blindly trusting AI output
+## 4. Tin output của AI mà không kiểm
 
-**What it looks like**
+**Trông như thế nào**
 
 ```ts
 it('báo lỗi khi file JSON hỏng', () => {
@@ -141,7 +141,7 @@ it('báo lỗi khi file JSON hỏng', () => {
 async; `STORE_PATH` là đường dẫn cố định dùng chung nên Jest chạy song song sẽ tranh nhau;
 và ghi file xong không dọn.
 
-**Why it hurts**
+**Tác hại**
 
 Cả ba lỗi đều không nhìn thấy được khi đọc. Không lỗi nào sai cú pháp, không lỗi nào sai
 logic nếu soi từng dòng. `it` thiếu `async` chỉ lộ khi hàm thật sự được gọi; đường dẫn
@@ -149,11 +149,11 @@ dùng chung chỉ lộ khi có worker thứ hai chạy cùng lúc. Đọc kỹ h
 vấn đề không nằm ở chỗ đọc chưa kỹ.
 
 Lý do code AI né được phản xạ đọc-thấy-ổn thì mình viết ở `04-ai-validation.md`, mục
-"Tests as an executable specification". Không chép lại ở đây.
+"Test là đặc tả chạy được". Không chép lại ở đây.
 
-**How to avoid it**
+**Cách tránh**
 
-Quy trình đầy đủ cũng nằm ở `04`, mục "My review procedure". Riêng với nhóm lỗi này thì
+Quy trình đầy đủ cũng nằm ở `04`, mục "Quy trình mình soát trước khi nhận output của AI". Riêng với nhóm lỗi này thì
 chỉ đúng một việc có tác dụng: **chạy nó**. Cả ba lỗi trên đều lộ ngay lần chạy đầu tiên.
 
 Ví dụ thật trong tuần này: AI nói với hàm async thì `expect(() => f()).toThrow()` sẽ "im
@@ -161,7 +161,7 @@ lặng pass". Mình cài Jest thật và chạy: nó **không** pass, nhưng cũ
 thường — worker chết vì promise bị reject không ai bắt. Rủi ro AI nêu là có thật, nhưng
 mô tả triệu chứng thì sai, và chỉ chạy mới biết. Chi tiết ở `ai-workflow-log.md` Part 3.
 
-## Before / after from my own refinement session
+## Trước và sau, lấy từ buổi refinement của mình
 
 File gốc: `experiments/refinement/ticket.test.ts` — 6 test, 10 vấn đề.
 Bản sửa: `experiments/refinement/ticket.revised.test.ts`.
@@ -230,16 +230,16 @@ Nhóm sót thứ hai là các lỗi **không nhìn thấy khi đọc**: `it` thi
 dùng chung khi chạy song song, thiếu dọn dẹp. Chúng không sai về cú pháp và không sai về
 logic khi đọc từng dòng — chỉ sai khi chạy thật trong đúng điều kiện.
 
-## How I verified this
+## Mình kiểm chứng bằng cách nào
 
-| Claim | How I checked it |
+| Khẳng định | Kiểm bằng cách nào |
 |---|---|
 | `toThrow('chuỗi')` khớp theo substring nên là assertion yếu | Đọc docs Jest chính thức, mục `.toThrow(error?)` |
 | `expect(() => f()).toThrow()` không dùng được cho hàm async | Cài Jest 30 thật trong `experiments/async-check/`, viết 4 biến thể và chạy: hai biến thể sai làm chết worker, chỉ `await expect(f()).rejects.toThrow(...)` chạy đúng |
 | `toBeTruthy()` pass với cả giá trị sai định dạng | Chạy `node -e "console.log(['x','-',1].map(Boolean))"` — cả ba đều `true`, nên một `id` rỗng ký tự hay sai tiền tố vẫn lọt |
 | Đường dẫn file dùng chung gây flaky | Jest mặc định chạy nhiều worker song song; hai file test cùng ghi một đường dẫn sẽ tranh nhau |
 
-## Still unsure about
+## Còn chưa chắc
 
 - Ranh giới giữa over-testing và test-phòng-hồi-quy chưa rõ. `expect(t.title).toBe(...)`
   hôm nay là thừa, nhưng khi `title` bắt đầu bị chuẩn hoá — cắt khoảng trắng, giới hạn độ
