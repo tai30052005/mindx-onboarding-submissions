@@ -4,7 +4,7 @@
 >
 > Bốn lỗi dưới đây là bốn lỗi đề bài nêu trong `docs/plans/week-1/overview.md`.
 > Ví dụ trong file này lấy từ buổi refinement thật của mình, ghi ở `ai-workflow-log.md`
-> mục 20/08. Phần provenance, tức cái gì mình tự tìm ra và cái gì phải được chỉ, ghi trung
+> mục 20/08. Phần cái gì mình tự tìm ra và cái gì phải được chỉ thì ghi trung
 > thực ở cuối file.
 
 ## Những câu hỏi file này trả lời
@@ -209,7 +209,7 @@ chỉ viết được **nhờ** đã tiêm `generateId` — tức là sửa mộ
 thay đổi thiết kế. Đây đúng là luận điểm "TDD là hoạt động thiết kế" ở `01`, lần này gặp
 theo chiều ngược lại.
 
-## Provenance — cái gì mình tự tìm, cái gì phải được chỉ
+## Cái gì mình tự tìm ra, cái gì phải được chỉ
 
 Ghi thẳng vì đây là tuần chấm về critical thinking, và một bản tự đánh giá trung thực
 đáng tin hơn một danh sách hoàn hảo.
