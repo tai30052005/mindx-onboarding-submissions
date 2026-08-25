@@ -22,7 +22,7 @@ khớp nhau không.
   nhất, kèm câu *"đừng khen phương án này"*.
 - **Lượt 5 không có transcript.** Lượt đó làm trong phiên Claude Code chứ không phải
   phiên hỏi đáp riêng, nên không có đoạn hội thoại tách rời để chép. Dấu vết của nó nằm
-  ở commit `0cee1f0` — bản đầu của `02` với tỷ lệ 70/25/5.
+  ở commit `26ec88a` — bản đầu của `02` với tỷ lệ 70/25/5.
 - **Solution Exploration và Iterative Refinement không có transcript.** Chỉ có kết quả:
   bảng ba phương án trong log, và cặp file trước/sau trong `../experiments/refinement/`.
 

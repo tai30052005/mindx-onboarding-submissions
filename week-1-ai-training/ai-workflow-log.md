@@ -47,10 +47,10 @@ khi sửa vẫn còn nguyên và không viết lùi được:
 
 | Đổi cái gì | Trước | Sau | Mở diff bằng |
 |---|---|---|---|
-| Tỷ lệ 70/25/5 → 50/45/5 sau khi tự đo | `0cee1f0` | `b704709` | `git diff 0cee1f0 b704709 -- week-1-ai-training/02-testing-levels.md` |
-| Sửa claim async `toThrow` sau khi chạy Jest thật | | `aabacbe` | `git show aabacbe` |
-| Viết lại lý do 3 sau khi chạy fake timer | | `657b2f5` | `git show 657b2f5` |
-| Đưa `experiments/` vào làm bằng chứng | | `02e2e48` | `git show 02e2e48` |
+| Tỷ lệ 70/25/5 → 50/45/5 sau khi tự đo | `26ec88a` | `d252be6` | `git diff 26ec88a d252be6 -- week-1-ai-training/02-testing-levels.md` |
+| Sửa claim async `toThrow` sau khi chạy Jest thật | | `e699e47` | `git show e699e47` |
+| Viết lại lý do 3 sau khi chạy fake timer | | `2a848a4` | `git show 2a848a4` |
+| Đưa `experiments/` vào làm bằng chứng | | `ee20444` | `git show ee20444` |
 
 Diff đầu bảng là cái đáng xem nhất: bản cũ ghi *"Tỷ lệ 70/25/5 là ước lượng theo lập luận,
 chưa có số đo thật"*, và ô Speed ghi *"hàng chục đến hàng trăm ms"* — đúng cái giả định mà
