@@ -13,7 +13,7 @@
 | Workflow | Dùng cho | Số lượt | Kết quả |
 |---|---|---|---|
 | Layered Questioning | `01-tdd-principles.md`, `02-testing-levels.md` | 6 lượt qua 2 phiên | Lượt hỏi giả định lôi ra 4 giả định sai về phạm vi bài, trong đó có việc tưởng tuần 1 chấm về TDD. Vòng review đối kháng ở phiên mới tìm ra 7 lỗi trong `02`, làm đổi tỷ lệ đề xuất từ 70/25/5 sang 50/45/5 |
-| Solution Exploration | Decision: how to test the JSON storage layer | 1 vòng, 3 phương án | Loại hẳn mock `fs` vì nó phá đúng ca "file JSON hỏng" mà đề bài bắt buộc. Chọn interface + in-memory làm mặc định, cộng nhóm nhỏ test file thật cho ba error case |
+| Solution Exploration | Quyết định: test tầng lưu trữ JSON bằng cách nào | 1 vòng, 3 phương án | Loại hẳn mock `fs` vì nó phá đúng ca "file JSON hỏng" mà đề bài bắt buộc. Chọn interface + in-memory làm mặc định, cộng nhóm nhỏ test file thật cho ba error case |
 | Iterative Refinement | `05-common-mistakes.md` | 6 bước, 1 vòng | Tự tìm được 1/10 lỗi; sửa 3 chỗ phủ ba loại lỗi khác nhau. Phát hiện sửa assertion yếu kéo theo thay đổi thiết kế |
 
 **Quyết định mình tự đưa ra:**
@@ -232,9 +232,9 @@ Chưa từng áp dụng TDD vào project nào
 
 | Phương án | Được gì | Mất gì |
 |---|---|---|
-| Real files in a temp directory | Test đúng hành vi thật, gồm cả file hỏng, thiếu file, và lỗi encoding — những thứ chỉ xuất hiện khi có `fs` thật. Không phải bảo trì một lớp giả | Chậm hơn: đo thật được 1.0–2.5ms mỗi test so với 0.05–0.13ms của unit. Mỗi test phải tự tạo và dọn thư mục tạm, quên là flaky khi Jest chạy song song |
-| Mock the `fs` module | Nhanh nhất, không chạm đĩa, không cần dọn dẹp | Đang khẳng định về **cái mock**, không phải về hành vi thật. Ca "file JSON hỏng" — đúng một trong ba error case bắt buộc — mất hết giá trị, vì chính mình quyết định mock sẽ hỏng thế nào. Mock `fs` cũng phải cập nhật theo mỗi lần đổi cách gọi API |
-| Storage behind an interface + in-memory implementation | Phần lớn test chạy ở tốc độ unit. Đổi sang nguồn khác dễ — đúng thứ tuần 3 cần khi cắm HTTP client, và khớp với mô hình mock-first mà `week-3/architecture.md` mô tả | Thêm một tầng trừu tượng trước khi có bằng chứng là cần. Vẫn phải viết vài test file thật cho ba error case bắt buộc, nên không thay thế được phương án 1 mà chỉ bổ sung |
+| File thật trong thư mục tạm | Test đúng hành vi thật, gồm cả file hỏng, thiếu file, và lỗi encoding — những thứ chỉ xuất hiện khi có `fs` thật. Không phải bảo trì một lớp giả | Chậm hơn: đo thật được 1.0–2.5ms mỗi test so với 0.05–0.13ms của unit. Mỗi test phải tự tạo và dọn thư mục tạm, quên là flaky khi Jest chạy song song |
+| Mock module `fs` | Nhanh nhất, không chạm đĩa, không cần dọn dẹp | Đang khẳng định về **cái mock**, không phải về hành vi thật. Ca "file JSON hỏng" — đúng một trong ba error case bắt buộc — mất hết giá trị, vì chính mình quyết định mock sẽ hỏng thế nào. Mock `fs` cũng phải cập nhật theo mỗi lần đổi cách gọi API |
+| Storage sau một interface, kèm bản in-memory | Phần lớn test chạy ở tốc độ unit. Đổi sang nguồn khác dễ — đúng thứ tuần 3 cần khi cắm HTTP client, và khớp với mô hình mock-first mà `week-3/architecture.md` mô tả | Thêm một tầng trừu tượng trước khi có bằng chứng là cần. Vẫn phải viết vài test file thật cho ba error case bắt buộc, nên không thay thế được phương án 1 mà chỉ bổ sung |
 
 **Ràng buộc của mình:** làm một mình · 5 tuần · tuần 3 phải cắm thêm HTTP client
 

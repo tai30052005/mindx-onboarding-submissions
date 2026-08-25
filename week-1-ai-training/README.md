@@ -1,4 +1,4 @@
-# Tuần 1 — AI Training: Effective Usage & Critical Thinking
+# Tuần 1 — AI Training: dùng AI hiệu quả và tư duy phản biện
 
 **Thời gian:** 18/08/2026 → 25/08/2026
 **Chủ đề nghiên cứu:** Test-Driven Development, để làm CLI đáng tin khi có AI hỗ trợ
@@ -16,23 +16,26 @@
 
 ## Tiêu chí chấm → nằm ở đâu
 
+Nguyên văn tiếng Anh của tiêu chí và deliverable nằm ở `docs/plans/week-1/overview.md`;
+ở đây dịch lại để cả file dùng một ngôn ngữ.
+
 | Tiêu chí chấm | Nằm ở đâu | Xong |
 |---|---|---|
-| Research content documented: TDD principles, testing levels, CLI test examples, AI validation | `01`, `02`, `03`, `04` | ☑ |
-| Research process with AI tracked: workflows applied and iterations documented | `ai-workflow-log.md` | ☑ |
-| Research findings can be explained clearly when submitting | *(interview)* | ☐ |
-| Questions about TDD, test types, AI-generated code validation can be answered | *(interview)* | ☐ |
+| Nội dung nghiên cứu được ghi lại: nguyên tắc TDD, các tầng test, ví dụ test cho CLI, kiểm chứng code AI | `01`, `02`, `03`, `04` | ☑ |
+| Quá trình làm việc với AI được ghi lại: dùng workflow nào, lặp bao nhiêu vòng | `ai-workflow-log.md` | ☑ |
+| Trình bày được rõ ràng kết quả nghiên cứu khi nộp bài | *(hỏi trực tiếp)* | ☐ |
+| Trả lời được câu hỏi về TDD, các loại test, cách kiểm chứng code AI sinh ra | *(hỏi trực tiếp)* | ☐ |
 
 ## Deliverable → nằm ở đâu
 
 | # | Deliverable | Nằm ở đâu | Xong |
 |---|---|---|---|
-| 1 | Core principles of TDD and Red-Green-Refactor | `01` | ☑ |
-| 2 | Comparison of unit / integration / e2e tests | `02` | ☑ |
-| 3 | Examples of tests for a Ticket Manager CLI | `03` | ☑ |
-| 4 | How testing helps control AI-generated implementation | `04` | ☑ |
-| 5 | Common testing mistakes and how to avoid them | `05` | ☑ |
-| 6 | Evidence of applying all 3 workflows | `ai-workflow-log.md` | ☑ |
+| 1 | Nguyên tắc cốt lõi của TDD và vòng Red-Green-Refactor | `01` | ☑ |
+| 2 | So sánh test unit / integration / e2e | `02` | ☑ |
+| 3 | Ví dụ test cho CLI quản lý ticket | `03` | ☑ |
+| 4 | Test giúp kiểm soát code AI sinh ra như thế nào | `04` | ☑ |
+| 5 | Lỗi test thường gặp và cách tránh | `05` | ☑ |
+| 6 | Bằng chứng đã áp dụng cả 3 workflow | `ai-workflow-log.md` | ☑ |
 
 ## Các quyết định đã chốt
 
