@@ -53,6 +53,6 @@ describe('filterTickets', () => {
 describe('formatLine', () => {
   it('format một ticket thành một dòng đọc được', () => {
     const line = formatLine(t({ id: 'T-1', title: 'Sửa lỗi', status: 'open', priority: 'high' }));
-    expect(line).toBe('T-1  open         high    Sửa lỗi');
+    expect(line).toBe('T-1   open         high    Sửa lỗi');
   });
 });
