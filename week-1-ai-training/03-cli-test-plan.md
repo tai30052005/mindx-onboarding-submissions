@@ -33,8 +33,8 @@ expect(t.id).toBe('T-1');
 Dòng này loại được giá trị sai, còn `toBeDefined()` thì không. Nó xanh với cả `"abcxyz"`
 lẫn `0`. Đó là lỗi assertion yếu ở `05-common-mistakes.md`.
 
-Nên chuyện viết test đã ép mình đổi cách viết hàm. Đây là chỗ "TDD là hoạt động thiết kế"
-ở `01` hiện ra cụ thể.
+Nên chuyện viết test đã ép mình đổi cách viết hàm. Đó là lý do 2 trong `01`, ở đây hiện
+ra cụ thể.
 
 **2. Hàm xử lý lệnh *trả về* exit code, không tự gọi `process.exit()`.**
 
@@ -158,7 +158,8 @@ substring nên vẫn pass với một lỗi khác miễn message chứa chuỗi 
 
 ## Đoạn code minh hoạ
 
-Cú pháp Jest, giữ nhất quán toàn tài liệu — không trộn với Vitest.
+Cú pháp Jest, giữ nhất quán trong cả tài liệu. Tuần 2 dùng đúng stack này, code thật ở
+`../week-2-3-ticket-cli/`.
 
 **Unit test với dependency được tiêm.** Nhờ tiêm `now` và `generateId` mà assert được giá
 trị chính xác thay vì `toBeDefined()`:

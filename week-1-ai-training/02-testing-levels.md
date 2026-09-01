@@ -35,8 +35,8 @@ Lần chạy này integration chậm hơn unit 32 lần. Chạy lại vài lư�
 trong khoảng 18 đến 59 lần, tuỳ máy lúc đó đang tải nặng hay nhẹ. Số thì đổi nhưng unit
 lúc nào cũng nhanh hơn nhiều, và 500 integration test vẫn chạy dưới 1 giây.
 
-Lần đo đầu mỗi nhóm bỏ không tính, vì lúc đó Node còn đang khởi động. Trong output ở trên
-nó hiện rõ: `UNIT 1` mất 5ms còn `UNIT 3` chỉ 0.09ms.
+Lần đo đầu mỗi nhóm bỏ không tính, vì lúc đó Node còn đang khởi động. Chạy thử thì thấy
+rõ: `UNIT 1` mất 5ms còn `UNIT 3` chỉ 0.09ms, cùng một đoạn code.
 
 ## Tỷ lệ giữa ba tầng, và vì sao mình đổi
 

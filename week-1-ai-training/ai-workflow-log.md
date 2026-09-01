@@ -196,8 +196,8 @@ Sáu lỗi còn lại không sửa. Lý do thật là hết giờ, không phải
 `generateId` để assert được giá trị chính xác.
 
 Một quan sát rút ra ở bước này: `expect(t.id).toBe('T-1')` chỉ viết được **nhờ** đã tiêm
-`generateId`. Tức là sửa một assertion yếu kéo theo một thay đổi thiết kế. Đúng luận điểm "TDD
-là hoạt động thiết kế" ở `01`, lần này gặp theo chiều ngược lại.
+`generateId`. Tức là sửa một assertion yếu kéo theo một thay đổi thiết kế. Đó là lý do 2 trong `01`
+gặp lại ở đây theo chiều ngược.
 
 **5. Mình phản hồi lại gì**
 

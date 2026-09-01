@@ -88,9 +88,11 @@ it('sinh id từ generateId được tiêm', () => {
 ```
 
 Chú ý một test yếu bị tách thành hai test có tên nói rõ hành vi. Và `expect(t.id).toBe('T-1')`
-chỉ viết được nhờ đã tiêm `generateId`. Tức là sửa một assertion yếu kéo theo một
-thay đổi thiết kế. Đây đúng là luận điểm "TDD là hoạt động thiết kế" ở `01`, lần này gặp
-theo chiều ngược lại.
+chỉ viết được nhờ đã tiêm `generateId`.
+
+Tức là muốn sửa một assertion yếu thì phải đổi luôn cách viết hàm. Đó là lý do 2 trong
+`01` gặp lại ở đây, nhưng đi ngược chiều: ở `01` là viết test trước nên mình quyết hình
+dạng hàm, còn ở đây là test đã viết rồi, sửa nó cho chắc thì hàm phải đổi theo.
 
 ## Cái gì mình tự tìm ra, cái gì phải được chỉ
 
