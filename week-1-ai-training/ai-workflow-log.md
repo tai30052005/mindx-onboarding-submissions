@@ -18,18 +18,27 @@
 
 **Quyết định mình tự đưa ra:**
 
-> Chọn phương án giấu tầng lưu trữ sau interface, kèm một bản in-memory. Cộng thêm một
-> nhóm nhỏ test dùng file thật cho ba error case bắt buộc.
+> Chọn phương án giấu tầng lưu trữ sau một interface, kèm một bản in-memory dùng trong
+> test. Cộng thêm một nhóm nhỏ test dùng file thật cho ba error case bắt buộc.
 >
-> Lý do: ràng buộc nặng nhất là tuần 3 phải cắm HTTP client vào cùng codebase, và đây là
-> phương án duy nhất chuẩn bị sẵn cho việc đó.
+> **Lý do thứ nhất:** nếu tầng lệnh gọi thẳng vào file thì mỗi test lệnh đều phải tạo
+> file thật rồi xoá đi. Có interface thì test truyền bản in-memory vào, không đụng file
+> nào. Nhanh hơn, và không phải dọn.
 >
-> Rủi ro đã biết: thêm một tầng trừu tượng khi chưa có bằng chứng là cần. Nếu cuối tuần 2
-> interface đó vẫn chỉ có một implementation thật thì mình đã trừu tượng hoá sớm.
+> **Lý do thứ hai, và là lý do chính:** tuần 3 phải cắm HTTP client vào chính codebase
+> này. Nếu tầng lệnh gọi thẳng `JsonTicketStore` thì phải sửa mọi chỗ đang gọi nó. Còn
+> nếu nó chỉ biết interface thì chỉ cần thêm một file mới, `HttpTicketStore`, cũng có
+> `load()` và `save()`. Tầng lệnh không phải sửa dòng nào.
+>
+> **Rủi ro đã biết:** thêm một tầng trừu tượng khi chưa có bằng chứng là cần. Nếu hết
+> tuần 2 mà interface đó vẫn chỉ có một bản thật thì mình đã trừu tượng hoá sớm.
 
-**Một quyết định khác về phương pháp:** cố tình gửi bài cho một phiên AI **mới** để
-review, thay vì hỏi lại phiên đã dựng phương án. Phiên cũ đã "ký tên" vào đề xuất rồi
-nên chỉ phản biện lấy lệ.
+**Một quyết định khác về phương pháp:** đưa `02` cho một phiên AI **mới** để review, chứ
+không hỏi lại phiên đã viết ra nó.
+
+Lý do: chính phiên đó viết ra `02`. Hỏi nó chỗ nào sai tức là bắt nó chê bài của chính
+nó, nên nó sẽ chê nhẹ cho có. Phiên mới không biết bài này của ai nên không có gì phải
+giữ.
 
 Lần đó tìm ra lỗi nặng nhất của cả tuần: mình dẫn số đo của e2e để chứng minh một khẳng
 định về integration.
