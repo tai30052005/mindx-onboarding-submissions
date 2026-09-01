@@ -178,8 +178,7 @@ Mười vấn đề, gom thành bốn nhóm khớp với bốn lỗi trong `05`:
 > bản sửa, mình chỉ đọc lại. Ghi đúng như vậy vì phần còn lại của log này chỉ đáng tin
 > nếu chỗ nào cũng ghi đúng.
 
-`experiments/refinement/ticket.revised.test.ts`. Sửa ba chỗ, chọn ba cái phủ đủ ba loại
-lỗi khác nhau:
+`experiments/refinement/ticket.revised.test.ts`. Sửa bốn chỗ trong mười lỗi:
 
 - Bỏ `STORE_PATH` cố định, thay bằng `mkdtemp` riêng cho mỗi test kèm `afterEach` dọn dẹp
 - Tách test đầu, vốn là một assertion yếu, thành hai test có tên nói rõ hành vi, và assert giá
@@ -189,8 +188,12 @@ lỗi khác nhau:
 - Tách `describe` thành ba khối theo đơn vị: `createTicket`, `JsonTicketStore`,
   `updateTicket`
 
-Bốn test còn lại để nguyên và đánh dấu `TODO` có chủ đích, làm mốc đối chiếu khi quay lại
-ở tuần 2.
+Sáu lỗi còn lại không sửa. Lý do thật là hết giờ, không phải chọn có chủ đích. Chúng được
+đánh dấu `TODO` để quay lại ở tuần 2.
+
+Đến tuần 2 thì cả bốn chỗ đã sửa ở đây đều thành quyết định thiết kế thật trong
+`week-2-3-ticket-cli/`: thư mục tạm riêng cho mỗi test, assert theo loại lỗi, và tiêm
+`generateId` để assert được giá trị chính xác.
 
 Một quan sát rút ra ở bước này: `expect(t.id).toBe('T-1')` chỉ viết được **nhờ** đã tiêm
 `generateId`. Tức là sửa một assertion yếu kéo theo một thay đổi thiết kế. Đúng luận điểm "TDD
