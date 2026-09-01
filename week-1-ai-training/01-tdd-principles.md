@@ -13,8 +13,8 @@ Viết test xong chạy ngay thì nó đỏ, vì chưa có code.
 
 Rồi viết code cho nó xanh. Chỉ vừa đủ để xanh, không viết thêm.
 
-Rồi refactor, tức là chỉnh lại code cho gọn nhưng không đổi hành vi. Biết refactor không
-làm hỏng gì là nhờ kết quả test. Sửa xong chạy lại, vẫn xanh thì không hỏng.
+Rồi refactor. Refactor là chỉnh lại code nhưng không phá vỡ hành vi cũ. Biết mình không
+phá vỡ gì là nhờ kết quả test: sửa xong chạy lại, vẫn xanh thì không hỏng.
 
 ## Vì sao viết test trước
 
@@ -23,19 +23,20 @@ làm hỏng gì là nhờ kết quả test. Sửa xong chạy lại, vẫn xanh 
 Viết test sau thì test xanh ngay từ đầu. Nếu mình viết hỏng cái test, ví dụ quên dòng
 `expect`, thì nó cũng xanh. Mà xanh giả trông y hệt xanh thật, mình không phát hiện được.
 
-Viết test trước thì mình thấy nó đỏ trước đã. Nó đỏ được nghĩa là nó thật sự bắt được
-cái nó nói là bắt.
+Viết test trước thì mình thấy nó đỏ trước đã. Nó đỏ được nghĩa là test đấy bắt được lỗi
+thật, chứ không phải xanh vì nó chẳng kiểm gì.
 
 **2. Viết test trước thì mình quyết hình dạng hàm sẽ thế nào.**
 
-Viết test sau thì test phải chấp nhận hàm đang có, kể cả khi hàm đó khó test. Viết
-test trước thì mình viết cách gọi hàm trước, thấy khó gọi thì sửa ngay, vì code chưa
-tồn tại nên sửa không mất gì.
+Viết test trước thì mình là người quyết hình dạng của hàm. Viết test sau thì test phải
+nhận hình dạng hàm đang có, kể cả khi hàm đó khó test. Viết trước thì thấy khó gọi là
+sửa ngay được, vì code chưa có nên sửa không mất gì.
 
 ## "Viết test sau cũng được, miễn cuối cùng đủ test và đều xanh"
 
-"Đủ test và đều xanh" chưa chắc là đủ. Xanh mà chưa đỏ lần nào thì không chứng minh
-được gì. Nó có thể xanh vì test hỏng chứ không phải vì code đúng.
+Viết test sau thì test không đỏ lần nào, nên mình không biết được nó có kiểm gì không.
+"Đủ test và đều xanh" chưa chắc là đủ: nó có thể xanh vì test hỏng chứ không phải vì
+code đúng.
 
 ## Khi nào TDD không hợp
 

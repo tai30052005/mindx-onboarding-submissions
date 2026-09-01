@@ -8,8 +8,8 @@
 
 Unit test là test chạy trong chương trình mình.
 Integration test là test phải ra ngoài chương trình.
-End-to-end thì chạy cả chương trình luôn, như người dùng gõ lệnh vào terminal.
-Nó không gọi hàm nào.
+End-to-end thì chạy cả chương trình luôn. Unit với integration đều gọi hàm trong code,
+còn e2e thì không gọi hàm nào, mình gõ lệnh vào terminal như người dùng.
 
 Ra ngoài chương trình thì test bị chậm, kết quả không đoán được, và các test ghi đè
 lên nhau.
@@ -17,7 +17,7 @@ lên nhau.
 Đĩa, mạng, đồng hồ, số ngẫu nhiên cùng một nhóm vì đều ở ngoài chương trình. Nên đều
 dính ba chuyện trên.
 
-Cần e2e vì unit xanh hết, integration xanh hết mà gõ lệnh vẫn hỏng. Ví dụ quên nối
+Cần e2e vì unit xanh hết, integration xanh hết mà gõ lệnh vẫn hỏng, ví dụ vì không nối
 lệnh vào chương trình.
 
 ## Số đo
@@ -46,8 +46,8 @@ Ban đầu mình để 70/25/5 vì nghĩ integration chậm. Đo thử thì mỗ
 500 test vẫn dưới 1 giây. Nên lý do "chậm" không đứng được, và mình đổi thành 50/45/5.
 
 Lý do giữ unit nhiều là unit đỏ thì biết sai ở đâu, còn integration đỏ thì phải tự tìm.
-Integration chạy qua cả logic lẫn chỗ lưu file,
-nên nó đỏ thì lỗi có thể ở logic, cũng có thể ở chỗ lưu file.
+Integration chạy qua cả logic lẫn chỗ lưu file, nên nó đỏ thì lỗi ở logic hoặc ở chỗ
+lưu file, mình chưa biết chỗ nào.
 
 Không viết toàn e2e vì nó đắt gấp khoảng 40 lần integration, mà đỏ thì cũng không chỉ
 được sai ở đâu.

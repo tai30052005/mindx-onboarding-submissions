@@ -5,15 +5,15 @@
 
 ## 1. Test thừa
 
-Viết test kiểm `1 + 1 === 2`, hay kiểm `Array.filter` của JavaScript chạy đúng — không
-có ích, vì đó là code của JavaScript rồi, đã có người test.
+Viết test kiểm `1 + 1 === 2`, hay kiểm `Array.filter` chạy đúng thì không có ích, vì đó
+là code của JavaScript rồi, đã có người test.
 
 Mình chỉ test code của mình. Test lại thư viện thì tốn công viết, và tốn công sửa mỗi
 lần thư viện đổi.
 
 ## 2. Assertion yếu
 
-Assertion yếu là test vẫn xanh nhưng không kiểm được giá trị có đúng không.
+Assertion yếu là test vẫn xanh nhưng không kiểm tra được giá trị có đúng không.
 
 ```js
 expect(t.createdAt).toBeDefined();

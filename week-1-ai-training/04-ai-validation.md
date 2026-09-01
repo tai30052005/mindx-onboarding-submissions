@@ -6,24 +6,24 @@
 
 Xanh hết không có nghĩa là code đúng.
 
-Lúc AI viết test, nó đang nhìn thấy cái code nó vừa viết. Nên test đó mô tả cái code
-đang làm, không phải cái đáng lẽ code phải làm. Code sai thì test sai theo, và vẫn xanh.
+Lúc AI viết test, nó nhìn thấy cái code nó vừa viết. Nên test đó mô tả cái code đang
+làm, không phải cái đáng lẽ code phải làm. Code sai thì test cũng sai theo, mà vẫn xanh.
 
-Thêm nữa là cái test đó chưa đỏ bao giờ, nên không biết nó có bắt được gì không.
+Thêm nữa là code đó chưa đỏ bao giờ, nên không biết test có bắt được gì không.
 
 ## Cách mình làm thay vào đó
 
 Mình viết test, AI viết code cho test đó xanh.
 
-Làm vậy thì AI không sửa được test cho khớp với code của nó, vì test đã viết từ trước
-rồi. Và mình đã thấy test đỏ trước khi AI đụng vào, nên biết test đó bắt được thật.
+Làm vậy thì AI không sửa được test cho khớp với code của nó, vì test viết từ trước rồi.
+Và mình thấy test đỏ trước khi AI đụng vào, nên biết test đó bắt được thật.
 
 Đây cũng là phương án mình chọn sau buổi Solution Exploration, ghi ở `ai-workflow-log.md`.
 
 ## Xanh rồi vẫn phải soát
 
 Test của mình kiểm 3 trường hợp, AI làm xanh cả 3. Nhưng trường hợp thứ 4 mình quên chưa
-test thì mình không chắc code chạy đúng.
+test thì không chắc code chạy đúng ở đó.
 
 Xanh chỉ chứng minh đúng ở những chỗ có test. Chỗ không có test thì xanh không nói gì.
 
