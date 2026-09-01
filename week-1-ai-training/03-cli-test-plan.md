@@ -208,6 +208,17 @@ lời AI. Kết quả:
 | Có `await`, khẳng định đúng | Pass đúng |
 | Có `await`, khẳng định sai | Đỏ đúng cách, thông báo đọc được |
 
+Chính Node nói ra chuyện đó khi chạy — không phải mình suy đoán:
+
+```
+Test "XANH GIA - quen await..." generated asynchronous activity after the test ended.
+This activity created the error "AssertionError..." and would have caused the test to
+fail, but instead triggered an unhandledRejection event.
+```
+
+*"lẽ ra phải làm test đỏ, nhưng thay vào đó lỗi bị nuốt mất"* — đó đúng là định nghĩa
+của xanh giả.
+
 Rủi ro AI nêu là có thật — test cho hàm async viết sai thì xanh giả — nhưng mô tả cơ chế
 thì sai, nên vẫn phải chạy mới biết. Chi tiết ở `ai-workflow-log.md` Phần 3.
 

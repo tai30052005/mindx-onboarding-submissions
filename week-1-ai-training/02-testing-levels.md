@@ -22,23 +22,27 @@ lệnh vào chương trình.
 
 ## Số đo
 
-Tự chạy `experiments/speed/bench.test.js`: 5 test trong bộ nhớ và 5 test ghi đọc file
-thật, chạy cùng một lượt.
+Tự chạy `experiments/speed/bench.test.js`: 5 test chạy thuần trong bộ nhớ và 5 test ghi
+đọc file thật, đo trong cùng một lượt.
 
 | | Thời gian mỗi test |
 |---|---|
-| Unit | 0.06 – 0.09 ms |
-| Integration (ghi đọc file thật) | 1 – 2 ms |
+| Unit | 0.023 ms |
+| Integration (ghi đọc file thật) | 0.729 ms |
 | End-to-end (khởi động tiến trình) | ~88 ms |
 
-Chênh khoảng 20 lần giữa unit và integration. Test đầu mỗi nhóm bỏ không tính, vì lần
-chạy đầu Node còn đang khởi động.
+Lần chạy này integration chậm hơn unit **32 lần**. Chạy lại vài lượt thì con số đó nhảy
+trong khoảng 18–59 lần, vì nó phụ thuộc tải máy lúc đó. Thứ không đổi giữa các lượt: unit
+luôn nhanh hơn hẳn, và integration về tuyệt đối vẫn rẻ — 500 test vẫn dưới 1 giây.
+
+Lần đo đầu mỗi nhóm bỏ không tính, vì lúc đó Node còn đang khởi động. Trong output ở trên
+nó hiện rõ: `UNIT 1` mất 5ms còn `UNIT 3` chỉ 0.09ms.
 
 ## Tỷ lệ giữa ba tầng, và vì sao mình đổi
 
 **50% unit / 45% integration / 5% end-to-end.**
 
-Ban đầu mình để 70/25/5 vì nghĩ integration chậm. Đo thử thì mỗi test chỉ 1–2ms,
+Ban đầu mình để 70/25/5 vì nghĩ integration chậm. Đo thử thì mỗi test chưa tới 1ms,
 500 test vẫn dưới 1 giây. Nên lý do "chậm" không đứng được, và mình đổi thành 50/45/5.
 
 Lý do thật để giữ unit ở tỷ trọng cao là chuyện khác: **unit đỏ thì biết sai ở đâu,
