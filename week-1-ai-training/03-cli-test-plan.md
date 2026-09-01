@@ -19,21 +19,42 @@ type Deps = { now: () => Date; generateId: () => string };
 createTicket(input: CreateTicketInput, deps: Deps): Ticket
 ```
 
-Nếu hàm tự gọi `randomUUID()` và `new Date()` thì từ bên ngoài không có cách nào assert
-giá trị chính xác, chỉ còn `expect(t.id).toBeDefined()` — đúng loại weak assertion liệt kê
-ở `05-common-mistakes.md`. Tiêm vào thì test khẳng định được `expect(t.id).toBe('T-1')`.
-Luận điểm "TDD là hoạt động thiết kế" ở `01` gặp lại ở đây dưới dạng cụ thể.
+Nếu hàm tự gọi `randomUUID()` và `new Date()` bên trong thì `id` ngẫu nhiên, mỗi lần chạy
+một giá trị khác. Lúc đó test không viết được `toBe('T-1')`, chỉ còn viết được
+`expect(t.id).toBeDefined()`.
+
+Còn nếu tiêm vào thì trong test mình truyền `generateId: () => 'T-1'`, nên `t.id` luôn là
+`'T-1'` và viết được:
+
+```ts
+expect(t.id).toBe('T-1');
+```
+
+Dòng này loại được giá trị sai, còn `toBeDefined()` thì không. Nó xanh với cả `"abcxyz"`
+lẫn `0`. Đó là lỗi assertion yếu ở `05-common-mistakes.md`.
+
+Nên chuyện viết test đã ép mình đổi cách viết hàm. Đây là chỗ "TDD là hoạt động thiết kế"
+ở `01` hiện ra cụ thể.
 
 **2. Hàm xử lý lệnh *trả về* exit code, không tự gọi `process.exit()`.**
 
-`process.exit()` gọi trong test sẽ giết luôn Jest worker và cho output khó đọc. Chỉ
-entrypoint mới được `process.exit(run(argv))`. Tương tự, `process.argv` và `console.log`
-được truyền vào chứ không đọc/gọi trực tiếp, để test bắt được output.
+`process.exit(1)` là tắt ngay tiến trình đang chạy, không chạy tiếp dòng nào nữa.
+
+Test thì chạy trong tiến trình của Jest. Nên nếu hàm tự gọi `process.exit()`, cái test đó
+tắt luôn tiến trình Jest, và các test còn lại không chạy nữa. Output cũng không chỉ được
+là chết ở chỗ nào.
+
+Nên hàm chỉ trả về số, còn `process.exit(run(argv))` để ở entrypoint. Test gọi hàm rồi
+kiểm số trả về là đủ. `process.argv` và `console.log` cũng truyền vào chứ không gọi
+thẳng, để test bắt được output.
 
 **3. Mỗi integration test dùng một thư mục tạm riêng.**
 
-Jest chạy nhiều worker song song. Hai file test cùng đọc/ghi một `tickets.json` sẽ cho
-test flaky — lúc xanh lúc đỏ mà không do code. Dùng `fs.mkdtemp` cho từng test rồi dọn.
+Jest chạy nhiều worker song song. Nếu mọi test dùng chung một file `tickets.json` thì
+các test ghi đè lên nhau, nên test đỏ mà code không sai gì. Lúc xanh lúc đỏ tuỳ test nào
+chạy trước.
+
+Nên mỗi test tự tạo một thư mục tạm riêng bằng `fs.mkdtemp` rồi dọn sau khi xong.
 
 > Cách test tầng lưu trữ — thư mục tạm thật, mock `fs`, hay giấu sau interface với bản
 > in-memory — vẫn đang là quyết định mở, sẽ chốt qua Solution Exploration
