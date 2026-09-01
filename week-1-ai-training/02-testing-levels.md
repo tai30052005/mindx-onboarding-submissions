@@ -84,17 +84,50 @@ Mười ba test case lấy từ phạm vi thật của Ticket Manager CLI.
 
 **Hai ca ranh giới, và cách mình xử lý:**
 
-- **`tickets show <id>` với id không tồn tại.** Ranh giới thật ở đây là **unit ↔
-  integration**, không phải integration ↔ e2e. Gọi handler với tầng lưu trong bộ nhớ thì
-  không qua biên nào → theo trục của mình đó là **unit**, dù về chủ đề nó là "CLI command
-  behavior". Chỉ khi đọc từ file thật trên đĩa nó mới thành integration. Mình viết cả
-  hai: một unit test cho luật "không tìm thấy thì trả lỗi gì", một integration test cho
-  "đọc từ file thật rồi không tìm thấy".
-- **`priority` ngoài tập giá trị cho phép.** Ca này tách làm hai. Nếu `priority` là union
-  type thì gán sai giá trị trong code chết ở compile time. Đó là tầng static, không
-  phải test. Phần còn lại là chuỗi từ `process.argv` cần thu hẹp kiểu, và việc đó xảy ra
-  ở biên CLI. Không mảnh nào của ca này ở lại thành unit test thuần theo cách mình nghĩ
-  ban đầu.
+- **`tickets show <id>` với id không tồn tại.** Ca này mình viết **hai** test, và tuần 2
+  làm thật rồi: `tests/commands/run.test.ts` chạy với kho trong bộ nhớ,
+  `tests/commands/cli-file.test.ts` chạy với file thật.
+
+  Cái trong bộ nhớ là **unit**, vì nó không ra ngoài chương trình. Gọi hàm của chính mình
+  thì không tính là đi qua biên, dù về chủ đề nó là "CLI command behavior".
+
+  Sao phải viết cả hai? Vì mỗi cái chứng minh một thứ cái kia không chứng minh được. Cùng
+  một lệnh `show T-999` nhưng đường đi khác nhau:
+
+  ```
+  trong bộ nhớ:  runShow -> load() -> mảng có sẵn -> tìm -> không có -> báo lỗi
+  file thật:     runShow -> load() -> MỞ FILE -> ĐỌC -> PARSE JSON -> mảng -> tìm -> không có -> báo lỗi
+  ```
+
+  Test file thật đỏ thì lỗi có thể ở luật "không tìm thấy", hoặc ở ba bước mở/đọc/parse.
+  Còn test trong bộ nhớ đỏ thì chỉ có một chỗ để tìm: chính hai dòng quyết định làm gì khi
+  không thấy ticket.
+
+  Chiều ngược lại: nếu `JsonTicketStore` hỏng hoàn toàn thì test trong bộ nhớ **vẫn xanh**,
+  vì nó không đụng tới file. Nên test file thật là thứ duy nhất chứng minh việc đọc file
+  thật sự chạy được.
+- **`priority` ngoài tập giá trị cho phép.** Ca này tách làm hai nửa, và hai nửa cần hai
+  cách xử lý khác nhau.
+
+  **Nửa thứ nhất, không cần test.** `Priority` là union type `'low' | 'medium' | 'high'`.
+  Viết `createTicket({ priority: 'khẩn-cấp' })` trong code thì TypeScript báo lỗi ngay
+  lúc mình đang gõ, chưa chạy dòng nào. Viết test cho ca này là thừa — có một tầng khác
+  đã chặn rồi, và nó chặn với chi phí runtime bằng không.
+
+  **Nửa thứ hai, bắt buộc phải test.** Người dùng gõ
+  `--priority khẩn-cấp` ở terminal thì giá trị đó đi vào qua `process.argv`, và mọi thứ
+  từ `argv` đều là **chuỗi**. Lúc đó chương trình đã chạy rồi, TypeScript không còn giúp
+  được gì.
+
+  Nếu không kiểm, chuỗi đó được lưu thẳng xuống file. Ticket ấy có `priority` là một giá
+  trị không nằm trong ba giá trị cho phép, nên **không lệnh lọc nào tìm ra nó** — nó nằm
+  trong file mà coi như mất.
+
+  Tuần 2 làm đúng vậy: `assertValidPriority` chặn ở `src/commands/create.ts`, kèm test
+  `it('priority ngoài tập cho phép thì bị từ chối ngay ở biên CLI')`.
+
+  Điều rút ra: chỗ nào TypeScript phủ được thì đừng viết test, nhưng phải biết TypeScript
+  hết phủ ở đâu. Nó hết phủ đúng chỗ dữ liệu từ ngoài đi vào.
 
 ## Còn chưa chắc
 
