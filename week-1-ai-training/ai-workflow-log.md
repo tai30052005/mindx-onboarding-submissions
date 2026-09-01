@@ -82,50 +82,16 @@ Transcript nguyên văn 4 lượt ở `transcripts/`.
 
 ### 20/08 — Testing levels, và một vòng review đối kháng
 
-**Lượt 5 — dựng bản đầu của `02`**
+Transcript lượt 6 ở `transcripts/luot-6-review-doi-khang.md`.
 
-- **Hỏi gì:** làm cùng Claude trong phiên Claude Code, không phải một phiên hỏi đáp riêng.
-  Ghi đúng như vậy để không nhận công cho một workflow không xảy ra.
-- **Assumptions AI đang giả định:** ngầm giả định integration test tốn hàng chục ms vì
-  chạm đĩa — giả định này về sau bị chính phép đo bác bỏ.
-- **Risks / edge case bị bỏ:** không đo tốc độ thật; lấy câu chữ trong acceptance criteria
-  tuần 2 làm định nghĩa cấp test trong khi nó là phát biểu về phạm vi cần phủ.
-- **Mình verify bằng cách nào:** đối chiếu định nghĩa với `week-2/overview.md` thay vì
-  lấy từ AI.
-- **Mình sửa lại gì, vì sao:** chốt một định nghĩa "unit" và bảo vệ nó, thay vì liệt kê
-  tranh cãi rồi né — vì deliverable đòi một bảng so sánh dứt khoát.
+| Lượt | Mình hỏi gì | AI đưa ra gì | Mình kiểm bằng cách nào | Mình sửa lại gì |
+|---|---|---|---|---|
+| **5** | Dựng bản đầu của `02`. Làm trong phiên Claude Code, **không phải một phiên hỏi đáp riêng** — ghi đúng vậy để không nhận công cho một workflow không xảy ra | Ngầm giả định integration test tốn hàng chục ms vì chạm đĩa. Không đo lần nào. Và lấy câu chữ trong acceptance criteria tuần 2 làm định nghĩa cấp test, trong khi đó là phát biểu về phạm vi cần phủ | Đối chiếu định nghĩa với `week-2/overview.md` thay vì lấy từ AI | Chốt một định nghĩa "unit" rồi bảo vệ nó, thay vì liệt kê tranh cãi rồi né — vì deliverable đòi một bảng so sánh dứt khoát |
+| **6** | Đưa `02` cho một phiên AI **hoàn toàn mới**: tìm chỗ dễ bị phản bác nhất trong cách phân loại. Kèm câu *"đừng khen phương án này"* | **7 lỗi**, ba trong đó mình không tự thấy: (a) dùng hai trục định nghĩa mâu thuẫn mà không có trọng tài khi chúng cho kết quả khác nhau; (b) định nghĩa integration rộng tới mức gộp cả test 0.05ms lẫn test 2ms vào một nhóm, làm hỏng mọi lập luận chi phí; (c) **bảng verify dẫn số đo của khởi động tiến trình để chứng minh một claim về integration** — tức là chưa từng đo integration lần nào | Không tin lời review. Tự viết `experiments/speed/bench.test.js`: 5 unit test thuần bộ nhớ và 5 integration test ghi/đọc file thật, chạy cùng một lượt. Kết quả: unit ~0.02ms, integration ~0.7ms, chênh khoảng 32 lần. **Số đo đứng về phía người review** | Đổi tỷ lệ từ 70/25/5 sang **50/45/5**, vì lý do chính của mình — integration chậm nên giết vòng lặp TDD — bị chính số đo của mình bác bỏ. Chốt một trục duy nhất (ra ngoài chương trình hay không), ghi rõ acceptance criteria là hệ quả chứ không phải trục thứ hai. Thu hẹp "integration": gọi hàm command của chính mình không tính. Bổ sung `tickets update`, ca sinh `id`, ca format output, và tách "nội dung JSON hỏng" khỏi "file trên đĩa hỏng" |
 
-**Lượt 6 — review đối kháng ở phiên MỚI**
-
-- **Hỏi gì:** đưa `02` cho một phiên AI hoàn toàn mới đọc và tìm lỗ hổng: chỗ nào trong
-  cách phân loại dễ bị phản bác nhất, và người theo Testing Trophy sẽ phản bác lựa chọn
-  kim tự tháp bằng lập luận gì. Có thêm câu "đừng khen phương án này".
-- **Assumptions AI đang giả định:** phiên mới không biết đây là bài nộp của mình, nên
-  không có động cơ giữ thể diện cho phương án — đó chính là lý do chọn nó.
-- **Risks / edge case bị bỏ:** review chỉ ra 7 lỗi, trong đó 3 lỗi mình không tự thấy
-  được: (a) dùng hai trục định nghĩa mâu thuẫn — trục chủ đề lấy từ acceptance criteria
-  và trục biên — mà không có trọng tài khi hai trục cho kết quả khác nhau; (b) định nghĩa
-  integration rộng tới mức gộp cả test 0.05ms lẫn test 2ms vào một nhóm, làm hỏng mọi lập
-  luận chi phí; (c) bảng verify dẫn số đo của **khởi động tiến trình** để chứng minh một
-  claim về **integration** — tức là chưa từng đo integration lần nào.
-- **Mình verify bằng cách nào:** không tin lời review, mà tự viết
-  `experiments/speed/bench.test.js` — 5 unit test thuần bộ nhớ và 5 integration
-  test ghi/đọc file thật trong thư mục tạm, chạy cùng một lần. Kết quả: unit 0.05–0.13ms,
-  integration 1.0–2.5ms, cả lần chạy có tiến trình ~88ms. Số đo đứng về phía người review.
-- **Mình sửa lại gì, vì sao:** đổi tỷ lệ đề xuất từ 70/25/5 sang **50/45/5**, vì lý do
-  chính để loại Trophy, rằng integration chậm nên giết vòng lặp TDD, bị chính số đo của mình
-  bác bỏ. Chốt một trục định nghĩa duy nhất (biên ngoài tiến trình) và nói rõ acceptance
-  criteria là hệ quả chứ không phải trục thứ hai. Thu hẹp "integration": gọi hàm command
-  của chính mình không tính là integration. Viết lại đoạn Trophy thành phản biện đúng
-  luận điểm, rằng hai bên đang dùng chữ "integration" khác nghĩa, thay vì viện dẫn
-  tiêu chí chấm,
-  vì viện dẫn rubric là đổi chủ đề chứ không phải bảo vệ lựa chọn. Bổ sung `tickets
-  update`, ca sinh `id`, ca format output, tách "nội dung JSON hỏng" khỏi "file trên đĩa
-  hỏng", và ghi rõ 13 ca này không phải mẫu theo tỷ lệ.
-
-**Ghi chú về phương pháp:** cố tình gửi sang phiên mới thay vì phiên đã dựng phương án,
-để tránh việc AI phản biện chính đề xuất của nó và chỉ đưa ra phản bác lấy lệ. Phiên cũ
-đã "ký tên" vào phương án qua hai vòng trước đó.
+> **Ghi chú về phương pháp:** cố tình gửi sang phiên mới thay vì phiên đã dựng phương án,
+> để tránh việc AI phản biện chính đề xuất của nó rồi chỉ đưa phản bác lấy lệ. Phiên cũ
+> đã "ký tên" vào phương án qua hai vòng trước đó.
 
 ### 20/08 — Solution Exploration: cách test tầng lưu JSON
 
@@ -136,7 +102,7 @@ Transcript nguyên văn 4 lượt ở `transcripts/`.
 
 | Phương án | Được gì | Mất gì |
 |---|---|---|
-| File thật trong thư mục tạm | Test đúng hành vi thật, gồm cả file hỏng, thiếu file, và lỗi encoding — những thứ chỉ xuất hiện khi có `fs` thật. Không phải bảo trì một lớp giả | Chậm hơn: đo thật được 1.0–2.5ms mỗi test so với 0.05–0.13ms của unit. Mỗi test phải tự tạo và dọn thư mục tạm, quên là flaky khi Jest chạy song song |
+| File thật trong thư mục tạm | Test đúng hành vi thật, gồm cả file hỏng, thiếu file, và lỗi encoding — những thứ chỉ xuất hiện khi có `fs` thật. Không phải bảo trì một lớp giả | Chậm hơn: đo thật được khoảng 0.7ms mỗi test so với 0.02ms của unit — chênh vài chục lần. Mỗi test phải tự tạo và dọn thư mục tạm, quên là flaky khi Jest chạy song song |
 | Mock module `fs` | Nhanh nhất, không chạm đĩa, không cần dọn dẹp | Đang khẳng định về **cái mock**, không phải về hành vi thật. Ca "file JSON hỏng" — đúng một trong ba error case bắt buộc — mất hết giá trị, vì chính mình quyết định mock sẽ hỏng thế nào. Mock `fs` cũng phải cập nhật theo mỗi lần đổi cách gọi API |
 | Storage sau một interface, kèm bản in-memory | Phần lớn test chạy ở tốc độ unit. Đổi sang nguồn khác dễ — đúng thứ tuần 3 cần khi cắm HTTP client, và khớp với mô hình mock-first mà `week-3/architecture.md` mô tả | Thêm một tầng trừu tượng trước khi có bằng chứng là cần. Vẫn phải viết vài test file thật cho ba error case bắt buộc, nên không thay thế được phương án 1 mà chỉ bổ sung |
 
@@ -230,7 +196,7 @@ Nhãn lấy từ `slides-ai-training.md`: `wrong facts/code` · `unnecessary ico
 |---|---|---|---|---|
 | 1 | `wrong facts/code` | Dạy `expect(() => createTicket('')).toThrow('title không được rỗng')` như cách viết đúng | Đọc docs Jest mục `.toThrow(error?)`: nó khớp theo **substring**, nên test vẫn pass với một Error khác miễn message chứa chuỗi đó; và đổi câu chữ message là vỡ test dù hành vi không đổi | Chỉ ra rằng chính nó ở lượt sau đã gọi đây là weak assertion + testing implementation details — hai trong bốn lỗi liệt kê ở `05`. Yêu cầu assert theo loại lỗi thay vì nội dung message |
 | 2 | `outdated information` | Khẳng định mục `## Refactor` trong `01-tdd-principles.md` vẫn còn trống | Mở file ra: mục đó đã viết xong và đã lưu trước khi hỏi | Nói rõ là nó đang dựa trên bản đọc cũ, và từ chối để nó viết lại mục đã có |
-| 3 | `wrong facts/code` | Trong bản đầu của `02`, khẳng định "unit nhanh hơn integration một bậc độ lớn" và dẫn số đo làm bằng chứng | Phiên review mới chỉ ra số đo đó là thời gian **khởi động tiến trình** (e2e), không phải integration. Mình tự viết `experiments/speed/bench.test.js` đo lại: integration in-process chỉ 1.0–2.5ms, không phải hàng chục ms | Sửa thẳng con số trong bảng verify, và đổi luôn tỷ lệ đề xuất từ 70/25/5 sang 50/45/5 vì lập luận cũ dựa trên số sai. Ghi rõ trong `02` là tỷ lệ đã đổi và đổi vì lý do gì |
+| 3 | `wrong facts/code` | Trong bản đầu của `02`, khẳng định "unit nhanh hơn integration một bậc độ lớn" và dẫn số đo làm bằng chứng | Phiên review mới chỉ ra số đo đó là thời gian **khởi động tiến trình** (e2e), không phải integration. Mình tự viết `experiments/speed/bench.test.js` đo lại: integration in-process chưa tới 1ms, không phải hàng chục ms | Sửa thẳng con số trong bảng verify, và đổi luôn tỷ lệ đề xuất từ 70/25/5 sang 50/45/5 vì lập luận cũ dựa trên số sai. Ghi rõ trong `02` là tỷ lệ đã đổi và đổi vì lý do gì |
 | 4 | `wrong facts/code` | Với hàm async, `expect(() => f()).toThrow(...)` sẽ "im lặng pass mà chẳng kiểm tra gì" — AI nói ở Lượt 2, mình tin và chép lại vào `03` và `04` | Viết `experiments/async-check/async-test.test.js` và chạy: triệu chứng thật không phải "im lặng pass". Cái thật sự xanh giả là khi **quên `await`** — lúc đó test xanh dù khẳng định bên trong sai hoàn toàn. Viết đủ `await` thì khẳng định sai bị bắt, test đỏ có thông báo đọc được | Sửa cả `03` lẫn `04`. Rủi ro AI nêu **có thật** — test cho hàm async viết sai thì xanh giả — nhưng mô tả cơ chế thì sai. Phải chạy mới biết |
 | 5 | `wrong facts/code` | Trong `01`, mình viết: nếu `id`/`createdAt` sinh ngầm trong hàm thì người viết test sau "không còn lựa chọn nào ngoài assert yếu kiểu `toBeDefined()`" | Lượt 4 phản bác bằng một phương án cụ thể. Mình viết `experiments/async-check/faketimer.test.js` với hàm **không tiêm gì**, dùng `randomUUID()` và `new Date()` trực tiếp: khoá đồng hồ lại thì `createdAt` assert được về giá trị chính xác; `id` assert được bằng regex định dạng. **2/2 pass** | Viết lại toàn bộ lý do 3, bỏ câu sai. Ghi rõ đường vòng này yếu hơn tiêm thật: assert định dạng không ghim được giá trị, và khoá đồng hồ là trạng thái toàn cục dễ rò sang test khác |
 
