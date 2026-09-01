@@ -26,15 +26,15 @@ cũng xanh, ngày sai bét cũng xanh. Viết chắc thì phải là:
 expect(t.createdAt).toBe('2026-08-20T10:00:00.000Z');
 ```
 
-Chỗ nguy là nó **trông giống test thật** — vẫn chạy, vẫn xanh, vẫn được tính coverage.
-Nên mình tưởng chỗ đó có bảo vệ, thật ra không có.
+Chỗ nguy là nó trông giống test thật. Vẫn chạy, vẫn xanh, vẫn được tính coverage. Nên
+mình tưởng chỗ đó có bảo vệ, thật ra không có.
 
 ## 3. Test vào chi tiết cài đặt
 
 Hàm tính tổng tiền, mà test lại đi kiểm bên trong hàm có gọi `Array.reduce` không.
 
-Sửa `reduce` thành vòng `for`, kết quả vẫn đúng y hệt, nhưng test đỏ — **đỏ dù chẳng có
-gì hỏng**. Test đó bám vào cách làm chứ không bám vào kết quả.
+Sửa `reduce` thành vòng `for`, kết quả vẫn đúng y hệt, nhưng test đỏ. Đỏ dù chẳng có gì
+hỏng. Test đó bám vào cách làm chứ không bám vào kết quả.
 
 Hậu quả: mỗi lần dọn code là test đỏ, nên refactor thành ra tốn kém. Mà refactor là bước
 thứ ba của TDD.
@@ -119,9 +119,9 @@ này vẫn đúng với những giá trị sai nào?"*.
 Vẫn sót: khối `describe` gom lẫn test thuần bộ nhớ với test chạm file; thiếu `afterEach`
 dọn dẹp; test cuối gọi `updateTicket` trên một ticket chưa từng được lưu.
 
-Cái đổi giữa hai lần không phải là đọc kỹ hơn, mà là có thêm ba câu để hỏi từng dòng:
-*khẳng định này còn đúng với giá trị sai nào?*, *cái đang test là logic của mình hay của
-ngôn ngữ?*, *chỗ này có ra ngoài chương trình không?*
+Lần này khác lần trước không phải vì mình đọc kỹ hơn. Là vì mình có thêm ba câu để hỏi
+từng dòng: khẳng định này còn đúng với giá trị sai nào, cái đang test là logic của mình
+hay của ngôn ngữ, và chỗ này có ra ngoài chương trình không.
 
 
 ## Còn chưa chắc

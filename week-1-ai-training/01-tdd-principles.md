@@ -9,39 +9,38 @@ TDD là viết test trước rồi mới viết code.
 
 ## Vòng Red - Green - Refactor
 
-Viết test xong chạy ngay thì nó **đỏ**, vì chưa có code.
+Viết test xong chạy ngay thì nó đỏ, vì chưa có code.
 
-Rồi viết code cho nó **xanh** — chỉ vừa đủ để xanh, không viết thêm.
+Rồi viết code cho nó xanh. Chỉ vừa đủ để xanh, không viết thêm.
 
-Rồi **refactor**: chỉnh lại code cho gọn nhưng không đổi hành vi. Biết refactor không
-làm hỏng gì là nhờ kết quả test — sửa xong chạy lại, vẫn xanh thì không hỏng.
+Rồi refactor, tức là chỉnh lại code cho gọn nhưng không đổi hành vi. Biết refactor không
+làm hỏng gì là nhờ kết quả test. Sửa xong chạy lại, vẫn xanh thì không hỏng.
 
 ## Vì sao viết test trước
 
 **1. Test phải đỏ một lần thì mới tin được nó.**
 
-Viết test sau thì test xanh ngay từ đầu. Nếu mình viết hỏng cái test — quên dòng
-`expect` chẳng hạn — nó cũng xanh, mà xanh giả trông y hệt xanh thật, mình không phát
-hiện được.
+Viết test sau thì test xanh ngay từ đầu. Nếu mình viết hỏng cái test, ví dụ quên dòng
+`expect`, thì nó cũng xanh. Mà xanh giả trông y hệt xanh thật, mình không phát hiện được.
 
 Viết test trước thì mình thấy nó đỏ trước đã. Nó đỏ được nghĩa là nó thật sự bắt được
 cái nó nói là bắt.
 
 **2. Viết test trước thì mình quyết hình dạng hàm sẽ thế nào.**
 
-Viết test sau thì test phải chấp nhận hàm đang có — kể cả khi hàm đó khó test. Viết
+Viết test sau thì test phải chấp nhận hàm đang có, kể cả khi hàm đó khó test. Viết
 test trước thì mình viết cách gọi hàm trước, thấy khó gọi thì sửa ngay, vì code chưa
 tồn tại nên sửa không mất gì.
 
 ## "Viết test sau cũng được, miễn cuối cùng đủ test và đều xanh"
 
 "Đủ test và đều xanh" chưa chắc là đủ. Xanh mà chưa đỏ lần nào thì không chứng minh
-được gì — nó có thể xanh vì test hỏng chứ không phải vì code đúng.
+được gì. Nó có thể xanh vì test hỏng chứ không phải vì code đúng.
 
 ## Khi nào TDD không hợp
 
-Lúc đang mò thử một thư viện mới, chưa biết nó chạy ra sao — gõ đại vài dòng xem trả
-về gì rồi xoá đi. Lúc đó viết test trước không hợp, vì mình chưa biết mình muốn gì.
+Lúc đang mò thử một thư viện mới, chưa biết nó chạy ra sao, gõ đại vài dòng xem trả về
+gì rồi xoá đi. Lúc đó viết test trước không hợp, vì mình chưa biết mình muốn gì.
 Chưa biết muốn gì thì không viết ra được cái test mô tả nó.
 
 ## Mình kiểm chứng bằng cách nào

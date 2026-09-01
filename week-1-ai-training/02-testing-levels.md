@@ -8,16 +8,16 @@
 
 Unit test là test chạy trong chương trình mình.
 Integration test là test phải ra ngoài chương trình.
-End-to-end thì không gọi hàm nào cả — nó chạy cả chương trình luôn, như người dùng
-gõ lệnh vào terminal.
+End-to-end thì chạy cả chương trình luôn, như người dùng gõ lệnh vào terminal.
+Nó không gọi hàm nào.
 
 Ra ngoài chương trình thì test bị chậm, kết quả không đoán được, và các test ghi đè
 lên nhau.
 
-Đĩa, mạng, đồng hồ hệ thống, số ngẫu nhiên — bốn thứ này cùng một nhóm không phải vì
-chúng giống nhau, mà vì **đều ở ngoài chương trình**. Nên đều dính đủ ba chuyện trên.
+Đĩa, mạng, đồng hồ, số ngẫu nhiên cùng một nhóm vì đều ở ngoài chương trình. Nên đều
+dính ba chuyện trên.
 
-Cần e2e vì unit xanh hết, integration xanh hết mà gõ lệnh vẫn hỏng — ví dụ quên nối
+Cần e2e vì unit xanh hết, integration xanh hết mà gõ lệnh vẫn hỏng. Ví dụ quên nối
 lệnh vào chương trình.
 
 ## Số đo
@@ -31,9 +31,9 @@ Tự chạy `experiments/speed/bench.test.js`: 5 test chạy thuần trong bộ 
 | Integration (ghi đọc file thật) | 0.729 ms |
 | End-to-end (khởi động tiến trình) | ~88 ms |
 
-Lần chạy này integration chậm hơn unit **32 lần**. Chạy lại vài lượt thì con số đó nhảy
-trong khoảng 18–59 lần, vì nó phụ thuộc tải máy lúc đó. Thứ không đổi giữa các lượt: unit
-luôn nhanh hơn hẳn, và integration về tuyệt đối vẫn rẻ — 500 test vẫn dưới 1 giây.
+Lần chạy này integration chậm hơn unit 32 lần. Chạy lại vài lượt thì con số đó nhảy
+trong khoảng 18 đến 59 lần, tuỳ máy lúc đó đang tải nặng hay nhẹ. Số thì đổi nhưng unit
+lúc nào cũng nhanh hơn nhiều, và 500 integration test vẫn chạy dưới 1 giây.
 
 Lần đo đầu mỗi nhóm bỏ không tính, vì lúc đó Node còn đang khởi động. Trong output ở trên
 nó hiện rõ: `UNIT 1` mất 5ms còn `UNIT 3` chỉ 0.09ms.
@@ -45,12 +45,12 @@ nó hiện rõ: `UNIT 1` mất 5ms còn `UNIT 3` chỉ 0.09ms.
 Ban đầu mình để 70/25/5 vì nghĩ integration chậm. Đo thử thì mỗi test chưa tới 1ms,
 500 test vẫn dưới 1 giây. Nên lý do "chậm" không đứng được, và mình đổi thành 50/45/5.
 
-Lý do thật để giữ unit ở tỷ trọng cao là chuyện khác: **unit đỏ thì biết sai ở đâu,
-còn integration đỏ thì phải tự tìm.** Integration chạy qua cả logic lẫn chỗ lưu file,
+Lý do giữ unit nhiều là unit đỏ thì biết sai ở đâu, còn integration đỏ thì phải tự tìm.
+Integration chạy qua cả logic lẫn chỗ lưu file,
 nên nó đỏ thì lỗi có thể ở logic, cũng có thể ở chỗ lưu file.
 
-Còn vì sao không viết toàn e2e cho chắc: e2e đắt gấp khoảng 40 lần integration, và đỏ
-thì cũng không chỉ được nguyên nhân.
+Không viết toàn e2e vì nó đắt gấp khoảng 40 lần integration, mà đỏ thì cũng không chỉ
+được sai ở đâu.
 
 ## Phân loại ví dụ thật
 
