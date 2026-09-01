@@ -166,9 +166,13 @@ Nhận file với thông tin duy nhất là "có ít nhất 4 lỗi", không bi�
 **0 trên 10.** Đọc file đó mình thấy bình thường, không thấy chỗ nào sai. Cả 10 lỗi đều
 phải được chỉ ra.
 
-Ghi đúng con số này vì nó nói được trình độ mình lúc đó. Và vì trần thẩm định là thứ
-quyết định mình được phép nhận output AI tới đâu. Tự đánh giá cao hơn thực tế ở chỗ này
-là nguy hiểm nhất.
+Ghi đúng con số này vì nó nói được trình độ mình lúc đó. Và vì nó quyết định mình được
+phép nhận output của AI tới đâu: mình chỉ soát được tới mức mình đọc ra. Đọc không ra
+thì "review kỹ trước khi nhận" chỉ là nói cho có. Xem thêm mục *Còn chưa chắc* của
+`04-ai-validation.md`.
+
+Đọc lại chính file đó vào cuối tuần thì tự tìm được 5 trên 6 lỗi ở nửa đầu file. Chi
+tiết ở `05-common-mistakes.md`, mục *Cái gì mình tự tìm ra*.
 
 **3. Mình tóm tắt lại các vấn đề**
 
