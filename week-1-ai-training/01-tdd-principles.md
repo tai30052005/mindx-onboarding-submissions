@@ -26,11 +26,10 @@ Viết test sau thì test xanh ngay từ đầu. Nếu mình viết hỏng cái 
 Viết test trước thì mình thấy nó đỏ trước đã. Nó đỏ được nghĩa là test đấy bắt được lỗi
 thật, chứ không phải xanh vì nó chẳng kiểm gì.
 
-**2. Viết test trước thì mình quyết hình dạng hàm sẽ thế nào.**
+**2. Mình là người quyết hình dạng của hàm.**
 
-Viết test trước thì mình là người quyết hình dạng của hàm. Viết test sau thì test phải
-nhận hình dạng hàm đang có, kể cả khi hàm đó khó test. Viết trước thì thấy khó gọi là
-sửa ngay được, vì code chưa có nên sửa không mất gì.
+Viết test sau thì test phải nhận hình dạng hàm đang có, kể cả khi hàm đó khó test.
+Viết trước thì thấy khó gọi là sửa ngay được, vì code chưa có nên sửa không mất gì.
 
 ## "Viết test sau cũng được, miễn cuối cùng đủ test và đều xanh"
 
