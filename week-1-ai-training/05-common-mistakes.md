@@ -97,28 +97,35 @@ theo chiều ngược lại.
 Ghi thẳng vì đây là tuần chấm về critical thinking, và một bản tự đánh giá trung thực
 đáng tin hơn một danh sách hoàn hảo.
 
-| | Số lượng |
+**Lần đầu đọc file `experiments/refinement/ticket.test.ts` — tự tìm được 0/10.** Đọc thấy
+bình thường, không thấy chỗ nào sai. Cả 10 lỗi đều phải được chỉ ra, và ba chỗ sửa cũng
+không phải mình viết.
+
+Nhóm mù hẳn là **weak assertions**. Đọc `expect(t).toBeDefined()` và
+`expect(t.id).toBeTruthy()` mình không thấy gì sai, vì chưa có phản xạ hỏi *"khẳng định
+này vẫn đúng với những giá trị sai nào?"*.
+
+**Đọc lại chính file đó cuối tuần — tự tìm được 5 trên 6 lỗi ở nửa đầu file:**
+
+| Lỗi | Lần này |
 |---|---|
-| Mình tự tìm ra trước khi hỏi | **0 / 10** |
-| Phải được chỉ ra | 10 / 10 |
+| `toBeDefined()` / `toBeTruthy()` không loại được giá trị sai nào | tự tìm |
+| `expect(t.title).toBe(...)` đang test phép gán của JavaScript | tự tìm |
+| So cả chuỗi `JSON.stringify` — đổi thứ tự field là đỏ dù hành vi không đổi | tự tìm |
+| `toThrow('rỗng')` khớp substring nên lỗi khác cũng lọt | phải chỉ |
+| Mọi test dùng chung `./tickets.json` nên ghi đè nhau | tự tìm |
+| `expect(() => store.load()).toThrow()` với hàm async → xanh giả | tự tìm |
 
-Không tự tìm được lỗi nào. Lúc đọc file test đó mình thấy nó bình thường.
+Vẫn sót: khối `describe` gom lẫn test thuần bộ nhớ với test chạm file; thiếu `afterEach`
+dọn dẹp; test cuối gọi `updateTicket` trên một ticket chưa từng được lưu.
 
-Nhóm mình mù hẳn là **weak assertions**. Đọc `expect(t).toBeDefined()` và
-`expect(t.id).toBeTruthy()` mình không thấy có gì sai, vì chưa có phản xạ hỏi
-*"khẳng định này vẫn đúng với những giá trị sai nào?"*. Sau khi được chỉ ra và tự chạy
-lại `experiments/async-check/faketimer.test.js` thì mới thấy: `toBeDefined()` xanh với
-cả `"abcxyz"` lẫn `0`.
-
-Nhóm thứ hai là các lỗi **không nhìn thấy khi đọc**: thiếu `await` trong test async,
-dùng chung đường dẫn file khi chạy song song, thiếu dọn dẹp. Chúng không sai cú pháp,
-không sai logic khi đọc từng dòng — chỉ sai khi chạy thật. Cái thiếu `await` mình đã tự
-chạy lại được ở `async-check/async-test.test.js`, và chính Node in ra dòng
-*"would have caused the test to fail"*.
+Cái đổi giữa hai lần không phải là đọc kỹ hơn, mà là có thêm ba câu để hỏi từng dòng:
+*khẳng định này còn đúng với giá trị sai nào?*, *cái đang test là logic của mình hay của
+ngôn ngữ?*, *chỗ này có ra ngoài chương trình không?*
 
 
 ## Còn chưa chắc
 
-- Tự tìm được 0/10 lỗi. Chưa biết đọc bao nhiêu file test nữa thì con số đó mới nhúc nhích
+- Lần đọc lại tự tìm được 5/6 ở nửa đầu file, nhưng đó là file mình đã được chỉ lỗi một lần rồi. Chưa biết gặp file lạ hoàn toàn thì tỉ lệ còn được bao nhiêu
 - Ranh giới giữa "test hành vi" và "test chi tiết cài đặt" rõ trong ví dụ `reduce` ở
   trên, nhưng ở ca thật thì chưa chắc mình phân biệt được ngay

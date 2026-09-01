@@ -14,7 +14,7 @@
 |---|---|---|---|
 | Layered Questioning | `01-tdd-principles.md`, `02-testing-levels.md` | 6 lượt qua 2 phiên | Lượt hỏi giả định lôi ra 4 giả định sai về phạm vi bài, trong đó có việc tưởng tuần 1 chấm về TDD. Vòng review đối kháng ở phiên mới tìm ra 7 lỗi trong `02`, làm đổi tỷ lệ đề xuất từ 70/25/5 sang 50/45/5 |
 | Solution Exploration | Quyết định: test tầng lưu trữ JSON bằng cách nào | 1 vòng, 3 phương án | Loại hẳn mock `fs` vì nó phá đúng ca "file JSON hỏng" mà đề bài bắt buộc. Chọn interface + in-memory làm mặc định, cộng nhóm nhỏ test file thật cho ba error case |
-| Iterative Refinement | `05-common-mistakes.md` | 6 bước, 1 vòng | Tự tìm được 0/10 lỗi — cả 10 đều phải được chỉ. Sau đó tự sửa 3 chỗ phủ ba loại lỗi khác nhau. Phát hiện sửa assertion yếu kéo theo thay đổi thiết kế |
+| Iterative Refinement | `05-common-mistakes.md` | 6 bước, 1 vòng | Lần đầu tự tìm được 0/10, ba chỗ sửa cũng do AI viết. Đọc lại cuối tuần thì tự tìm được 5/6 ở nửa đầu file. Phát hiện sửa assertion yếu kéo theo thay đổi thiết kế |
 
 **Quyết định mình tự đưa ra:**
 
@@ -248,8 +248,7 @@ implementation thật thì đó là dấu hiệu mình đã trừu tượng hoá
 
 ### 20/08 — Iterative Refinement (soát lại file test)
 
-> _6 bước. Bước 4 là **mình tự sửa**, không nhắn "sửa giúp tôi" — đó là ranh giới
-> giữa "you are the architect" và AI làm architect._
+> _6 bước. Bước 4 lẽ ra là **mình tự sửa** — xem ghi chú trung thực ở mục 4 bên dưới._
 
 **1. Bản AI đưa ra**
 
@@ -279,7 +278,11 @@ Mười vấn đề, gom thành bốn nhóm khớp với bốn lỗi trong `05`:
   cố định dùng chung nên Jest chạy song song sẽ tranh nhau; ghi file xong không dọn; tên
   test `'update giữ nguyên các field khác'` chỉ assert mỗi `status`
 
-**4. Bản mình sửa lại**
+**4. Bản sửa lại**
+
+> **Ghi chú trung thực:** bước 4 của workflow đòi *mình tự sửa*. Thực tế lần đó AI viết
+> bản sửa, mình chỉ đọc lại. Ghi đúng như vậy vì phần còn lại của log này chỉ đáng tin
+> nếu chỗ nào cũng ghi đúng.
 
 `experiments/refinement/ticket.revised.test.ts`. Sửa ba chỗ, chọn ba cái phủ đủ ba loại
 lỗi khác nhau:
@@ -299,7 +302,7 @@ Một quan sát rút ra ở bước này: `expect(t.id).toBe('T-1')` chỉ viế
 `generateId`. Tức là sửa một assertion yếu kéo theo một thay đổi thiết kế — luận điểm "TDD
 là hoạt động thiết kế" ở `01`, lần này gặp theo chiều ngược lại.
 
-**5. What I fed back**
+**5. Mình phản hồi lại gì**
 
 Đưa bản sửa lại và hỏi còn sót gì. Cũng nói rõ là cố tình để lại 4 `TODO` để phản hồi
 không bị lãng phí vào những chỗ đã biết.
