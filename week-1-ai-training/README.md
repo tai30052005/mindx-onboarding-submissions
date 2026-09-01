@@ -45,11 +45,3 @@ Nguyên văn tiếng Anh của tiêu chí và deliverable nằm ở `docs/plans/
 - **Framework test: Jest**, dùng nhất quán trong mọi đoạn code, khớp với stack mà
   chương trình đã chốt ở `docs/plans/week-3/architecture.md`.
 
-## Nhãn câu hỏi
-
-Mỗi câu hỏi ở mục *Những câu hỏi file này trả lời* đều gắn nhãn nguồn gốc:
-
-- `[đề bài]` — đề bài nêu trong `docs/plans/week-1/overview.md` (Research focus / Deliverable). Bắt buộc.
-- `[thêm]` — mình tự thêm, theo phán đoán buổi review sẽ đào vào đâu, vì tiêu chí 3 và 4
-  chấm bằng miệng nhưng không liệt kê câu hỏi cụ thể nào. Hữu ích, nhưng đề bài không
-  bắt buộc.

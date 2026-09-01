@@ -7,14 +7,6 @@ Phạm vi lấy từ `docs/plans/week-2/overview.md`: một CLI lưu ticket vào
 ticket có các field `title`, `description`, `status`, `priority`, `tags`, và bốn lệnh
 `tickets create`, `tickets list`, `tickets show <id>`, `tickets update <id>`.
 
-## Những câu hỏi file này trả lời
-
-- Mỗi lệnh trong bốn lệnh cần test những gì? `[đề bài]`
-- Có những luật validate nào, và test từng luật ra sao? `[đề bài]`
-- Tầng lưu file JSON được test thế nào? `[đề bài]`
-- Ba error case bắt buộc được test thế nào? `[đề bài]`
-- Trong số đó, cái nào là unit test và cái nào là integration test? `[thêm]`
-
 ## Ba quyết định thiết kế mà kế hoạch này dựa vào
 
 Kế hoạch test không đứng độc lập với thiết kế. Ba điểm dưới đây phải chốt trước, nếu
@@ -121,6 +113,18 @@ test flaky — lúc xanh lúc đỏ mà không do code. Dùng `fs.mkdtemp` cho t
 | Invalid input | Gọi `create` với `title = ''`, hoặc `update` với `status` ngoài tập cho phép | Ném lỗi validate có mã riêng; không ghi gì xuống file; exit code khác 0; thông báo nói rõ field nào sai |
 | Ticket not found | Gọi `show` hoặc `update` với `id` không có trong kho | Lỗi "not found" — **khác loại** với lỗi validate, để lớp CLI map ra thông báo và exit code khác nhau |
 | Missing / corrupted JSON | Thiếu: không tạo file trong thư mục tạm rồi chạy lệnh. Hỏng: ghi `'{ this is not json'` vào `tickets.json` rồi chạy lệnh | Thiếu → coi như kho rỗng hoặc tạo mới theo spec, không văng stack trace. Hỏng → thông báo rõ là file dữ liệu hỏng kèm đường dẫn, exit code khác 0, **không** ghi đè mất dữ liệu người dùng |
+
+Vì sao "không tìm thấy" phải tách riêng khỏi "input sai":
+
+```
+tickets show ""       -> "id không được để trống"
+tickets show T-999    -> "không tìm thấy ticket T-999"
+```
+
+Cái đầu là người dùng gõ sai. Cái sau là người dùng gõ đúng, nhưng thứ họ tìm không
+tồn tại. Hai tình huống cần hai thông báo khác nhau, nên trong code phải là hai loại lỗi
+khác nhau. Gộp lại thì chỉ còn một thông báo, mà một thông báo thì hoặc sai với ca này
+hoặc sai với ca kia.
 
 Ba loại lỗi này cần ba loại riêng biệt trong code, không dùng chung `Error`. Lý do: assert
 theo loại lỗi thì test không vỡ khi sửa câu chữ thông báo. Assert theo nội dung message —
