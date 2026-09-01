@@ -47,17 +47,20 @@ Lần đó tìm ra lỗi nặng nhất của cả tuần: mình dẫn số đo c
 
 ## Bằng chứng cho phần log này
 
-Log là bản thuật lại, viết sau khi việc đã xảy ra. Ba nguồn dưới đây kiểm chéo được nó.
+Log là bản thuật lại, viết sau khi việc đã xảy ra. Người đọc chỉ có mỗi lời mình. Ba
+nguồn dưới đây để họ tự kiểm chéo.
 
-**1. Transcript gốc** — `transcripts/`, chép nguyên văn 5 lượt. Đối chiếu được với cột
-*"Hỏi gì"* và *"Mình sửa lại gì, vì sao"* ở từng lượt bên dưới. Lượt nào không có
-transcript thì `transcripts/README.md` ghi rõ là không có, kèm lý do.
+**1. Thí nghiệm chạy lại được** — `experiments/`, bốn thư mục, chạy bằng `node --test`,
+không cần cài gì. Đây là nguồn khó bịa nhất trong ba nguồn, vì người đọc **tự chạy ra
+kết quả thật** chứ không phải tin lời mình. Hai nguồn kia thì vẫn phải tin là mình chép
+đúng.
 
-**2. Thí nghiệm chạy lại được** — `experiments/`, bốn thư mục. `tdd-loop/` và `speed/`
-chạy bằng `node --test`, không cần cài gì.
+**2. Transcript gốc** — `transcripts/`, chép nguyên văn 5 lượt. Đối chiếu được với cột
+*"Hỏi gì"* và *"Mình sửa lại gì"* ở từng lượt bên dưới. Lượt nào không có transcript thì
+`transcripts/README.md` ghi rõ là không có, kèm lý do.
 
-**3. Lịch sử git** — mỗi lần đổi kết luận là một commit riêng. Nên trạng thái trước khi
-sửa vẫn còn nguyên, không viết lùi được:
+**3. Lịch sử git** — mỗi lần đổi kết luận là một commit riêng, nên bản trước khi sửa vẫn
+còn và diff được:
 
 | Đổi cái gì | Trước | Sau | Mở diff bằng |
 |---|---|---|---|
@@ -69,6 +72,12 @@ sửa vẫn còn nguyên, không viết lùi được:
 Diff đầu bảng là cái đáng xem nhất: bản cũ ghi *"Tỷ lệ 70/25/5 là ước lượng theo lập luận,
 chưa có số đo thật"*, và ô Speed ghi *"hàng chục đến hàng trăm ms"*. Đúng cái giả định mà
 phép đo về sau bác bỏ.
+
+Một chỗ phải ghi rõ: toàn bộ lịch sử này đã được viết lại một lần, khi mình chuyển các
+commit message sang chuẩn Conventional Commits theo góp ý của mentor. Nội dung từng thay
+đổi và ngày tháng thì giữ nguyên, nhưng mã commit thì đổi. Nên lịch sử git ở đây chứng
+minh được *thứ tự và nội dung* các lần sửa, chứ không phải là bằng chứng không thể can
+thiệp.
 
 ---
 
