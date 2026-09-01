@@ -198,17 +198,20 @@ describe('JsonTicketStore', () => {
 ```
 
 Chú ý ca thứ hai dùng `await expect(...).rejects.toThrow(...)`, và `it` phải là `async`.
-Đây là chỗ mình đã chạy thử thật với Jest 30 trên Node 24 thay vì tin lời AI:
+
+Chỗ này mình chạy thử thật trong `experiments/async-check/async-test.test.js` thay vì tin
+lời AI. Kết quả:
 
 | Cách viết | Kết quả thật |
 |---|---|
-| `expect(() => load()).toThrow()` | Không pass, cũng không đỏ bình thường — promise bị reject không ai bắt, **worker chết** kèm stack trace không chỉ vào test nào |
-| `expect(load()).rejects.toThrow(...)` thiếu `await` | Assertion chạy sau khi test đã kết thúc; cũng làm chết worker |
-| `await expect(load()).rejects.toThrow('file hong')` | Pass đúng |
-| `await expect(load()).rejects.toThrow('thông báo khác')` | Đỏ đúng cách, có diff đọc được |
+| Quên `await` trước khẳng định về hàm async | **Xanh giả** — test xanh dù khẳng định bên trong sai hoàn toàn, vì test kết thúc trước khi biết kết quả |
+| Có `await`, khẳng định đúng | Pass đúng |
+| Có `await`, khẳng định sai | Đỏ đúng cách, thông báo đọc được |
 
-Chi tiết ở `ai-workflow-log.md` Part 3. Điều này còn quan trọng hơn ở tuần 3, khi mọi lời
-gọi HTTP đều là async.
+Rủi ro AI nêu là có thật — test cho hàm async viết sai thì xanh giả — nhưng mô tả cơ chế
+thì sai, nên vẫn phải chạy mới biết. Chi tiết ở `ai-workflow-log.md` Phần 3.
+
+Điều này còn quan trọng hơn ở tuần 3, khi mọi lời gọi HTTP đều là async.
 
 ## Mình kiểm chứng bằng cách nào
 

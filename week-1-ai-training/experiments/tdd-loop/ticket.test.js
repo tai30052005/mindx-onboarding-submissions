@@ -2,18 +2,19 @@ const test = require('node:test');
 const assert = require('node:assert');
 const { createTicket } = require('./ticket');
 
-// ===== VÒNG 1 =====
-test('tạo ticket mới với status "open"', () => {
+// Test 1 - ticket moi phai co status la "open"
+test('tạo ticket mới thì status là open', () => {
   const t = createTicket('Fix login bug');
   assert.strictEqual(t.status, 'open');
 });
 
-// ===== VÒNG 2 — bỏ dấu // ở 3 dòng dưới khi tới bước C =====
-test('ném lỗi khi title rỗng', () => {
+// Test 2 - title rong thi phai nem loi
+test('title rỗng thì ném lỗi', () => {
   assert.throws(() => createTicket(''), /title không được rỗng/);
 });
 
-// ===== VÒNG 3 — bỏ dấu // ở 3 dòng dưới khi tới bước E =====
-test('coi title chỉ có khoảng trắng là rỗng', () => {
+// Test 3 - title toan khoang trang cung phai bi coi la rong
+// Day la test buoc code phai dung title.trim() chu khong phai title === ''
+test('title toàn khoảng trắng cũng bị coi là rỗng', () => {
   assert.throws(() => createTicket('   '), /title không được rỗng/);
 });

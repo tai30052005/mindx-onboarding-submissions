@@ -111,7 +111,7 @@ Chưa từng áp dụng TDD vào project nào
   khớp substring nên buộc test vào nội dung message; CRLF/LF trên Windows; `jest --watch`.
 - **Mình verify bằng cách nào:** không nhận cả gói. Kiểm từng claim: claim `toThrow('chuỗi')`
   khớp substring — đọc docs Jest chính thức mục `.toThrow(error?)`, **đúng**. Claim
-  `toThrow()` với hàm async "im lặng pass" — cài Jest 30 thật trong `experiments/async-check/` và chạy
+  `toThrow()` với hàm async "im lặng pass" — viết `experiments/async-check/async-test.test.js` và chạy,
   4 biến thể, **sai** (xem Part 3 dòng 4). Claim về nghiên cứu Fucci et al. — AI tự nhận
   dẫn từ trí nhớ, mình không tra được nguồn nên **không dùng**.
 - **Mình sửa lại gì, vì sao:** ba thay đổi kéo theo, đều xuất phát từ danh sách rủi ro này.
@@ -158,9 +158,8 @@ Chưa từng áp dụng TDD vào project nào
   không đúng với iterative test-last.
 - **Mình verify bằng cách nào:** không tin lời phản bác. Viết `experiments/async-check/faketimer.test.js`
   với một hàm **không tiêm gì cả**, dùng `randomUUID()` và `new Date()` trực tiếp, rồi thử
-  ba assertion: `createdAt` khoá bằng `jest.useFakeTimers()` + `setSystemTime()` và assert
-  giá trị chính xác; `id` assert bằng regex định dạng UUID; `id` của hai lần gọi phải khác
-  nhau. **3/3 pass.** Người phản biện đúng.
+  hai assertion: `createdAt` khoá đồng hồ lại rồi assert giá trị chính xác; `id` assert
+  bằng regex định dạng UUID. **2/2 pass.** Người phản biện đúng.
 - **Mình sửa lại gì, vì sao:** viết lại lý do 3 trong `01` — bỏ câu sai, thay bằng phần
   còn lại thật sự đứng được (test-first làm câu hỏi thiết kế thành *không thể né*,
   test-last làm nó thành *có thể né*), và ghi rõ hai chỗ hở: đường vòng có tồn tại, và
@@ -325,8 +324,8 @@ Nhãn lấy từ `slides-ai-training.md`: `wrong facts/code` · `unnecessary ico
 | 1 | `wrong facts/code` | Dạy `expect(() => createTicket('')).toThrow('title không được rỗng')` như cách viết đúng | Đọc docs Jest mục `.toThrow(error?)`: nó khớp theo **substring**, nên test vẫn pass với một Error khác miễn message chứa chuỗi đó; và đổi câu chữ message là vỡ test dù hành vi không đổi | Chỉ ra rằng chính nó ở lượt sau đã gọi đây là weak assertion + testing implementation details — hai trong bốn lỗi liệt kê ở `05`. Yêu cầu assert theo loại lỗi thay vì nội dung message |
 | 2 | `outdated information` | Khẳng định mục `## Refactor` trong `01-tdd-principles.md` vẫn còn trống | Mở file ra: mục đó đã viết xong và đã lưu trước khi hỏi | Nói rõ là nó đang dựa trên bản đọc cũ, và từ chối để nó viết lại mục đã có |
 | 3 | `wrong facts/code` | Trong bản đầu của `02`, khẳng định "unit nhanh hơn integration một bậc độ lớn" và dẫn số đo làm bằng chứng | Phiên review mới chỉ ra số đo đó là thời gian **khởi động tiến trình** (e2e), không phải integration. Mình tự viết `experiments/speed/bench.test.js` đo lại: integration in-process chỉ 1.0–2.5ms, không phải hàng chục ms | Sửa thẳng con số trong bảng verify, và đổi luôn tỷ lệ đề xuất từ 70/25/5 sang 50/45/5 vì lập luận cũ dựa trên số sai. Ghi rõ trong `02` là tỷ lệ đã đổi và đổi vì lý do gì |
-| 4 | `wrong facts/code` | Với hàm async, `expect(() => f()).toThrow(...)` sẽ "im lặng pass mà chẳng kiểm tra gì" — AI nói ở Lượt 2, mình tin và chép lại vào `03` và `04` | Cài Jest 30 thật trong `experiments/async-check/`, viết 4 biến thể và chạy. Nó **không** pass: promise bị reject không ai bắt nên worker chết kèm stack trace không chỉ vào test nào. Cả biến thể `.rejects` thiếu `await` cũng vậy. Chỉ `await expect(f()).rejects.toThrow(...)` mới chạy đúng — pass khi đúng, đỏ có diff khi sai | Sửa cả `03` lẫn `04`, thay câu "im lặng pass" bằng bảng kết quả đo thật kèm phiên bản (Jest 30 / Node 24). Ghi rõ là rủi ro AI nêu **có thật**, nhưng mô tả triệu chứng thì sai — nên vẫn phải chạy mới biết |
-| 5 | `wrong facts/code` | Trong `01`, mình viết: nếu `id`/`createdAt` sinh ngầm trong hàm thì người viết test sau "không còn lựa chọn nào ngoài assert yếu kiểu `toBeDefined()`" | Lượt 4 phản bác bằng một phương án cụ thể. Mình viết `experiments/async-check/faketimer.test.js` với hàm **không tiêm gì**, dùng `randomUUID()` và `new Date()` trực tiếp: `jest.useFakeTimers()` + `setSystemTime()` khoá được `createdAt` về giá trị chính xác; `id` assert được bằng regex định dạng và bằng tính duy nhất giữa hai lần gọi. **3/3 pass** | Viết lại toàn bộ lý do 3, bỏ câu sai, và ghi rõ phần còn lại đứng được là gì. Thêm ghi chú rằng đường vòng tuy dùng được nhưng yếu hơn: assert định dạng không ghim giá trị, fake timer là trạng thái toàn cục dễ rò |
+| 4 | `wrong facts/code` | Với hàm async, `expect(() => f()).toThrow(...)` sẽ "im lặng pass mà chẳng kiểm tra gì" — AI nói ở Lượt 2, mình tin và chép lại vào `03` và `04` | Viết `experiments/async-check/async-test.test.js` và chạy: triệu chứng thật không phải "im lặng pass". Cái thật sự xanh giả là khi **quên `await`** — lúc đó test xanh dù khẳng định bên trong sai hoàn toàn. Viết đủ `await` thì khẳng định sai bị bắt, test đỏ có thông báo đọc được | Sửa cả `03` lẫn `04`. Rủi ro AI nêu **có thật** — test cho hàm async viết sai thì xanh giả — nhưng mô tả cơ chế thì sai. Phải chạy mới biết |
+| 5 | `wrong facts/code` | Trong `01`, mình viết: nếu `id`/`createdAt` sinh ngầm trong hàm thì người viết test sau "không còn lựa chọn nào ngoài assert yếu kiểu `toBeDefined()`" | Lượt 4 phản bác bằng một phương án cụ thể. Mình viết `experiments/async-check/faketimer.test.js` với hàm **không tiêm gì**, dùng `randomUUID()` và `new Date()` trực tiếp: khoá đồng hồ lại thì `createdAt` assert được về giá trị chính xác; `id` assert được bằng regex định dạng. **2/2 pass** | Viết lại toàn bộ lý do 3, bỏ câu sai. Ghi rõ đường vòng này yếu hơn tiêm thật: assert định dạng không ghim được giá trị, và khoá đồng hồ là trạng thái toàn cục dễ rò sang test khác |
 
 > Đính chính chỉ có hiệu lực trong đúng cuộc hội thoại đó; phiên mới bắt đầu lại từ đầu.
 > Thứ nào đáng giữ thì phải đưa vào file quy tắc, theo rule 10 của `.cursor/rules/overview.mdc`.
