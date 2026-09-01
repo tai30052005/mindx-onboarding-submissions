@@ -147,6 +147,10 @@ tồn tại. Hai tình huống cần hai thông báo khác nhau, nên trong code
 khác nhau. Gộp lại thì chỉ còn một thông báo, mà một thông báo thì hoặc sai với ca này
 hoặc sai với ca kia.
 
+Còn ca file JSON hỏng thì có một luật riêng: **không được ghi đè lên file đó.** Nếu chương
+trình cứ ghi đè thì người dùng mất dữ liệu, mà mất vì chương trình chứ không phải vì họ
+làm gì sai. Báo lỗi kèm đường dẫn rồi dừng, để họ tự xem file.
+
 Ba loại lỗi này cần ba loại riêng biệt trong code, không dùng chung `Error`. Lý do: assert
 theo loại lỗi thì test không vỡ khi sửa câu chữ thông báo. Assert theo nội dung message —
 kiểu `toThrow('title không được rỗng')` — là weak assertion, vì `toThrow` khớp theo
