@@ -21,6 +21,12 @@ export function filterTickets(tickets: Ticket[], filter: Filter): Ticket[] {
 }
 
 export function formatLine(t: Ticket): string {
-  // Cot co do rong co dinh cho de doc khi liet ke nhieu dong.
-  return t.id.padEnd(6) + t.status.padEnd(13) + t.priority.padEnd(8) + t.title;
+  // Luon co hai dau cach giua cac cot, de id dai khong dinh vao cot sau.
+  // Bug nay chi lo ra khi chay that voi id 8 ky tu, test cu dung id 'T-1' nen khong bat duoc.
+  return [
+    t.id.padEnd(8),
+    t.status.padEnd(11),
+    t.priority.padEnd(6),
+    t.title,
+  ].join('  ');
 }

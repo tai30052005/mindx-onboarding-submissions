@@ -53,6 +53,13 @@ describe('filterTickets', () => {
 describe('formatLine', () => {
   it('format một ticket thành một dòng đọc được', () => {
     const line = formatLine(t({ id: 'T-1', title: 'Sửa lỗi', status: 'open', priority: 'high' }));
-    expect(line).toBe('T-1   open         high    Sửa lỗi');
+    expect(line).toBe('T-1       open         high    Sửa lỗi');
+  });
+});
+
+describe('formatLine - id dài không dính vào cột sau', () => {
+  it('id 8 ký tự vẫn cách cột status ra', () => {
+    const line = formatLine(t({ id: '1529fe0a', status: 'open', priority: 'high' }));
+    expect(line).toContain('1529fe0a  open');
   });
 });
