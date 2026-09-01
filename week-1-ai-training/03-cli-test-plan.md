@@ -260,12 +260,12 @@ thì sai, nên vẫn phải chạy mới biết. Chi tiết ở `ai-workflow-log
 
 ## Còn chưa chắc
 
-Bốn chỗ dưới đây em chưa quyết được, và cả bốn đều phải chốt trước khi viết test tuần 2,
+Bốn chỗ dưới đây mình chưa quyết được, và cả bốn đều phải chốt trước khi viết test tuần 2,
 vì chúng là quyết định về đặc tả chứ không phải về code.
 
 - Lệnh `update` mà không truyền field nào thì báo lỗi, hay coi như không làm gì rồi trả 0
 - Thiếu file `tickets.json` thì tự tạo file mới, hay báo lỗi. Đề bài xếp nó chung nhóm
-  với file hỏng, nhưng em thấy hai cái khác nhau: thiếu file là chuyện bình thường lần
+  với file hỏng, nhưng mình thấy hai cái khác nhau: thiếu file là chuyện bình thường lần
   chạy đầu, còn file hỏng thì không
 - Cách test tầng lưu trữ. Xem mục Solution Exploration trong `ai-workflow-log.md`. Nếu
   chọn phương án giấu sau interface thì mấy ca đang xếp Integration sẽ thành Unit
