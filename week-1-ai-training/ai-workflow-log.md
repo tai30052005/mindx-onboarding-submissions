@@ -133,12 +133,24 @@ Transcript lượt 6 ở `transcripts/luot-6-review-doi-khang.md`.
 
 
 **Chọn:** phương án 3 làm mặc định, cộng một nhóm nhỏ test theo phương án 1 cho ba error
-case bắt buộc. **Vì sao:** ràng buộc "tuần 3 cắm HTTP client vào cùng codebase" là ràng buộc
-nặng nhất, và phương án 3 là phương án duy nhất chuẩn bị sẵn cho nó; phương án 2 bị loại
-hẳn vì nó phá đúng ca "file JSON hỏng" mà đề bài bắt buộc phải test.
-**Rủi ro đã biết:** thêm một tầng trừu tượng khi chưa có bằng chứng là cần — đúng thứ DHH gọi
-là "test-induced design damage". Nếu tới cuối tuần 2 mà interface đó chỉ có một
-implementation thật thì đó là dấu hiệu mình đã trừu tượng hoá quá sớm.
+case bắt buộc.
+
+**Vì sao chọn phương án 3:** ràng buộc nặng nhất là tuần 3 phải cắm HTTP client vào cùng
+codebase. Phương án 3 là cái duy nhất chuẩn bị sẵn cho việc đó: chỉ cần thêm một file mới
+cũng có `load()` và `save()`, tầng lệnh không phải sửa gì.
+
+**Vì sao loại hẳn phương án 2:** mock `fs` nghĩa là thay `fs` thật bằng một cái giả, trả
+về bất cứ gì mình bảo. Làm vậy thì trong ca "file JSON hỏng", chính mình là người quyết
+định file hỏng như thế nào. Rồi mình kiểm xem code có xử lý được đúng kiểu hỏng mình vừa
+nghĩ ra không.
+
+Nó chỉ chứng minh được đúng thế thôi. File thật ngoài đời hỏng theo những kiểu mình không
+nghĩ tới: bị cắt cụt giữa chừng, sai encoding, không có quyền đọc. Mà "file JSON hỏng"
+lại là một trong ba error case đề bài bắt buộc, nên không thể để nó thành một ca không
+kiểm chứng được gì.
+
+**Rủi ro đã biết:** thêm một tầng trừu tượng khi chưa có bằng chứng là cần. Nếu tới cuối
+tuần 2 mà interface đó chỉ có một bản thật thì mình đã trừu tượng hoá sớm.
 
 ### 20/08 — Iterative Refinement (soát lại file test)
 
