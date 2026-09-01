@@ -99,23 +99,26 @@ Ghi thẳng vì đây là tuần chấm về critical thinking, và một bản 
 
 | | Số lượng |
 |---|---|
-| Mình tự tìm ra trước khi hỏi | 1 / 10 |
-| Phải được chỉ ra | 9 / 10 |
+| Mình tự tìm ra trước khi hỏi | **0 / 10** |
+| Phải được chỉ ra | 10 / 10 |
 
-Cái tự tìm được: khối `describe('Ticket')` gom cả unit test lẫn test chạm file vào một
-chỗ, nên tên khối không nói được nó đang test đơn vị nào.
+Không tự tìm được lỗi nào. Lúc đọc file test đó mình thấy nó bình thường.
 
-Nhóm sót nhiều nhất là **weak assertions**. Lúc đọc `toBeTruthy()` mình không thấy có gì
-sai, vì chưa có phản xạ hỏi *"khẳng định này vẫn đúng với những giá trị sai nào?"*. Sau
-buổi này thì đó thành câu hỏi mình đặt cho từng assertion.
+Nhóm mình mù hẳn là **weak assertions**. Đọc `expect(t).toBeDefined()` và
+`expect(t.id).toBeTruthy()` mình không thấy có gì sai, vì chưa có phản xạ hỏi
+*"khẳng định này vẫn đúng với những giá trị sai nào?"*. Sau khi được chỉ ra và tự chạy
+lại `experiments/async-check/faketimer.test.js` thì mới thấy: `toBeDefined()` xanh với
+cả `"abcxyz"` lẫn `0`.
 
-Nhóm sót thứ hai là các lỗi **không nhìn thấy khi đọc**: `it` thiếu `async`, đường dẫn
-dùng chung khi chạy song song, thiếu dọn dẹp. Chúng không sai về cú pháp và không sai về
-logic khi đọc từng dòng — chỉ sai khi chạy thật trong đúng điều kiện.
+Nhóm thứ hai là các lỗi **không nhìn thấy khi đọc**: thiếu `await` trong test async,
+dùng chung đường dẫn file khi chạy song song, thiếu dọn dẹp. Chúng không sai cú pháp,
+không sai logic khi đọc từng dòng — chỉ sai khi chạy thật. Cái thiếu `await` mình đã tự
+chạy lại được ở `async-check/async-test.test.js`, và chính Node in ra dòng
+*"would have caused the test to fail"*.
 
 
 ## Còn chưa chắc
 
-- Mới tự tìm được 1/10 lỗi. Chưa biết tỉ lệ đó cải thiện được bao nhiêu sau tuần 2
+- Tự tìm được 0/10 lỗi. Chưa biết đọc bao nhiêu file test nữa thì con số đó mới nhúc nhích
 - Ranh giới giữa "test hành vi" và "test chi tiết cài đặt" rõ trong ví dụ `reduce` ở
   trên, nhưng ở ca thật thì chưa chắc mình phân biệt được ngay

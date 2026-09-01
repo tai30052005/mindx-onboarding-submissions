@@ -14,7 +14,7 @@
 |---|---|---|---|
 | Layered Questioning | `01-tdd-principles.md`, `02-testing-levels.md` | 6 lượt qua 2 phiên | Lượt hỏi giả định lôi ra 4 giả định sai về phạm vi bài, trong đó có việc tưởng tuần 1 chấm về TDD. Vòng review đối kháng ở phiên mới tìm ra 7 lỗi trong `02`, làm đổi tỷ lệ đề xuất từ 70/25/5 sang 50/45/5 |
 | Solution Exploration | Quyết định: test tầng lưu trữ JSON bằng cách nào | 1 vòng, 3 phương án | Loại hẳn mock `fs` vì nó phá đúng ca "file JSON hỏng" mà đề bài bắt buộc. Chọn interface + in-memory làm mặc định, cộng nhóm nhỏ test file thật cho ba error case |
-| Iterative Refinement | `05-common-mistakes.md` | 6 bước, 1 vòng | Tự tìm được 1/10 lỗi; sửa 3 chỗ phủ ba loại lỗi khác nhau. Phát hiện sửa assertion yếu kéo theo thay đổi thiết kế |
+| Iterative Refinement | `05-common-mistakes.md` | 6 bước, 1 vòng | Tự tìm được 0/10 lỗi — cả 10 đều phải được chỉ. Sau đó tự sửa 3 chỗ phủ ba loại lỗi khác nhau. Phát hiện sửa assertion yếu kéo theo thay đổi thiết kế |
 
 **Quyết định mình tự đưa ra:**
 
@@ -256,15 +256,14 @@ implementation thật thì đó là dấu hiệu mình đã trừu tượng hoá
 `experiments/refinement/ticket.test.ts` — một file test cho Ticket Manager CLI, 6 test.
 Nhận file với thông tin duy nhất là "có ít nhất 4 lỗi", không biết lỗi gì và ở đâu.
 
-**2. Những lỗi mình tự tìm được** (before asking anything)
+**2. Những lỗi mình tự tìm được** (trước khi hỏi gì)
 
-Tự tìm được **1 trên 10**: khối `describe('Ticket', ...)` gom cả `createTicket`,
-`updateTicket` (logic thuần trong bộ nhớ) lẫn `JsonTicketStore` với `writeFileSync` (chạm
-hệ thống file) vào một chỗ. Theo trục đã chốt ở `02-testing-levels.md` đó là hai tầng khác
-nhau, nên tên khối "Ticket" không nói được đơn vị nào đang được test, và không tách được
-để chạy riêng nhóm nhanh với nhóm chậm.
+**0 trên 10.** Đọc file đó mình thấy bình thường, không thấy chỗ nào sai. Cả 10 lỗi đều
+phải được chỉ ra.
 
-Chín lỗi còn lại phải được chỉ ra.
+Ghi đúng con số này vì nó nói được trình độ mình lúc đó — và vì trần thẩm định là thứ
+quyết định mình được phép nhận output AI tới đâu. Tự đánh giá cao hơn thực tế ở chỗ này
+là nguy hiểm nhất.
 
 **3. Mình tóm tắt lại các vấn đề**
 
