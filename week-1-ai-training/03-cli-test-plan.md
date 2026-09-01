@@ -260,14 +260,14 @@ thì sai, nên vẫn phải chạy mới biết. Chi tiết ở `ai-workflow-log
 
 ## Còn chưa chắc
 
-- Ca `update` không truyền field nào: nên từ chối như invalid input, hay coi là no-op và
-  trả 0? Đề bài không nói. Cần chốt trước khi viết test, vì đây là quyết định về đặc tả
-  chứ không phải về code
-- Thiếu file `tickets.json` nên tự tạo mới hay báo lỗi. Đề bài xếp nó chung nhóm với
-  "corrupted", nhưng hai tình huống này khác nhau: thiếu file là trạng thái bình thường
-  lần chạy đầu, còn file hỏng là bất thường
-- Cách test tầng lưu trữ vẫn chưa chốt — xem Solution Exploration trong
-  `ai-workflow-log.md`. Nếu chọn phương án giấu sau interface thì một số ca ở cột
-  Integration sẽ chuyển thành Unit
-- Chưa rõ `id` nên sinh tuần tự (`T-1`, `T-2`) hay UUID. Tuần tự thì dễ gõ tay khi dùng
-  `show <id>`, nhưng phải đọc toàn bộ file mới biết số kế tiếp
+Bốn chỗ dưới đây em chưa quyết được, và cả bốn đều phải chốt trước khi viết test tuần 2,
+vì chúng là quyết định về đặc tả chứ không phải về code.
+
+- Lệnh `update` mà không truyền field nào thì báo lỗi, hay coi như không làm gì rồi trả 0
+- Thiếu file `tickets.json` thì tự tạo file mới, hay báo lỗi. Đề bài xếp nó chung nhóm
+  với file hỏng, nhưng em thấy hai cái khác nhau: thiếu file là chuyện bình thường lần
+  chạy đầu, còn file hỏng thì không
+- Cách test tầng lưu trữ. Xem mục Solution Exploration trong `ai-workflow-log.md`. Nếu
+  chọn phương án giấu sau interface thì mấy ca đang xếp Integration sẽ thành Unit
+- `id` nên là `T-1`, `T-2` hay UUID. Tuần tự thì dễ gõ tay lúc dùng `show <id>`, nhưng
+  phải đọc cả file mới biết số kế tiếp
