@@ -1,21 +1,6 @@
-# Node
 node_modules/
 dist/
-build/
-coverage/
-*.tsbuildinfo
-
-# Env — never commit real credentials or endpoints
-.env
-.env.local
-!.env.example
-
-# Logs
 *.log
-npm-debug.log*
-
-# OS / editor
+.env
 .DS_Store
 Thumbs.db
-.idea/
-*.swp
