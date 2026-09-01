@@ -43,24 +43,10 @@ Thực tế: mentor pre-check qua Zalo → email thuantv@ cc huynq@ → phỏng 
 "May tests be modified during the Refactor step?" — tôi không trả lời.
 "When is TDD not the right approach?" — tôi chỉ lướt qua.
 "Why write the test first — ít nhất 3 lý do; viết test sau thì mất gì?" — tôi đưa ~1.5 lý do.
-C. Edge case & rủi ro tôi chưa nhắc
-⚠️ Ba cái sẽ cắn bạn chắc chắn ở tuần 2
-C-1. Non-determinism: id và createdAt.
-crypto.randomUUID() và Date.now() làm test không lặp lại được — bạn không thể expect(t.id).toBe(...). Đây là bức tường đầu tiên. Cách xử lý: tiêm chúng vào (createTicket(input, { now, generateId })) thay vì gọi trực tiếp — hoặc jest.useFakeTimers(). Việc TDD ép bạn phát hiện ra điều này sớm chính là một trong "3 lý do viết test trước" mà tôi thiếu ở mục B-8.
-C-2. process.exit() trong test giết luôn Jest worker.
-CLI thật gọi process.exit(1) khi lỗi. Nếu bạn test hàm đó in-process, worker chết, output khó hiểu. Tách hàm trả về exit code thay vì tự gọi process.exit; chỉ process.exit(run()) ở entrypoint. Tương tự: process.argv, và capture console.log.
-C-3. Test cô lập với file JSON thật.
-Jest chạy các file test song song trên nhiều worker mặc định. Nếu hai file test cùng đọc/ghi tickets.json, bạn sẽ có test flaky — lúc xanh lúc đỏ, không do code. Dùng thư mục tạm riêng cho mỗi test (fs.mkdtemp) + dọn dẹp, hoặc jest --runInBand. Người mới thường kết luận nhầm là "TDD không đáng" khi gặp cái này.
-⚠️ Bẫy đến trực tiếp từ ví dụ tôi vừa đưa
-C-4. toThrow() KHÔNG bắt được promise bị reject.
-Tôi dạy bạn expect(() => f()).toThrow(...). Với hàm async (tuần 3, gọi API) cú pháp đó im lặng pass dù chẳng kiểm tra gì. Phải là await expect(f()).rejects.toThrow(...).
-C-5. Quên await/return trong test async = XANH GIẢ.
-Test kết thúc trước khi assertion chạy → báo pass. Đây là loại lỗi nguy hiểm nhất vì nó vô hình. Cực kỳ liên quan tới tuần 3.
-C-6. toThrow('chuỗi') khớp theo substring, và tôi buộc test vào nội dung message tiếng Việt.
-Test của tôi sẽ pass với một Error khác miễn message có chứa chuỗi đó. Và đổi câu chữ message = vỡ test dù hành vi không đổi — đúng cái "testing implementation details" trong 05-common-mistakes.md. Nên assert theo loại lỗi / mã lỗi, không theo văn bản.
-C-7. Windows. Bạn có .gitattributes — có vẻ đã dính CRLF/LF rồi. Test so sánh output CLI nhiều dòng sẽ vỡ giữa CRLF và LF. Cả đường dẫn \ vs / trong test storage.
-C-8. Tôi không nhắc jest --watch. Đây có lẽ là mẹo thực dụng giá trị nhất cho người mới TDD — vòng đỏ/xanh chạy tự động khi lưu file. Thiếu nó, TDD cảm giác chậm chạp và bạn sẽ bỏ.
-⚠️ Rủi ro về độ tin cậy của chính câu trả lời trước
+
+> _Đã cắt phần liệt kê rủi ro C-1 đến C-8 (chi tiết kỹ thuật). Giữ lại bốn mục_
+> _có ảnh hưởng tới bài nộp. Bản đầy đủ ở commit `31c9f97`._
+
 C-9. Claim nghiên cứu thực nghiệm vẫn CHƯA được kiểm chứng. Tôi dẫn Fucci et al. từ trí nhớ và có dặn bạn tự tra. Nếu nó vào bài nộp mà mentor hỏi, bạn không có gì đỡ. Hoặc tra cho ra, hoặc bỏ hẳn. Đừng để nó ở trạng thái lơ lửng.
 C-10. Phát hiện TS7 có hạn sử dụng. ts-jest có thể hỗ trợ TS7 trước khi bạn tới tuần 2. "Ghim TS 5" có thể thành lời khuyên cũ. Nó đúng hôm nay, trên máy này.
 C-11. Tôi bán hơi quá "phá code xem test có đỏ không". Tôi chỉ thử 2 mutation. Nó là heuristic tốt, không phải bằng chứng đầy đủ.
@@ -76,6 +62,5 @@ Tôi đề nghị làm tiếp cái gì
 Việc có giá trị nhất bây giờ không phải giảng thêm TDD, mà là lấp 3 chỗ trống thật:
 Điền 03-cli-test-plan.md bằng domain thật (4 lệnh, 3 error case, storage JSON) thay vì ví dụ đồ chơi của tôi — kèm C-1/C-2/C-3.
 Trả lời 3 câu tôi bỏ sót trong 01 (sửa test lúc Refactor? khi nào TDD không hợp? 3 lý do test-first).
-Với 05, không lấy list của tôi — dựng một buổi refinement thật: để tôi viết một file test cố tình có lỗi, bạn tự soi ra, rồi ghi lại cái bạn tìm được.
-Muốn bắt đầu từ cái nào?
 
+> _Đã cắt phần cuối. Bản đầy đủ ở commit `31c9f97`._

@@ -3,6 +3,11 @@
 Bằng chứng sơ cấp cho **Deliverable 6** và **Acceptance criterion 2**
 (*"Research process with AI is tracked: workflows applied and iterations documented"*).
 
+**Các file dưới đây đã cắt bớt.** Bản gốc chép nguyên văn nằm trong lịch sử git,
+commit `31c9f97`. Ở đây giữ lại prompt của mình nguyên vẹn, và những đoạn trả lời mà
+bảng đối chiếu bên dưới có dẫn — đủ để kiểm xem log có khớp với thực tế không, mà không
+phải đọc mười nghìn từ văn AI.
+
 `../ai-workflow-log.md` là bản **thuật lại** — có tóm tắt, có diễn giải, và viết sau khi
 sự việc đã xảy ra. Thư mục này là bản **gốc**, để ai đọc cũng đối chiếu được hai bên có
 khớp nhau không.

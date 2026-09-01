@@ -60,120 +60,25 @@ phép đo về sau bác bỏ.
 
 ## Phần 2 — Nhật ký từng lượt
 
-Template mỗi lượt — copy năm dòng này rồi điền:
-
-- **Hỏi gì:**
-- **Assumptions AI đang giả định:**
-- **Risks / edge case bị bỏ:**
-- **Mình verify bằng cách nào:**
-- **Mình sửa lại gì, vì sao:**
-
 ### 18/08 — Layered Questioning (TDD)
 
-**Tier 1 — Research**
+Công cụ: Claude, phiên riêng có quyền đọc repo này. Trạng thái xuất phát: cả 5 câu trong
+`01` đều chưa trả lời được, chưa từng áp dụng TDD vào project nào.
 
-Công cụ: Claude, phiên riêng có quyền đọc repo này\
-Trạng thái xuất phát: cả 5 câu trong phần 01 đều chưa trả lời được.\
-Chưa từng áp dụng TDD vào project nào
+Transcript nguyên văn 4 lượt ở `transcripts/`.
 
-**Lượt 1 — TDD là gì, Red/Green/Refactor**
+| Lượt | Mình hỏi gì | AI đưa ra gì | Mình kiểm bằng cách nào | Mình sửa lại gì |
+|---|---|---|---|---|
+| **1** | Giải thích R-G-R kèm ví dụ chạy được; tách phần đồng thuận khỏi phần còn tranh cãi; 2-3 hiểu lầm phổ biến | Dựng cả một project chạy được: `npm init`, `jest.config.js`, và vấp lỗi TypeScript 7 chưa được ts-jest hỗ trợ | Không đọc chay. Dựng lại ví dụ và **tự chạy** trong `experiments/tdd-loop/`: đi đủ 3 vòng, thấy hai kiểu đỏ khác nhau. Rồi cố tình phá code — đổi `title` thành `title.trim()` — **3/3 test vẫn xanh** dù hành vi đã đổi | Bỏ hết phần dựng project khỏi `01`, vì mentor đã chốt 17/08 rằng tuần 1 snippet là đủ. Giữ kết luận từ phép phá code, nó thành nền cho mục Refactor |
+| **2** | "Bạn đang giả định gì về trình độ và bài toán của tôi? Có rủi ro nào chưa nhắc không?" | 6 giả định về trình độ, và **4 giả định sai rõ về bài toán** — nặng nhất là tưởng tuần 1 chấm về TDD, thực tế chấm về cách dùng AI. Kèm danh sách rủi ro: `toThrow('chuỗi')` khớp substring, quên `await` gây xanh giả, test song song tranh nhau file | Kiểm từng claim thay vì nhận cả gói. Claim substring — đọc docs Jest, **đúng**. Claim `toThrow()` async "im lặng pass" — tự viết `async-test.test.js` và chạy, **sai** (xem Phần 3 dòng 4). Claim nghiên cứu Fucci — AI tự nhận dẫn từ trí nhớ, mình không tra được nguồn | Chuyển `03` và `05` sang assert theo **loại lỗi** thay vì nội dung message. Đưa ràng buộc tiêm `now`/`generateId` thành quyết định thiết kế ghi rõ ở đầu `03`. Bỏ hẳn claim Fucci khỏi phần chính |
+| **3** | Ba câu còn trống của `01`: 3 lý do viết test trước và viết sau thì mất gì; vì sao TDD là thiết kế; khi nào TDD không hợp | **5 lý do** thay vì 3. **5 tình huống** TDD không hợp. Và đề nghị nhét cặp file `codeFirst.ts` / `testFirst.ts` vào `01` | Kết quả nó chạy (`toBeDefined()` không bắt được `createdAt` sai lẫn `id` rỗng) trùng với thí nghiệm mình tự chạy ở lượt 1. Hai lần độc lập, cùng một kết luận | Giữ **3 lý do**, bỏ lý do 5 vì đó là chuyện thói quen làm việc chứ không phải cơ chế của TDD. Giữ **3 tình huống**, bỏ "thẩm mỹ" và "throwaway". Từ chối đưa code vào `01`, chuyển snippet sang `03` |
+| **4** | "Trong 3 lý do đó, lý do nào **yếu nhất**? Và phản biện thế nào trước câu *viết test sau cũng được, miễn cuối cùng đủ test và đều xanh*?" | Chỉ ra **lý do 3 yếu nhất**, với một lỗi sự thật kiểm chứng được: câu "người viết test sau không còn lựa chọn nào ngoài `toBeDefined()`" là **sai** | Không tin lời phản bác. Viết `experiments/async-check/faketimer.test.js` với hàm **không tiêm gì**, dùng `randomUUID()` và `new Date()` trực tiếp: khoá đồng hồ lại thì assert được giá trị chính xác, `id` assert bằng regex định dạng. **2/2 pass** — người phản biện đúng | Viết lại toàn bộ lý do 3, bỏ câu sai. Đổi "cơ chế duy nhất" thành "rẻ nhất và tự động nhất". Thêm hẳn một mục cho câu phản bác kia trong `01` |
 
-- **Hỏi gì:** khai báo thẳng là chưa có kinh nghiệm nên không tự phát hiện được AI
-  nói sai; yêu cầu 3 thứ: giải thích R-G-R kèm ví dụ chạy được, tách phần ĐỒNG THUẬN
-  khỏi phần QUAN ĐIỂM, và 2-3 hiểu lầm phổ biến.
-- **Assumptions AI đang giả định:** không tự nêu ra ở lượt này — phải hỏi riêng ở Lượt 2
-  mới lộ. Xem danh sách đầy đủ ở Lượt 2 bên dưới.
-- **Risks / edge case bị bỏ:** cũng vậy, xem Lượt 2.
-- **Mình verify bằng cách nào:** không đọc chay. Dựng lại ví dụ AI đưa và **tự chạy** bằng
-  `node --test` trong `experiments/tdd-loop/`: đi đủ 3 vòng RED → GREEN, thấy tận mắt hai kiểu
-  đỏ khác nhau (module chưa tồn tại, và hàm không ném lỗi). Rồi cố tình phá code — đổi
-  `return { title }` thành `return { title: title.trim() }` — và thấy 3/3 test vẫn xanh dù
-  hành vi đã đổi.
-- **Mình sửa lại gì, vì sao:** bỏ toàn bộ phần `npm init` / `jest.config.js` / lỗi
-  TypeScript 7 ra khỏi `01`, vì mentor đã chốt ngày 17/08 rằng tuần 1 snippet là đủ và
-  project để tuần 2 — AI đưa vào là lệch phạm vi. Giữ lại kết luận từ phép phá code, vì đó
-  là thứ tự kiểm chứng được và nó thành nền cho mục `## Refactor` trong `01`.
+> **Ghi chú về cấu trúc:** khung ban đầu dựng theo 4 tier (Research → Brief feature →
+> Code example → Validation). Thực tế không diễn ra theo 4 tier tách rời — tier 2 và 3 gộp
+> vào lượt 3, tier 4 rải qua lượt 2 và lượt 6. Giữ ghi chép theo lượt thật thay vì ép vào
+> khung cũ.
 
-**Lượt 2 — bắt AI tự nêu giả định**
-
-- **Hỏi gì:** "bạn đang giả định gì về trình độ và về bài toán của tôi? Có edge case
-  hay rủi ro nào chưa nhắc tới không?"
-- **Assumptions AI đang giả định:** 6 giả định về trình độ (thạo Node/TS, đọc được
-  nguồn tiếng Anh, tự gỡ được toolchain hỏng, cần chiều sâu hơn ngắn gọn). Về bài toán,
-  4 giả định sai rõ: (a) tuần 1 cần project chạy được — mentor đã chốt snippet là đủ;
-  (b) domain chỉ `createTicket(title, priority)` — thực tế 5 field, 4 lệnh, 3 error case;
-  (c) logic thuần không I/O — thực tế tuần 2 có file JSON, tuần 3 có HTTP;
-  (d) không có `id` — nhưng `tickets show <id>` bắt buộc phải sinh id.
-  Sai nặng nhất: tưởng tuần 1 chấm về TDD, thực tế tuần 1 chấm về cách dùng AI.
-- **Risks / edge case bị bỏ:** non-determinism của `id`/`createdAt`; `process.exit()`
-  giết Jest worker; test song song tranh nhau file JSON; `toThrow()` không bắt được
-  promise reject; quên `await` trong test async gây **xanh giả**; `toThrow('chuỗi')`
-  khớp substring nên buộc test vào nội dung message; CRLF/LF trên Windows; `jest --watch`.
-- **Mình verify bằng cách nào:** không nhận cả gói. Kiểm từng claim: claim `toThrow('chuỗi')`
-  khớp substring — đọc docs Jest chính thức mục `.toThrow(error?)`, **đúng**. Claim
-  `toThrow()` với hàm async "im lặng pass" — viết `experiments/async-check/async-test.test.js` và chạy,
-  4 biến thể, **sai** (xem Part 3 dòng 4). Claim về nghiên cứu Fucci et al. — AI tự nhận
-  dẫn từ trí nhớ, mình không tra được nguồn nên **không dùng**.
-- **Mình sửa lại gì, vì sao:** ba thay đổi kéo theo, đều xuất phát từ danh sách rủi ro này.
-  (1) Chuyển toàn bộ `03` và `05` sang assert theo **loại lỗi** thay vì nội dung message,
-  vì assert theo message là weak assertion và vỡ khi sửa câu chữ. (2) Đưa ràng buộc tiêm
-  `now` / `generateId` thành quyết định thiết kế ghi rõ ở đầu `03`, vì không tiêm thì không
-  assert được giá trị chính xác. (3) Bỏ hẳn claim Fucci ra khỏi phần chính, chỉ ghi ở
-  `Còn chưa chắc` của `01` — để lơ lửng trong bài nộp mà bị hỏi thì không đỡ được.
-
-**Lượt 3 — ba chỗ trống còn lại của `01`** (20/08)
-
-- **Hỏi gì:** ba câu, kèm khai báo là đã hiểu R-G-R / triangulation / Fake It rồi nên
-  đừng giảng lại: (1) ít nhất 3 lý do viết test **trước**, mỗi lý do phải nói rõ viết
-  test **sau** thì mất chính xác cái gì — không nhận "lợi ích chung chung";
-  (2) vì sao TDD là hoạt động thiết kế chứ không chỉ testing, cụ thể là ép ra quyết
-  định thiết kế nào; (3) khi nào TDD **không** phù hợp, kèm phương án thay thế.
-  Vẫn giữ yêu cầu tách đồng thuận khỏi quan điểm tranh cãi.
-- **Assumptions AI đang giả định:** giả định trạng thái file `01` vẫn như lần nó đọc
-  trước đó — nó kết bài bằng việc nhắc mục Refactor còn trống, trong khi mục đó đã
-  viết xong và đã lưu.
-- **Risks / edge case bị bỏ:** không có rủi ro kỹ thuật mới; rủi ro nằm ở phía mình —
-  nó đưa 5 lý do thay vì 3, và đề nghị nhét cặp file `codeFirst.ts` / `testFirst.ts`
-  vào `01`, ngược với quyết định giữ `01` thuần khái niệm.
-- **Mình verify bằng cách nào:** kết quả nó chạy (`toBeDefined()` không bắt được
-  `createdAt` sai lẫn `id` rỗng) trùng với thí nghiệm mình tự chạy trước đó — đổi
-  `title` thành `title.trim()` mà 3/3 test vẫn xanh. Hai lần độc lập cùng một kết luận.
-- **Mình sửa lại gì, vì sao:** bỏ lý do 5 ("test viết sau thường không bao giờ được
-  viết") vì đó là chuyện thói quen làm việc chứ không phải cơ chế của TDD, bị vặn là
-  đuối. Bỏ luôn hai tình huống "thẩm mỹ" và "throwaway" ở câu 3, giữ 3 tình huống
-  chắc nhất. Từ chối đưa code vào `01`, chuyển snippet sang `03`.
-
-**Lượt 4 — phản biện**
-
-- **Hỏi gì:** trong 3 lý do vừa nêu, lý do nào yếu nhất và bị phản bác bằng lập luận
-  gì; và phản biện ra sao trước câu "viết test sau cũng được, miễn cuối cùng có đủ
-  test và đều xanh".
-- **Assumptions AI đang giả định:** đọc thẳng `01-tdd-principles.md` chứ không dựa vào
-  mô tả của mình, và nói rõ điều đó ngay đầu câu trả lời — nên nó phản biện đúng ba lý do
-  trong file chứ không phản biện một phiên bản tưởng tượng.
-- **Risks / edge case bị bỏ:** chỉ ra **lý do 3 là yếu nhất** với bốn chỗ hở, trong đó có
-  một chỗ là lỗi sự thật kiểm chứng được: câu "người viết test sau không còn lựa chọn nào
-  ngoài `toBeDefined()`" là sai. Hai lỗi nhỏ hơn: lý do 2 dùng chữ "cơ chế **duy nhất**"
-  trong khi mutation testing cho cùng bằng chứng; lý do 1 chỉ đúng với test-after-everything,
-  không đúng với iterative test-last.
-- **Mình verify bằng cách nào:** không tin lời phản bác. Viết `experiments/async-check/faketimer.test.js`
-  với một hàm **không tiêm gì cả**, dùng `randomUUID()` và `new Date()` trực tiếp, rồi thử
-  hai assertion: `createdAt` khoá đồng hồ lại rồi assert giá trị chính xác; `id` assert
-  bằng regex định dạng UUID. **2/2 pass.** Người phản biện đúng.
-- **Mình sửa lại gì, vì sao:** viết lại lý do 3 trong `01` — bỏ câu sai, thay bằng phần
-  còn lại thật sự đứng được (test-first làm câu hỏi thiết kế thành *không thể né*,
-  test-last làm nó thành *có thể né*), và ghi rõ hai chỗ hở: đường vòng có tồn tại, và
-  đây là luận điểm về quyền sửa code chứ không về thứ tự viết. Đổi "cơ chế duy nhất" thành
-  "rẻ nhất và tự động nhất". Thêm hẳn một mục mới cho câu phản bác *"viết test sau cũng
-  được, miễn cuối cùng đủ test và đều xanh"*, theo hướng: nhượng bộ phần đúng trước, rồi
-  tấn công hai chữ chưa được kiểm chứng là "đủ" và "xanh", và đề xuất mutation score làm
-  trọng tài đo được. Cũng đưa phản bác vòng-tròn-định-nghĩa của DHH từ `Còn chưa chắc`
-  lên phần chính, vì để một chỗ mình biết là hở làm trụ cột là tự tạo điểm bị vặn.
-
-> **Ghi chú về cấu trúc:** khung ban đầu mình dựng theo 4 tier (Research → Brief feature →
-> Code example → Validation). Thực tế không diễn ra theo 4 tier tách rời — Tier 2 và 3 gộp
-> vào Lượt 3, còn Tier 4 (validation, edge case) thì rải qua Lượt 2 và Lượt 6. Giữ nguyên
-> ghi chép theo lượt thật thay vì ép vào khung cũ.
 
 ### 20/08 — Testing levels, và một vòng review đối kháng
 
