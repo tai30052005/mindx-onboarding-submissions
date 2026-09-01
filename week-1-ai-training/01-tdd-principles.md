@@ -55,8 +55,15 @@ Code của hai dòng đầu ở `experiments/tdd-loop/`.
 
 ## Còn chưa chắc
 
+- **Lý do 1 yếu hơn mình viết.** Người viết test sau vẫn thấy được test đỏ: họ cố tình
+  phá code cho sai đi, thấy test chuyển đỏ, rồi sửa lại. Làm vậy thì họ cũng có đúng cái
+  bằng chứng mà mình bảo chỉ test-first mới có. Chỗ lý do 1 còn đứng được là: viết test
+  trước thì thấy đỏ **tự động**, mỗi lần, không mất công gì. Còn cách phá code thì phải
+  tự nhớ làm cho từng test, và người ta hay quên. Đó là khác biệt về mức kỷ luật phải bỏ
+  ra, không phải khác biệt về bằng chứng thu được. Phần chính mình viết chưa rõ
+  chỗ đó
 - Có nghiên cứu so sánh TDD với "viết code từng mẩu nhỏ rồi test ngay sau", và kết quả
   không rõ ràng. AI dẫn tên nghiên cứu từ trí nhớ, mình chưa tra được nguồn nên không
   đưa vào phần chính
-- Mình mới đi vòng Red-Green-Refactor trên một hàm nhỏ. Chưa biết nó còn dễ giữ nhịp
-  không khi làm cả CLI ở tuần 2
+- Mình mới đi vòng Red-Green-Refactor trên một hàm nhỏ trong `experiments/tdd-loop/`.
+  Chưa tự đi hết vòng đó trên cả một project
