@@ -39,9 +39,10 @@ Nguyên văn tiếng Anh của tiêu chí và deliverable nằm ở `docs/plans/
 
 ## Các quyết định đã chốt
 
-- **Chỉ đoạn code minh hoạ, không có project chạy được.** Mentor đã chốt ngày 17/08: *"Snippet là đủ.
-  Tuần 2 e mới làm project nhé."* Mọi ví dụ test trong thư mục này đều là đoạn minh hoạ;
-  project thật bắt đầu từ tuần 2.
-- **Framework test: Jest**, dùng nhất quán trong mọi đoạn code, khớp với stack mà
-  chương trình đã chốt ở `docs/plans/week-3/architecture.md`.
+- **Chỉ đoạn code minh hoạ, không có project chạy được.** Mentor đã chốt ngày 17/08:
+  *"Snippet là đủ. Tuần 2 e mới làm project nhé."* Mọi ví dụ test trong thư mục này đều là
+  đoạn minh hoạ. Project thật ở [`../week-2-3-ticket-cli/`](../week-2-3-ticket-cli/), làm
+  đúng theo kế hoạch trong `03-cli-test-plan.md`.
+- **Framework test: Jest**, dùng nhất quán trong mọi đoạn code, khớp với stack chương
+  trình đã chốt ở `docs/plans/week-3/architecture.md`. Tuần 2 dùng đúng stack này.
 
