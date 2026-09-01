@@ -39,7 +39,19 @@ test cho chỗ đó.
 
 ## Còn chưa chắc
 
+- **"Đọc code trước khi nhận" chỉ chạy được tới mức mình đọc ra.** Đây là chỗ hở lớn
+  nhất của file này. Mở một file code mình không viết ra đọc, nếu trong đó có lỗi thì
+  mình không chắc phát hiện được. Nói cách khác, cái chốt chặn mình viết trong phần chính
+  lại giả định sẵn một kỹ năng mà mình chưa có.
+
+  Cái vẫn dùng được khi đọc không ra: **chạy thật, rồi phá thử.** Sửa một dòng cho sai
+  đi, chạy test, xem có đỏ không. Không đỏ nghĩa là test không canh chỗ đó, bất kể mình
+  có hiểu code hay không. Đó đúng là cách mình bắt được vụ `title.trim()` trong
+  `experiments/tdd-loop/`: đổi một dòng, hành vi khác hẳn, 3/3 test vẫn xanh. Lúc đó mình
+  chưa hiểu gì về đoạn code đó cả.
+
+  Nên thứ tự đúng chắc là **chạy và phá trước, đọc code sau**, ngược với thứ tự mình
+  viết ở phần chính. Chưa sửa lại phần chính vì chưa làm đủ nhiều để chắc.
+
 - Mình mới phá code bằng tay hai ba chỗ để thử xem test có bắt không. Chưa dùng công cụ
   tự động (Stryker), nên chưa biết cách làm thủ công này đủ hay không
-- "Đọc code trước khi nhận" nghe rõ, nhưng chỗ nào mình chưa đủ nghề thì đọc cũng không
-  thấy sai. Chưa biết xử lý phần đó thế nào
