@@ -1,6 +1,6 @@
 # Thí nghiệm
 
-Bốn thí nghiệm tự chạy trong tuần 1. Mục đích không phải làm project — mentor đã chốt
+Bốn thí nghiệm tự chạy trong tuần 1. Mục đích không phải làm project, vì mentor đã chốt
 ngày 17/08 rằng tuần 1 snippet là đủ. Mục đích là **kiểm chứng bằng cách chạy thật**
 thay vì tin lời AI.
 
@@ -23,12 +23,12 @@ node --test async-check/faketimer.test.js
 node --test async-check/async-test.test.js
 ```
 
-`tdd-loop/HUONG-DAN.md` là bài đi từng bước qua vòng Red-Green-Refactor — sửa một dòng,
+`tdd-loop/HUONG-DAN.md` là bài đi từng bước qua vòng Red-Green-Refactor. Sửa một dòng,
 chạy lại, xem màu đổi.
 
 `async-check/async-test.test.js` **cố ý có một test đỏ**. Kết quả đúng là 2 pass, 1 fail.
 Cái đỏ đó để so với cái xanh giả ở ngay trên nó: cùng một khẳng định sai, nhưng viết
 thiếu `await` thì xanh, viết đủ `await` thì đỏ.
 
-`refinement/` là hai file để đọc và đối chiếu, không chạy được — chúng import từ
+`refinement/` là hai file để đọc và đối chiếu, không chạy được, vì chúng import từ
 `src/domain/ticket` và `src/storage/json-store`, tức là code của tuần 2 chưa tồn tại.

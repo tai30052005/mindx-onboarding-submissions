@@ -103,7 +103,7 @@ Ba cái này chốt từ tuần 1, và cả ba đều xuất phát từ chuyện
 
 **1. `id` và `createdAt` tiêm vào, không gọi thẳng trong hàm.**
 Nếu hàm tự gọi `randomUUID()` và `new Date()` thì `id` ngẫu nhiên, test chỉ viết được
-`expect(t.id).toBeDefined()` — mà câu đó xanh với cả `"abcxyz"` lẫn `0`. Tiêm vào thì
+`expect(t.id).toBeDefined()`, mà câu đó xanh với cả `"abcxyz"` lẫn `0`. Tiêm vào thì
 test truyền `generateId: () => 'T-1'`, assert được giá trị chính xác.
 
 **2. Hàm trả về exit code, không tự gọi `process.exit()`.**

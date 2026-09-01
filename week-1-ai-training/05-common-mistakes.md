@@ -42,7 +42,7 @@ thứ ba của TDD.
 ## 4. Tin output của AI mà không kiểm
 
 Viết ở `04-ai-validation.md`. Tóm lại: AI viết cả test lẫn code thì test mô tả cái code
-đang làm, không phải cái đáng lẽ phải làm — code sai thì test sai theo và vẫn xanh.
+đang làm, không phải cái đáng lẽ phải làm. Code sai thì test sai theo và vẫn xanh.
 
 ## Trước và sau, lấy từ buổi refinement của mình
 
@@ -88,7 +88,7 @@ it('sinh id từ generateId được tiêm', () => {
 ```
 
 Chú ý một test yếu bị tách thành hai test có tên nói rõ hành vi. Và `expect(t.id).toBe('T-1')`
-chỉ viết được **nhờ** đã tiêm `generateId` — tức là sửa một assertion yếu kéo theo một
+chỉ viết được nhờ đã tiêm `generateId`. Tức là sửa một assertion yếu kéo theo một
 thay đổi thiết kế. Đây đúng là luận điểm "TDD là hoạt động thiết kế" ở `01`, lần này gặp
 theo chiều ngược lại.
 

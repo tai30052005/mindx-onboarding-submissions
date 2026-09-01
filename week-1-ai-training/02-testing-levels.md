@@ -1,7 +1,7 @@
 # Ba tầng test: unit, integration, end-to-end
 
 > **Deliverable 2.** Workflow đã dùng: Layered Questioning, rồi một vòng review đối kháng
-> ở phiên AI mới. Vòng review đó làm đổi tỷ lệ mình đề xuất — chi tiết ở
+> ở phiên AI mới. Vòng review đó làm đổi tỷ lệ mình đề xuất. Chi tiết ở
 > `ai-workflow-log.md`.
 
 ## Ba tầng khác nhau chỗ nào
@@ -61,8 +61,8 @@ Mười ba test case lấy từ phạm vi thật của Ticket Manager CLI.
 - Bảng này **không** phải mẫu theo tỷ lệ 50/45/5 ở trên. Nó chọn theo độ đa dạng của tình
   huống, không theo tỷ trọng.
 - Phân loại giả định `id`, `createdAt` và tầng lưu trữ được **tiêm vào** chứ không gọi
-  trực tiếp bên trong hàm. Nếu tuần 2 không làm vậy — nếu `createTicket` tự gọi
-  `randomUUID()` và `new Date()` — thì ba dòng đầu tụt xuống integration, vì lúc đó chúng
+  trực tiếp bên trong hàm. Nếu tuần 2 không làm vậy, tức là `createTicket` tự gọi
+  `randomUUID()` và `new Date()`, thì ba dòng đầu tụt xuống integration, vì lúc đó chúng
   chạm đồng hồ và bộ sinh ngẫu nhiên. Đây là ràng buộc thiết kế chưa cam kết, không phải
   sự thật đã có.
 
@@ -91,7 +91,7 @@ Mười ba test case lấy từ phạm vi thật của Ticket Manager CLI.
   hai: một unit test cho luật "không tìm thấy thì trả lỗi gì", một integration test cho
   "đọc từ file thật rồi không tìm thấy".
 - **`priority` ngoài tập giá trị cho phép.** Ca này tách làm hai. Nếu `priority` là union
-  type thì gán sai giá trị trong code chết ở **compile time** — đó là tầng static, không
+  type thì gán sai giá trị trong code chết ở compile time. Đó là tầng static, không
   phải test. Phần còn lại là chuỗi từ `process.argv` cần thu hẹp kiểu, và việc đó xảy ra
   ở biên CLI. Không mảnh nào của ca này ở lại thành unit test thuần theo cách mình nghĩ
   ban đầu.
@@ -99,8 +99,8 @@ Mười ba test case lấy từ phạm vi thật của Ticket Manager CLI.
 ## Còn chưa chắc
 
 - Tỷ lệ 50/45/5 mình chọn dựa trên tốc độ, nhưng chưa đo tỉ lệ vỡ unit test. Bảng của
-  chính mình ghi unit là tầng dễ vỡ nhất khi refactor — đó là một chi phí chưa cân được
+  chính mình ghi unit là tầng dễ vỡ nhất khi refactor. Đó là một chi phí chưa cân được
 - Ba dòng unit đầu bảng phụ thuộc vào việc `id`/`createdAt`/tầng lưu có được tiêm hay
-  không. Đó là quyết định thiết kế của tuần 2, chưa cam kết — nếu làm khác thì bảng phải sửa
+  không. Đó là quyết định thiết kế của tuần 2, chưa cam kết. Nếu làm khác thì bảng phải sửa
 - Ranh giới "ngoài chương trình" xử lý gọn cho `fs`, nhưng chưa chắc còn gọn ở tuần 3
   khi có HTTP client giả và HTTP client thật hoán đổi qua biến môi trường

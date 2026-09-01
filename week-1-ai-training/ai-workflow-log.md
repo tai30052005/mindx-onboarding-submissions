@@ -18,16 +18,21 @@
 
 **Quyết định mình tự đưa ra:**
 
-> Chọn phương án giấu tầng lưu trữ sau interface với một bản in-memory, cộng một nhóm nhỏ
-> test dùng file thật cho ba error case bắt buộc. Vì ràng buộc nặng nhất là tuần 3 phải
-> cắm HTTP client vào cùng codebase, và đây là phương án duy nhất chuẩn bị sẵn cho việc
-> đó. Rủi ro đã biết: thêm một tầng trừu tượng khi chưa có bằng chứng là cần — nếu cuối
-> tuần 2 interface đó vẫn chỉ có một implementation thật thì mình đã trừu tượng hoá sớm.
+> Chọn phương án giấu tầng lưu trữ sau interface, kèm một bản in-memory. Cộng thêm một
+> nhóm nhỏ test dùng file thật cho ba error case bắt buộc.
+>
+> Lý do: ràng buộc nặng nhất là tuần 3 phải cắm HTTP client vào cùng codebase, và đây là
+> phương án duy nhất chuẩn bị sẵn cho việc đó.
+>
+> Rủi ro đã biết: thêm một tầng trừu tượng khi chưa có bằng chứng là cần. Nếu cuối tuần 2
+> interface đó vẫn chỉ có một implementation thật thì mình đã trừu tượng hoá sớm.
 
-**Một quyết định khác về phương pháp:** cố tình gửi bài cho một phiên AI **mới** để review
-thay vì hỏi lại phiên đã dựng phương án, vì phiên cũ đã "ký tên" vào đề xuất nên chỉ phản
-biện lấy lệ. Lần áp dụng đó tìm ra lỗi nặng nhất của cả tuần: mình dẫn số đo của e2e để
-chứng minh một khẳng định về integration.
+**Một quyết định khác về phương pháp:** cố tình gửi bài cho một phiên AI **mới** để
+review, thay vì hỏi lại phiên đã dựng phương án. Phiên cũ đã "ký tên" vào đề xuất rồi
+nên chỉ phản biện lấy lệ.
+
+Lần đó tìm ra lỗi nặng nhất của cả tuần: mình dẫn số đo của e2e để chứng minh một khẳng
+định về integration.
 
 ---
 
@@ -42,18 +47,18 @@ transcript thì `transcripts/README.md` ghi rõ là không có, kèm lý do.
 **2. Thí nghiệm chạy lại được** — `experiments/`, bốn thư mục. `tdd-loop/` và `speed/`
 chạy bằng `node --test`, không cần cài gì.
 
-**3. Lịch sử git** — mỗi lần đổi kết luận là một commit riêng, nên trạng thái **trước**
-khi sửa vẫn còn nguyên và không viết lùi được:
+**3. Lịch sử git** — mỗi lần đổi kết luận là một commit riêng. Nên trạng thái trước khi
+sửa vẫn còn nguyên, không viết lùi được:
 
 | Đổi cái gì | Trước | Sau | Mở diff bằng |
 |---|---|---|---|
 | Tỷ lệ 70/25/5 → 50/45/5 sau khi tự đo | `26ec88a` | `d252be6` | `git diff 26ec88a d252be6 -- week-1-ai-training/02-testing-levels.md` |
-| Sửa claim async `toThrow` sau khi chạy Jest thật | | `e699e47` | `git show e699e47` |
+| Sửa claim async `toThrow` sau khi tự chạy thử | | `e699e47` | `git show e699e47` |
 | Viết lại lý do 3 sau khi chạy fake timer | | `2a848a4` | `git show 2a848a4` |
 | Đưa `experiments/` vào làm bằng chứng | | `ee20444` | `git show ee20444` |
 
 Diff đầu bảng là cái đáng xem nhất: bản cũ ghi *"Tỷ lệ 70/25/5 là ước lượng theo lập luận,
-chưa có số đo thật"*, và ô Speed ghi *"hàng chục đến hàng trăm ms"* — đúng cái giả định mà
+chưa có số đo thật"*, và ô Speed ghi *"hàng chục đến hàng trăm ms"*. Đúng cái giả định mà
 phép đo về sau bác bỏ.
 
 ---
@@ -75,7 +80,7 @@ Transcript nguyên văn 4 lượt ở `transcripts/`.
 | **4** | "Trong 3 lý do đó, lý do nào **yếu nhất**? Và phản biện thế nào trước câu *viết test sau cũng được, miễn cuối cùng đủ test và đều xanh*?" | Chỉ ra **lý do 3 yếu nhất**, với một lỗi sự thật kiểm chứng được: câu "người viết test sau không còn lựa chọn nào ngoài `toBeDefined()`" là **sai** | Không tin lời phản bác. Viết `experiments/async-check/faketimer.test.js` với hàm **không tiêm gì**, dùng `randomUUID()` và `new Date()` trực tiếp: khoá đồng hồ lại thì assert được giá trị chính xác, `id` assert bằng regex định dạng. **2/2 pass** — người phản biện đúng | Viết lại toàn bộ lý do 3, bỏ câu sai. Đổi "cơ chế duy nhất" thành "rẻ nhất và tự động nhất". Thêm hẳn một mục cho câu phản bác kia trong `01` |
 
 > **Ghi chú về cấu trúc:** khung ban đầu dựng theo 4 tier (Research → Brief feature →
-> Code example → Validation). Thực tế không diễn ra theo 4 tier tách rời — tier 2 và 3 gộp
+> Code example → Validation). Thực tế không diễn ra theo 4 tier tách rời. Tier 2 và 3 gộp
 > vào lượt 3, tier 4 rải qua lượt 2 và lượt 6. Giữ ghi chép theo lượt thật thay vì ép vào
 > khung cũ.
 
@@ -131,7 +136,7 @@ Nhận file với thông tin duy nhất là "có ít nhất 4 lỗi", không bi�
 **0 trên 10.** Đọc file đó mình thấy bình thường, không thấy chỗ nào sai. Cả 10 lỗi đều
 phải được chỉ ra.
 
-Ghi đúng con số này vì nó nói được trình độ mình lúc đó — và vì trần thẩm định là thứ
+Ghi đúng con số này vì nó nói được trình độ mình lúc đó. Và vì trần thẩm định là thứ
 quyết định mình được phép nhận output AI tới đâu. Tự đánh giá cao hơn thực tế ở chỗ này
 là nguy hiểm nhất.
 
@@ -170,7 +175,7 @@ Bốn test còn lại để nguyên và đánh dấu `TODO` có chủ đích, l�
 ở tuần 2.
 
 Một quan sát rút ra ở bước này: `expect(t.id).toBe('T-1')` chỉ viết được **nhờ** đã tiêm
-`generateId`. Tức là sửa một assertion yếu kéo theo một thay đổi thiết kế — luận điểm "TDD
+`generateId`. Tức là sửa một assertion yếu kéo theo một thay đổi thiết kế. Đúng luận điểm "TDD
 là hoạt động thiết kế" ở `01`, lần này gặp theo chiều ngược lại.
 
 **5. Mình phản hồi lại gì**
