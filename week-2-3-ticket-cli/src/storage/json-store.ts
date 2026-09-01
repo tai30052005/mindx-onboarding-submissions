@@ -1,13 +1,14 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { CorruptedStoreError } from '../errors';
 import { Ticket } from '../domain/ticket';
+import { TicketStore } from './ticket-store';
 
 /**
  * Tang luu tru: doc/ghi file JSON that tren dia.
  * Day la cho DUY NHAT trong app cham vao he thong file, nen no la cho duy nhat
  * can integration test. Moi thu khac chay thuan trong bo nho.
  */
-export class JsonTicketStore {
+export class JsonTicketStore implements TicketStore {
   constructor(private readonly filePath: string) {}
 
   load(): Ticket[] {
