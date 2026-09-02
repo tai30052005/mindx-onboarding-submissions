@@ -10,7 +10,7 @@ Bài nộp cá nhân cho chương trình onboarding engineer 5 tuần của Mind
 | Tuần | Chủ đề | Thư mục | Đã nộp |
 |------|-------|--------|-----------|
 | 1 | AI Training — dùng AI hiệu quả và tư duy phản biện | [week-1-ai-training](week-1-ai-training/) | ☑ |
-| 2 | Thực hành TDD — CLI quản lý ticket | [week-2-3-ticket-cli](week-2-3-ticket-cli/) | ☑ |
+| 2 | Thực hành TDD — CLI quản lý ticket | [week-2-3-ticket-cli](week-2-3-ticket-cli/) | ☐ |
 | 3 | Tích hợp KB API (mở rộng tuần 2) | `week-2-3-ticket-cli/` | ☐ |
 | 4 | Xử lý ticket và giao tiếp chuyên nghiệp | `week-4-ticket-handling/` | ☐ |
 | 5 | Báo cáo, phân tích và tự động hoá | `week-5-reporting-automation/` | ☐ |

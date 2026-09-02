@@ -125,3 +125,4 @@ lên nhau, test đỏ mà code không sai gì.
 | Integration test cho lưu JSON và hành vi lệnh | `tests/storage/`, `tests/commands/cli-file.test.ts` |
 | Test ba ca lỗi | input sai + không tìm thấy: `tests/commands/run.test.ts`; file thiếu/hỏng: `tests/storage/json-store.test.ts` |
 | Hướng dẫn cài đặt, cấu hình, sử dụng | file này |
+| Trả lời được câu hỏi dựa trên research và implementation | *(hỏi trực tiếp)* — chưa xong |
