@@ -79,3 +79,67 @@ describe('CLI chạy với file JSON thật', () => {
     expect(run(['list'], deps)).toBe(0);
   });
 });
+
+// Ba ca duoi day vá đúng ba chỗ `03-cli-test-plan.md` có liệt kê mà code chưa phủ.
+// Chúng là test viết sau, không phải test-first: hành vi đã chạy đúng sẵn rồi.
+describe('ba ca integration còn thiếu so với 03-cli-test-plan.md', () => {
+  let dir: string;
+  let file: string;
+
+  const setup = (id = 'T-1') => {
+    const out: string[] = [];
+    return {
+      out,
+      deps: {
+        store: new JsonTicketStore(file),
+        now: () => new Date('2026-09-01T10:00:00.000Z'),
+        generateId: () => id,
+        log: (m: string) => out.push(m),
+      },
+    };
+  };
+
+  beforeEach(() => {
+    dir = mkdtempSync(join(tmpdir(), 'cli-gap-'));
+    file = join(dir, 'tickets.json');
+  });
+
+  afterEach(() => {
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  it('list đọc từ file thật rồi lọc theo status', () => {
+    run(['create', '--title', 'Còn mở'], setup('T-1').deps);
+    run(['create', '--title', 'Đã xong'], setup('T-2').deps);
+    run(['update', 'T-2', '--status', 'done'], setup().deps);
+
+    const b = setup();
+    expect(run(['list', '--status', 'done'], b.deps)).toBe(0);
+
+    const inRa = b.out.join('\n');
+    expect(inRa).toContain('Đã xong');
+    expect(inRa).not.toContain('Còn mở');
+  });
+
+  it('show với id TỒN TẠI, đọc từ file thật', () => {
+    run(['create', '--title', 'Sửa lỗi đăng nhập', '--tag', 'bug'], setup('T-1').deps);
+
+    const b = setup();
+    expect(run(['show', 'T-1'], b.deps)).toBe(0);
+    expect(b.out.join('\n')).toContain('Sửa lỗi đăng nhập');
+    expect(b.out.join('\n')).toContain('bug');
+  });
+
+  it('update ticket này không làm hỏng ticket kia, trên file thật', () => {
+    run(['create', '--title', 'Ticket một'], setup('T-1').deps);
+    run(['create', '--title', 'Ticket hai', '--tag', 'ui'], setup('T-2').deps);
+
+    run(['update', 'T-1', '--status', 'done'], setup().deps);
+
+    const luu = JSON.parse(readFileSync(file, 'utf8'));
+    const hai = luu.find((t: { id: string }) => t.id === 'T-2');
+    expect(hai.title).toBe('Ticket hai');
+    expect(hai.status).toBe('open');
+    expect(hai.tags).toEqual(['ui']);
+  });
+});
