@@ -56,10 +56,11 @@ chạy trước.
 
 Nên mỗi test tự tạo một thư mục tạm riêng bằng `fs.mkdtemp` rồi dọn sau khi xong.
 
-> Cách test tầng lưu trữ — thư mục tạm thật, mock `fs`, hay giấu sau interface với bản
-> in-memory — vẫn đang là quyết định mở, sẽ chốt qua Solution Exploration
-> (`ai-workflow-log.md`, mục 20/08). Kế hoạch dưới đây viết theo phương án thư mục tạm
-> thật, khớp với cách phân loại đã chốt ở `02-testing-levels.md`.
+> Lúc viết kế hoạch này thì cách test tầng lưu trữ vẫn đang bỏ ngỏ: thư mục tạm thật,
+> mock `fs`, hay giấu sau interface với một bản in-memory. Sau buổi Solution Exploration
+> (`ai-workflow-log.md`, mục 20/08) thì chốt: giấu sau interface làm mặc định, cộng một
+> nhóm nhỏ test thư mục tạm thật cho ba error case. Tuần 2 làm đúng vậy, xem
+> `../week-2-3-ticket-cli/src/storage/`.
 
 ## Luật validate
 
@@ -151,10 +152,12 @@ Còn ca file JSON hỏng thì có một luật riêng: **không được ghi đ�
 trình cứ ghi đè thì người dùng mất dữ liệu, mà mất vì chương trình chứ không phải vì họ
 làm gì sai. Báo lỗi kèm đường dẫn rồi dừng, để họ tự xem file.
 
-Ba loại lỗi này cần ba loại riêng biệt trong code, không dùng chung `Error`. Lý do: assert
-theo loại lỗi thì test không vỡ khi sửa câu chữ thông báo. Assert theo nội dung message —
-kiểu `toThrow('title không được rỗng')` — là weak assertion, vì `toThrow` khớp theo
-substring nên vẫn pass với một lỗi khác miễn message chứa chuỗi đó.
+Ba loại lỗi này cần ba class riêng trong code, không dùng chung `Error`. Assert theo loại
+lỗi thì test không vỡ khi mình sửa câu chữ thông báo.
+
+Còn assert theo nội dung message, kiểu `toThrow('title không được rỗng')`, là weak
+assertion. `toThrow` khớp theo substring, nên nó vẫn xanh với một lỗi hoàn toàn khác miễn
+message có chứa chuỗi đó.
 
 ## Đoạn code minh hoạ
 
@@ -234,7 +237,7 @@ lời AI. Kết quả:
 | Có `await`, khẳng định đúng | Pass đúng |
 | Có `await`, khẳng định sai | Đỏ đúng cách, thông báo đọc được |
 
-Chính Node nói ra chuyện đó khi chạy — không phải mình suy đoán:
+Chính Node nói ra chuyện đó khi chạy, không phải mình suy đoán:
 
 ```
 Test "XANH GIA - quen await..." generated asynchronous activity after the test ended.
@@ -242,10 +245,10 @@ This activity created the error "AssertionError..." and would have caused the te
 fail, but instead triggered an unhandledRejection event.
 ```
 
-*"lẽ ra phải làm test đỏ, nhưng thay vào đó lỗi bị nuốt mất"* — đó đúng là định nghĩa
-của xanh giả.
+Câu *"lẽ ra phải làm test đỏ, nhưng thay vào đó lỗi bị nuốt mất"* nói đúng thế nào là
+xanh giả.
 
-Rủi ro AI nêu là có thật — test cho hàm async viết sai thì xanh giả — nhưng mô tả cơ chế
+Rủi ro AI nêu là có thật, test cho hàm async viết sai thì xanh giả. Nhưng mô tả cơ chế
 thì sai, nên vẫn phải chạy mới biết. Chi tiết ở `ai-workflow-log.md` Phần 3.
 
 Điều này còn quan trọng hơn ở tuần 3, khi mọi lời gọi HTTP đều là async.

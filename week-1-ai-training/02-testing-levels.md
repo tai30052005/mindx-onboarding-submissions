@@ -61,10 +61,10 @@ Mười ba test case lấy từ phạm vi thật của Ticket Manager CLI.
 - Bảng này **không** phải mẫu theo tỷ lệ 50/45/5 ở trên. Nó chọn theo độ đa dạng của tình
   huống, không theo tỷ trọng.
 - Phân loại giả định `id`, `createdAt` và tầng lưu trữ được **tiêm vào** chứ không gọi
-  trực tiếp bên trong hàm. Nếu tuần 2 không làm vậy, tức là `createTicket` tự gọi
-  `randomUUID()` và `new Date()`, thì ba dòng đầu tụt xuống integration, vì lúc đó chúng
-  chạm đồng hồ và bộ sinh ngẫu nhiên. Đây là ràng buộc thiết kế chưa cam kết, không phải
-  sự thật đã có.
+  trực tiếp bên trong hàm. Nếu làm ngược lại, tức là `createTicket` tự gọi `randomUUID()`
+  và `new Date()`, thì ba dòng đầu tụt xuống integration, vì lúc đó chúng chạm đồng hồ và
+  bộ sinh ngẫu nhiên. Lúc viết bảng này thì đó mới là ràng buộc chưa cam kết. Tuần 2 làm
+  đúng như vậy, xem `Deps` trong `../week-2-3-ticket-cli/src/domain/ticket.ts`.
 
 | # | Test case | Tầng | Vì sao |
 |---|---|---|---|
@@ -111,7 +111,7 @@ Mười ba test case lấy từ phạm vi thật của Ticket Manager CLI.
 
   **Nửa thứ nhất, không cần test.** `Priority` là union type `'low' | 'medium' | 'high'`.
   Viết `createTicket({ priority: 'khẩn-cấp' })` trong code thì TypeScript báo lỗi ngay
-  lúc mình đang gõ, chưa chạy dòng nào. Viết test cho ca này là thừa — có một tầng khác
+  lúc mình đang gõ, chưa chạy dòng nào. Viết test cho ca này là thừa, vì có một tầng khác
   đã chặn rồi, và nó chặn với chi phí runtime bằng không.
 
   **Nửa thứ hai, bắt buộc phải test.** Người dùng gõ
@@ -120,7 +120,7 @@ Mười ba test case lấy từ phạm vi thật của Ticket Manager CLI.
   được gì.
 
   Nếu không kiểm, chuỗi đó được lưu thẳng xuống file. Ticket ấy có `priority` là một giá
-  trị không nằm trong ba giá trị cho phép, nên **không lệnh lọc nào tìm ra nó** — nó nằm
+  trị không nằm trong ba giá trị cho phép, nên **không lệnh lọc nào tìm ra nó**. Nó nằm
   trong file mà coi như mất.
 
   Tuần 2 làm đúng vậy: `assertValidPriority` chặn ở `src/commands/create.ts`, kèm test
@@ -134,6 +134,6 @@ Mười ba test case lấy từ phạm vi thật của Ticket Manager CLI.
 - Tỷ lệ 50/45/5 mình chọn dựa trên tốc độ, nhưng chưa đo tỉ lệ vỡ unit test. Bảng của
   chính mình ghi unit là tầng dễ vỡ nhất khi refactor. Đó là một chi phí chưa cân được
 - Ba dòng unit đầu bảng phụ thuộc vào việc `id`/`createdAt`/tầng lưu có được tiêm hay
-  không. Đó là quyết định thiết kế của tuần 2, chưa cam kết. Nếu làm khác thì bảng phải sửa
+  không. Lúc viết thì đó là điều chưa chắc, giờ thì tuần 2 đã tiêm thật nên bảng vẫn đúng
 - Ranh giới "ngoài chương trình" xử lý gọn cho `fs`, nhưng chưa chắc còn gọn ở tuần 3
   khi có HTTP client giả và HTTP client thật hoán đổi qua biến môi trường
