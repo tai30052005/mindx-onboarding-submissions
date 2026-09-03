@@ -17,9 +17,9 @@ export type Ticket = {
 };
 
 /**
- * Nhung thu den tu ben ngoai ham. Tiem vao chu khong goi thang trong ham.
- * Ly do: neu ham tu goi randomUUID() va new Date() thi id ngau nhien, test chi
- * viet duoc toBeDefined() - assertion yeu. Tiem vao thi assert duoc gia tri chinh xac.
+ * Những thứ đến từ bên ngoài hàm. Tiêm vào chứ không gọi thẳng trong hàm.
+ * Lý do: nếu hàm tự gọi randomUUID() và new Date() thì id ngẫu nhiên, test chỉ
+ * viết được toBeDefined(), là assertion yếu. Tiêm vào thì assert được giá trị chính xác.
  */
 export type Deps = {
   now: () => Date;
@@ -61,7 +61,7 @@ export type UpdateInput = {
   tags?: string[];
 };
 
-/** Tra ve danh sach MOI, khong sua truc tiep danh sach cu. */
+/** Trả về danh sách mới, không sửa trực tiếp danh sách cũ. */
 export function updateTicket(
   tickets: Ticket[],
   id: string,

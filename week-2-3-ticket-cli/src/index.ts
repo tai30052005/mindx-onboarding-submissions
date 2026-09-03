@@ -5,8 +5,8 @@ import { run } from './commands/run';
 import { JsonTicketStore } from './storage/json-store';
 
 /**
- * Entrypoint. Day la cho DUY NHAT duoc goi process.exit().
- * Moi ham khac chi TRA VE exit code, de test goi duoc ma khong giet tien trinh Jest.
+ * Entrypoint. Đây là chỗ duy nhất được gọi process.exit().
+ * Mọi hàm khác chỉ trả về exit code, để test gọi được mà không giết tiến trình Jest.
  */
 const file = process.env.TICKETS_FILE ?? join(process.cwd(), 'tickets.json');
 

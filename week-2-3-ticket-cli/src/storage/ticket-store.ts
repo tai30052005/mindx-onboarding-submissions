@@ -1,10 +1,9 @@
 import { Ticket } from '../domain/ticket';
 
 /**
- * Tang lenh chi biet den interface nay, khong biet du lieu nam o dau.
- * Nho vay test tang lenh chay duoc voi kho trong bo nho (nhanh, khong cham dia),
- * con luc chay that thi cam JsonTicketStore vao.
- * Tuan 3 cam them HTTP client cung se di qua cho nay.
+ * Tầng lệnh chỉ biết đến interface này, không biết dữ liệu nằm ở đâu.
+ * Nhờ vậy test tầng lệnh chạy được với kho trong bộ nhớ, không phải tạo file thật.
+ * Tuần 3 cắm HTTP client vào thì chỉ cần thêm một bản mới cũng có load() và save().
  */
 export interface TicketStore {
   load(): Ticket[];

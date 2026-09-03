@@ -4,9 +4,9 @@ import { Ticket } from '../domain/ticket';
 import { TicketStore } from './ticket-store';
 
 /**
- * Tang luu tru: doc/ghi file JSON that tren dia.
- * Day la cho DUY NHAT trong app cham vao he thong file, nen no la cho duy nhat
- * can integration test. Moi thu khac chay thuan trong bo nho.
+ * Tầng lưu trữ: đọc ghi file JSON thật trên đĩa.
+ * Đây là chỗ duy nhất trong app chạm vào hệ thống file, nên cũng là chỗ duy nhất
+ * cần integration test. Mọi thứ khác chạy thuần trong bộ nhớ.
  */
 export class JsonTicketStore implements TicketStore {
   constructor(private readonly filePath: string) {}
@@ -17,7 +17,7 @@ export class JsonTicketStore implements TicketStore {
     try {
       raw = readFileSync(this.filePath, 'utf8');
     } catch (err) {
-      // File chua ton tai la chuyen BINH THUONG lan chay dau -> coi nhu kho rong.
+      // File chưa tồn tại là chuyện bình thường lần chạy đầu, nên coi như kho rỗng.
       if ((err as NodeJS.ErrnoException).code === 'ENOENT') return [];
       throw err;
     }
@@ -25,8 +25,8 @@ export class JsonTicketStore implements TicketStore {
     try {
       return JSON.parse(raw) as Ticket[];
     } catch {
-      // File hong thi bao loi roi DUNG. Khong ghi de len no,
-      // vi ghi de la lam mat du lieu cua nguoi dung.
+      // File hỏng thì báo lỗi rồi dừng. Không ghi đè lên nó,
+      // vì ghi đè là làm mất dữ liệu của người dùng.
       throw new CorruptedStoreError(
         `file dữ liệu hỏng, không đọc được: ${this.filePath}`
       );

@@ -1,7 +1,7 @@
 import { Ticket } from '../domain/ticket';
 import { TicketStore } from './ticket-store';
 
-/** Ban gia dung trong test. Giu du lieu trong bo nho, mat khi chuong trinh tat. */
+/** Bản giả dùng trong test. Giữ dữ liệu trong bộ nhớ, mất khi chương trình tắt. */
 export class InMemoryTicketStore implements TicketStore {
   constructor(private tickets: Ticket[] = []) {}
 

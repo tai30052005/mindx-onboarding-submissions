@@ -4,8 +4,8 @@ import { RunDeps } from './deps';
 export function runShow(args: string[], deps: RunDeps): number {
   const id = args[0];
 
-  // Thieu id la nguoi dung GO SAI -> ValidationError.
-  // Con id dung dinh dang ma khong co trong kho la NotFoundError. Hai chuyen khac nhau.
+  // Thiếu id là người dùng gõ sai, nên ném ValidationError.
+  // Còn id đúng định dạng mà không có trong kho thì là NotFoundError. Hai chuyện khác nhau.
   if (!id || id.startsWith('--')) {
     throw new ValidationError('thiếu id. Cách dùng: tickets show <id>');
   }

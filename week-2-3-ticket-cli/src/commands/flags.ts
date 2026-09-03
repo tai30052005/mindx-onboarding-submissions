@@ -7,9 +7,9 @@ export type Flags = {
 };
 
 /**
- * Doc argv thanh cac flag.
- * Gia tri lay tu argv LUON la chuoi, ke ca khi no phai la status hay priority.
- * Nen doc xong van phai kiem lai kieu o tang lenh.
+ * Đọc argv thành các flag.
+ * Giá trị lấy từ argv luôn là chuỗi, kể cả khi nó phải là status hay priority.
+ * Nên đọc xong vẫn phải kiểm lại kiểu ở tầng lệnh.
  */
 export function docFlags(args: string[]): Flags {
   const flags: Flags = {};

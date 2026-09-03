@@ -1,10 +1,10 @@
 /**
- * Ba loai loi rieng biet, khong dung chung Error.
- * Ly do: test assert theo LOAI loi thi khong vo khi sua cau chu thong bao.
- * Assert theo noi dung message la weak assertion - xem 05-common-mistakes.md.
+ * Ba loại lỗi riêng biệt, không dùng chung Error.
+ * Lý do: test assert theo loại lỗi thì không vỡ khi sửa câu chữ thông báo.
+ * Assert theo nội dung message là assertion yếu, xem 05-common-mistakes.md.
  */
 
-/** Nguoi dung go sai: title rong, status ngoai tap cho phep... */
+/** Người dùng gõ sai: title rỗng, status ngoài tập cho phép. */
 export class ValidationError extends Error {
   constructor(message: string) {
     super(message);
@@ -12,7 +12,7 @@ export class ValidationError extends Error {
   }
 }
 
-/** Nguoi dung go dung, nhung thu ho tim khong ton tai. */
+/** Người dùng gõ đúng, nhưng thứ họ tìm không tồn tại. */
 export class NotFoundError extends Error {
   constructor(message: string) {
     super(message);
@@ -20,7 +20,7 @@ export class NotFoundError extends Error {
   }
 }
 
-/** File tickets.json tren dia bi hong, khong parse duoc. */
+/** File tickets.json trên đĩa bị hỏng, không parse được. */
 export class CorruptedStoreError extends Error {
   constructor(message: string) {
     super(message);

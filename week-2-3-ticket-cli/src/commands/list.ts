@@ -14,7 +14,7 @@ export function runList(args: string[], deps: RunDeps): number {
     tags: flags.tags,
   });
 
-  // Loc khong khop gi la chuyen binh thuong, khong phai loi -> van tra 0.
+  // Lọc không khớp gì là chuyện bình thường, không phải lỗi, nên vẫn trả 0.
   if (ketQua.length === 0) {
     deps.log('Chưa có ticket nào khớp.');
     return 0;

@@ -14,9 +14,9 @@ const HUONG_DAN = `Cách dùng:
   tickets update <id> [--title <title>] [--status <status>] [--priority <priority>]`;
 
 /**
- * Tra ve EXIT CODE, khong tu goi process.exit().
- * Ly do: process.exit() trong test se tat luon tien trinh Jest, cac test con lai
- * khong chay nua. Chi entrypoint (index.ts) moi duoc goi process.exit(run(argv)).
+ * Trả về exit code, không tự gọi process.exit().
+ * Lý do: process.exit() trong test sẽ tắt luôn tiến trình Jest, các test còn lại
+ * không chạy nữa. Chỉ entrypoint (index.ts) mới được gọi process.exit(run(argv)).
  */
 export function run(argv: string[], deps: RunDeps): number {
   const [command, ...rest] = argv;
@@ -40,7 +40,7 @@ export function run(argv: string[], deps: RunDeps): number {
   }
 }
 
-/** Ba loai loi -> ba exit code khac nhau, de script goi CLI phan biet duoc. */
+/** Ba loại lỗi cho ba exit code khác nhau, để script gọi CLI phân biệt được. */
 function baoLoi(err: unknown, deps: RunDeps): number {
   if (err instanceof ValidationError) {
     deps.log(`Lỗi: ${err.message}`);
