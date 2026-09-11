@@ -64,8 +64,8 @@ Tuần 2 có 50 test, không có test e2e nào.
 
 | Bước | Commit | Kết quả |
 |---|---|---|
-| Viết test e2e khởi động cả chương trình | `60f31d2` | **Đỏ 3/3**, đều báo `ERR_MODULE_NOT_FOUND` |
-| Đổi script thành `tsc && node dist/index.js` | `9ecaf56` | **Xanh**, cả bộ 54/54 |
+| Viết test e2e khởi động cả chương trình | `fd7a6a2` | **Đỏ 3/3**, đều báo `ERR_MODULE_NOT_FOUND` |
+| Đổi script thành `tsc && node dist/index.js` | `b95e2c0` | **Xanh**, cả bộ 54/54 |
 
 Mình tự chạy, tự nhìn output đỏ trước khi sửa, và tự chạy lại sau khi sửa.
 
@@ -141,7 +141,7 @@ RED/GREEN. Nhìn vào thì tưởng mình đi từng vòng TDD và nhìn từng 
 Thực tế là AI chạy liền một mạch. Mình không xem lần đỏ nào trong 12 commit đó.
 
 Khai ra vì nếu không thì `git log` thành bằng chứng gây hiểu nhầm. Cặp duy nhất mình tự
-chạy và tự nhìn đỏ là `60f31d2` rồi `9ecaf56`, ngày 11/09.
+chạy và tự nhìn đỏ là `fd7a6a2` rồi `b95e2c0`, ngày 11/09.
 
 ## Phần 5 — Guardrail cho tuần 3
 
