@@ -32,7 +32,6 @@ Cả ba câu này chính là ba mục trống trong 01-tdd-principles.md. Bằng
 > _Từ đây là trả lời của AI. Đã cắt bớt phần diễn giải dài; giữ lại đúng những chỗ_
 > _bảng đối chiếu ở `README.md` có dẫn. Bản đầy đủ nằm trong lịch sử git, commit `31c9f97`._
 
-
 Câu 1 — Ba lý do viết test TRƯỚC, và mất chính xác cái gì nếu viết SAU
 Lý do 1: Test viết sau bị neo vào code đã tồn tại
 …

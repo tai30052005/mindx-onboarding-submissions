@@ -264,14 +264,12 @@ thì sai, nên vẫn phải chạy mới biết. Chi tiết ở `ai-workflow-log
 
 ## Còn chưa chắc
 
-Bốn chỗ dưới đây mình chưa quyết được, và cả bốn đều phải chốt trước khi viết test tuần 2,
-vì chúng là quyết định về đặc tả chứ không phải về code.
+Lúc viết kế hoạch này có bốn chỗ mình chưa quyết được, và cả bốn là quyết định về đặc tả
+chứ không phải về code. Cột bên phải ghi tuần 2 chốt ra sao.
 
-- Lệnh `update` mà không truyền field nào thì báo lỗi, hay coi như không làm gì rồi trả 0
-- Thiếu file `tickets.json` thì tự tạo file mới, hay báo lỗi. Đề bài xếp nó chung nhóm
-  với file hỏng, nhưng mình thấy hai cái khác nhau: thiếu file là chuyện bình thường lần
-  chạy đầu, còn file hỏng thì không
-- Cách test tầng lưu trữ. Xem mục Solution Exploration trong `ai-workflow-log.md`. Nếu
-  chọn phương án giấu sau interface thì mấy ca đang xếp Integration sẽ thành Unit
-- `id` nên là `T-1`, `T-2` hay UUID. Tuần tự thì dễ gõ tay lúc dùng `show <id>`, nhưng
-  phải đọc cả file mới biết số kế tiếp
+| Chỗ chưa quyết lúc đó | Tuần 2 chốt |
+|---|---|
+| Lệnh `update` mà không truyền field nào thì báo lỗi, hay coi như không làm gì rồi trả 0 | Báo lỗi. `ValidationError('không có field nào để sửa')`, exit code 2 |
+| Thiếu file `tickets.json` thì tự tạo file mới, hay báo lỗi. Đề bài xếp nó chung nhóm với file hỏng, nhưng mình thấy hai cái khác nhau: thiếu file là chuyện bình thường lần chạy đầu, còn file hỏng thì không | Tách hẳn hai ca. Thiếu file trả về mảng rỗng, coi như kho rỗng. File hỏng ném `CorruptedStoreError`, exit code 4, không ghi đè |
+| Cách test tầng lưu trữ. Nếu chọn phương án giấu sau interface thì mấy ca đang xếp Integration sẽ thành Unit | Giấu sau interface `TicketStore`. Đúng như dự đoán: các ca lệnh chuyển sang dùng kho trong bộ nhớ nên thành Unit, chỉ còn `tests/storage/` là Integration |
+| `id` nên là `T-1`, `T-2` hay UUID. Tuần tự thì dễ gõ tay lúc dùng `show <id>`, nhưng phải đọc cả file mới biết số kế tiếp | UUID cắt 8 ký tự. Chính độ dài 8 đó về sau làm lộ bug cột `id` dính vào cột `status` |

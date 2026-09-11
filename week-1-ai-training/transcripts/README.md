@@ -42,7 +42,7 @@ khớp nhau không.
 | Lượt 3: đề nghị nhét cặp file `codeFirst.ts` / `testFirst.ts` vào `01` | Từ chối, chuyển snippet sang `03` | `01` giữ thuần khái niệm |
 | Lượt 1: dựng cả project chạy được, `npm init`, `jest.config.js` | Bỏ hết | Mentor đã chốt 17/08: tuần 1 snippet là đủ |
 | Lượt 2: dẫn nghiên cứu Fucci et al. | Không dùng ở phần chính | AI tự nhận dẫn từ trí nhớ, mình không tra được nguồn |
-| Lượt 4: nói lý do 3 sai ở đâu | Chấp nhận, viết lại toàn bộ lý do 3 | Nhưng chỉ sau khi tự chạy `faketimer.test.js` để kiểm — 3/3 pass |
+| Lượt 4: nói lý do 3 sai ở đâu | Chấp nhận, viết lại toàn bộ lý do 3 | Nhưng chỉ sau khi tự chạy `faketimer.test.js` để kiểm, 2/2 pass |
 | Lượt 6: nói bảng verify dẫn số đo sai | Chấp nhận, đổi tỷ lệ 70/25/5 → 50/45/5 | Nhưng chỉ sau khi tự viết `bench.test.js` đo lại |
 
 Hai dòng cuối là điểm chính: cả hai lần AI phản bác đúng, nhưng mình không nhận lời ngay

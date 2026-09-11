@@ -125,7 +125,6 @@ Lần này khác lần trước không phải vì mình đọc kỹ hơn. Là v�
 từng dòng: khẳng định này còn đúng với giá trị sai nào, cái đang test là logic của mình
 hay của ngôn ngữ, và chỗ này có ra ngoài chương trình không.
 
-
 ## Còn chưa chắc
 
 - Lần đọc lại tự tìm được 5/6 ở nửa đầu file, nhưng đó là file mình đã được chỉ lỗi một lần rồi. Chưa biết gặp file lạ hoàn toàn thì tỉ lệ còn được bao nhiêu
