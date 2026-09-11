@@ -95,7 +95,12 @@ tests/
   storage/                integration test, ghi đọc file thật trong thư mục tạm
   commands/run.test.ts    unit test tầng lệnh, dùng kho trong bộ nhớ
   commands/cli-file.test.ts   integration test, chạy lệnh với file thật
+  e2e/cli-e2e.test.ts     e2e, khởi động cả chương trình bằng tiến trình riêng
 ```
+
+54 test: 4 e2e, còn lại unit và integration. Tầng `e2e/` thêm ngày 11/09, sau khi chạy
+thật thì thấy lệnh `npm run tickets` chết ngay dòng import trong khi 50 test kia vẫn
+xanh. Chi tiết ở [`ai-workflow-log.md`](ai-workflow-log.md).
 
 ## Ba quyết định thiết kế
 
@@ -123,6 +128,8 @@ lên nhau, test đỏ mà code không sai gì.
 | CLI chạy được 4 lệnh | `src/commands/run.ts`, mục *Bốn lệnh* ở trên |
 | Unit test cho logic và luật validate | `tests/domain/` |
 | Integration test cho lưu JSON và hành vi lệnh | `tests/storage/`, `tests/commands/cli-file.test.ts` |
+| End-to-end: gõ lệnh như người dùng | `tests/e2e/cli-e2e.test.ts` |
+| Dùng AI có kiểm soát, có guardrail và validation | [`ai-workflow-log.md`](ai-workflow-log.md) |
 | Test ba ca lỗi | input sai + không tìm thấy: `tests/commands/run.test.ts`; file thiếu/hỏng: `tests/storage/json-store.test.ts` |
 | Hướng dẫn cài đặt, cấu hình, sử dụng | file này |
 | Trả lời được câu hỏi dựa trên research và implementation | *(hỏi trực tiếp)* — chưa xong |
