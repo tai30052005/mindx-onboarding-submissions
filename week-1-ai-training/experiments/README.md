@@ -31,4 +31,4 @@ Cái đỏ đó để so với cái xanh giả ở ngay trên nó: cùng một k
 thiếu `await` thì xanh, viết đủ `await` thì đỏ.
 
 `refinement/` là hai file để đọc và đối chiếu, không chạy được, vì chúng import từ
-`src/domain/ticket` và `src/storage/json-store`, tức là code của tuần 2 chưa tồn tại.
+`src/domain/ticket` và `src/storage/json-store`, tức là code nằm ở `../../week-2-3-ticket-cli/`, không phải trong thư mục này.

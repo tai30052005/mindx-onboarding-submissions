@@ -15,7 +15,7 @@ Bài nộp cá nhân cho chương trình onboarding engineer 5 tuần của Mind
 | 4 | Xử lý ticket và giao tiếp chuyên nghiệp | `week-4-ticket-handling/` | ☐ |
 | 5 | Báo cáo, phân tích và tự động hoá | `week-5-reporting-automation/` | ☐ |
 
-Thư mục cho tuần 2–5 sẽ tạo khi tới tuần đó.
+Thư mục cho tuần 4 và 5 sẽ tạo khi tới tuần đó.
 
 Tuần 2 và tuần 3 dùng chung một codebase (tuần 3 mở rộng CLI của tuần 2), nên hai bài
 nộp phân biệt bằng git tag chứ không bằng thư mục.
