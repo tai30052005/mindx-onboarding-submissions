@@ -74,7 +74,7 @@ Mã 3 tách khỏi mã 2 là có chủ đích: `show ""` là người dùng gõ 
 người dùng gõ đúng nhưng thứ họ tìm không tồn tại. Hai chuyện khác nhau nên hai thông báo
 khác nhau.
 
-Gặp file hỏng (mã 4) thì chương trình **không ghi đè** lên file đó. Ghi đè là làm mất dữ
+Gặp file hỏng (mã 4) thì chương trình không ghi đè lên file đó. Ghi đè là làm mất dữ
 liệu người dùng.
 
 ## Cấu trúc
@@ -104,7 +104,7 @@ xanh. Chi tiết ở [`ai-workflow-log.md`](ai-workflow-log.md).
 
 ## Ba quyết định thiết kế
 
-Ba cái này chốt từ tuần 1, và cả ba đều xuất phát từ chuyện **viết test thế nào cho được**.
+Ba cái này chốt từ tuần 1, và cả ba đều xuất phát từ chuyện viết test thế nào cho được.
 
 **1. `id` và `createdAt` tiêm vào, không gọi thẳng trong hàm.**
 Nếu hàm tự gọi `randomUUID()` và `new Date()` thì `id` ngẫu nhiên, test chỉ viết được
@@ -124,7 +124,7 @@ lên nhau, test đỏ mà code không sai gì.
 
 | Tiêu chí | Nằm ở đâu |
 |---|---|
-| Thấy được vòng TDD: test đỏ → code → test xanh → refactor | `git log` — commit `test(...)` đứng trước commit `feat(...)` |
+| Thấy được vòng TDD: test đỏ → code → test xanh → refactor | `git log`, commit `test(...)` đứng trước commit `feat(...)`. [`ai-workflow-log.md`](ai-workflow-log.md) ghi rõ vòng nào mình tự chạy, vòng nào AI chạy |
 | CLI chạy được 4 lệnh | `src/commands/run.ts`, mục *Bốn lệnh* ở trên |
 | Unit test cho logic và luật validate | `tests/domain/` |
 | Integration test cho lưu JSON và hành vi lệnh | `tests/storage/`, `tests/commands/cli-file.test.ts` |
